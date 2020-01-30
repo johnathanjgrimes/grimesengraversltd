@@ -1,11 +1,11 @@
 @extends('layouts.app')
-@section('title','Grimes Engravers | Trophies & Awards')
+@section('title','Trophies & Awards')
 
 @section('styles')
 @endsection
 
 @section('content')
-    <div class="container mx-auto pb-16">
+    <div class="container mx-auto">
         <h1 class="pb-5 pt-10 text-3xl">Trophies & Awards</h1>
 
         <p class="pb-5">Below is a list with a link to the catalogues and product ranges we can offer to you.</p>
@@ -14,8 +14,8 @@
             as much information as possible.
         </p>
 
-        <div class="flex">
-            <a href="https://issuu.com/trophystreetcatalogue/docs/trophy_street_catalogue_2020_17.12.2019?fr=sMTljODYyOTY4MAhjis" target="_blank" class="w-1/3 mr-4 overflow-hidden rounded shadow-lg">
+        <div class="flex flex-col lg:flex-row">
+            <a href="/trophies-awards-catalogue" class="w-full lgw-1/3 sm:mb-12 mr-0 lg:mr-4 overflow-hidden rounded shadow-lg">
                 <div>
                     <img class="w-full" src="/storage/images/trophies-awards.jpg" alt="Trophies  & Awards">
                     <div class="px-6 py-4">
@@ -35,7 +35,7 @@
                     </div>
                 </div>
             </a>
-            <a href="https://www.emagcloud.com/Swatkins/Main_Catalogue/page_1.html" target="_blank" class="w-1/3 mr-4 overflow-hidden rounded shadow-lg">
+            <a href="/swatkins-catalogue" class="w-full lgw-1/3 sm:mb-12 mr-0 lg:mr-4 overflow-hidden rounded shadow-lg">
                 <div>
                     <img class="w-full" src="/storage/images/cups.jpg" alt=">Presentations Cups & Awards">
                     <div class="px-6 py-4">
@@ -54,7 +54,7 @@
                     </div>
                 </div>
             </a>
-            <a href="https://www.ordershop.co.uk/e-catalogue/index.html" target="_blank" class="w-1/3 overflow-hidden rounded shadow-lg">
+            <a href="/crystal-catalogue" class="w-full lgw-1/3 sm:mb-12 overflow-hidden rounded shadow-lg">
                 <div >
                     <img class="w-full" src="/storage/images/glass-engraving.jpg" alt="Glass Gifts & Awards">
                     <div class="px-6 py-4">

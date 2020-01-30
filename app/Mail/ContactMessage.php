@@ -69,7 +69,8 @@ class ContactMessage extends Mailable
     public function build()
     {
         return $this
-            ->from('info@grimesengravers.com', 'Grimes Engravers Ltd')
+            ->from('no-reply@grimesengravers.com', 'Grimes Engravers Ltd')
+            ->subject('Contact message from website.')
             ->replyTo($this->email, $this->name)
             ->view('emails.contact');
     }
