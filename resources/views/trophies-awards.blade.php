@@ -6,13 +6,15 @@
 
 @section('content')
     <div class="container mx-auto">
-        <h1 class="pb-5 pt-10 text-3xl">Trophies & Awards</h1>
+        <div class="px-6 py-4">
+            <h1 class="pb-5 pt-10 text-3xl">Trophies & Awards</h1>
 
-        <p class="pb-5">Below is a list with a link to the catalogues and product ranges we can offer to you.</p>
+            <p class="pb-5">Below is a list with a link to the catalogues and product ranges we can offer to you.</p>
 
-        <p class="pb-5">If you see something your are intrested in then please get in contact with one of our team providing
-            as much information as possible.
-        </p>
+            <p class="pb-5">If you see something your are intrested in then please get in contact with one of our team providing
+                as much information as possible.
+            </p>
+        </div>
 
         <div class="flex flex-col lg:flex-row">
             <a href="/trophies-awards-catalogue" class="w-full lgw-1/3 sm:mb-12 mr-0 lg:mr-4 overflow-hidden rounded shadow-lg">

@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="container mx-auto">
-        <h1 class="pb-5 pt-10 text-3xl">Industrial Engraving</h1>
+        <h1 class="pb-5 pt-10 text-3xl px-6 py-4">Industrial Engraving</h1>
 
             <div class="w-full overflow-hidden rounded shadow-lg">
 {{--                <img class="w-full" src="/storage/images/glass-engraving.jpg" alt="Glass Gifts & Awards">--}}
