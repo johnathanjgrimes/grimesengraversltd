@@ -17,7 +17,22 @@ Route::get('/', function () {
 Route::get('/trophies-awards', function () {
     return view('trophies-awards');
 });
-Route::get('/trophies-awards', function () {
+Route::get('/trophies-awards-catalogue', function () {
+    return view('trophies-awards-catalogue');
+});
+Route::get('/swatkins-catalogue', function () {
+    return view('swatkins');
+});
+Route::get('/crystal-catalogue', function () {
+    return view('crystal');
+});
+Route::get('/industrial-engraving', function () {
+    return view('industrial');
+});
+Route::get('/commercial-engraving', function () {
+    return view('commercial');
+});
+Route::get('/contact', function () {
     return view('contact');
 });
 Route::post('contact', 'ContactController@store');

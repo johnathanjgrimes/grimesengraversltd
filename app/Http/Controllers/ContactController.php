@@ -15,8 +15,9 @@ class ContactController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return void
      */
-    public function storeLoggedOutMessage(Request $request)
+    public function store(Request $request)
     {
+
         $request->validate([
             'name' => 'required',
             'email' => 'required|email',
@@ -25,20 +26,18 @@ class ContactController extends Controller
 
         // If the 'comment' field has any data, it is likely this was a spam message and therefore block it.
         if (!is_null($request->comment)) {
-            Cache::put('spam_message_count', (int) Cache::get('spam_message_count') + 1, 86400);
             abort(500);
         }
 
-
-        $subject = $this->topics[$request->topic];
-
         Mail::to('info@grimesengravers.com')->send(
             new ContactMessage(
-                $subject,
                 $request->message,
                 $request->name,
                 $request->email
             )
         );
+
+        return redirect()->back()->with('message', 'Message sent successfully!');
+
     }
 }
