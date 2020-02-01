@@ -124,11 +124,11 @@
     }
 </style>
 
-<div class="absolute bg-white bottom-0 cursor-pointer font-semibold hover:bg-gray-100 left-0 m-5 order-now-button px-4 py-2 rounded shadow-lg text-gray-800 text-white mb-12 text-4xl lg:text-base">
+<div class="absolute bg-white bottom-0 cursor-pointer font-semibold hover:bg-gray-100 left-0 m-5 order-now-button px-4 py-2 rounded shadow-lg text-gray-800 text-white mb-12 text-4xl md:text-base lg:text-base">
     <a href="/trophies-awards"><i class="fas fa-caret-left mr-1"></i> Back to Catalogues</a>
 </div>
 
-<div class="absolute bg-green-600 bottom-0 cursor-pointer hover:bg-green-500 m-5 order-now-button px-4 py-2 right-0 rounded text-white mb-12 font-semibold text-4xl lg:text-base">
+<div class="absolute bg-green-600 bottom-0 cursor-pointer hover:bg-green-500 m-5 order-now-button px-4 py-2 right-0 rounded text-white mb-12 font-semibold text-4xl md:text-base lg:text-base">
     <a href="/contact" target="_blank">Order Now <i class="fas fa-shopping-basket ml-1"></i></a>
 </div>
 
