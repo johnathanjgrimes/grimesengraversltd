@@ -16,7 +16,7 @@
                  </p>
              </div>
             <div class="flex flex-col lg:flex-row">
-            <a href="/trophies-awards-catalogue" class="w-full lgw-1/3 sm:mb-12 ml-0 lg:ml-4 mr-0 lg:mr-4 overflow-hidden rounded shadow-lg">
+            <a href="/trophies-awards-catalogue" class="w-full lgw-1/3 sm:mb-12 ml-0 lg:ml-4 mr-0 lg:mr-4 overflow-hidden rounded shadow-md">
                 <div>
                     <img class="w-full" src="/storage/images/trophies-awards.jpg" alt="Trophies  & Awards">
                     <div class="px-6 py-4">
@@ -36,7 +36,7 @@
                     </div>
                 </div>
             </a>
-            <a href="/swatkins-catalogue" class="w-full lgw-1/3 sm:mb-12 ml-0 lg:ml-4 mr-0 lg:mr-4 overflow-hidden rounded shadow-lg">
+            <a href="/swatkins-catalogue" class="w-full lgw-1/3 sm:mb-12 ml-0 lg:ml-4 mr-0 lg:mr-4 overflow-hidden rounded shadow-md">
                 <div>
                     <img class="w-full" src="/storage/images/cups.jpg" alt=">Presentations Cups & Awards">
                     <div class="px-6 py-4">
@@ -55,7 +55,7 @@
                     </div>
                 </div>
             </a>
-            <a href="/crystal-catalogue" class="w-full lgw-1/3 sm:mb-12 mr-0 lg:mr-4 overflow-hidden rounded shadow-lg">
+            <a href="/crystal-catalogue" class="w-full lgw-1/3 sm:mb-12 mr-0 lg:mr-4 overflow-hidden rounded shadow-md">
                 <div >
                     <img class="w-full" src="/storage/images/glass-engraving.jpg" alt="Glass Gifts & Awards">
                     <div class="px-6 py-4">
