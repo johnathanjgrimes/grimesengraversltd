@@ -9,7 +9,7 @@
         <h1 class="pb-5 pt-10 text-3xl px-6 py-4 text-teal-800">Contact Us</h1>
         <div class="flex flex-col lg:flex-row overflow-hidden px-6 py-4 rounded shadow-lg w-full">
             <div class="pr-0 lg:pr-20 w-full lg:w-1/2">
-                <p>Jot us a note and we’ll get back to you as quickly as possible.</p>
+                <p>Get in touch and we’ll get back to you as quickly as possible.</p>
 
                 <h2 class="pb-2 pt-2 text-2xl text-teal-800">Contact Details</h2>
                 <p>Tel: <span>02920 795 343</span></p>
@@ -30,33 +30,33 @@
                         </div>
                     </div>
                 @endif
-{{--                <form action="/contact" method="POST">--}}
-{{--                        {{ csrf_field() }}--}}
-{{--                        <div class="flex flex-wrap -mx-3 mb-6">--}}
-{{--                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">--}}
-{{--                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">--}}
-{{--                                    Name <span class="text-red-500 text-xs italic">*</span>--}}
-{{--                                </label>--}}
-{{--                                <input class="@error('name') border border-red-500 @enderror appearance-none block w-full bg-gray-200 text-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" name="name" type="text" placeholder="Jane">--}}
-{{--                            </div>--}}
-{{--                            <div class="w-full md:w-1/2 px-3">--}}
-{{--                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">--}}
-{{--                                    Email <span class="text-red-500 text-xs italic">*</span>--}}
-{{--                                </label>--}}
-{{--                                <input class="@error('email') border border-red-500 @enderror appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="email" type="email" placeholder="jane@gmail.com">--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <div class="flex flex-wrap -mx-3 mb-6">--}}
-{{--                            <div class="w-full px-3">--}}
-{{--                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">--}}
-{{--                                    Message <span class="text-red-500 text-xs italic">*</span>--}}
-{{--                                </label>--}}
-{{--                                <textarea class="@error('message') border border-red-500 @enderror appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="message" rows="4" cols="50"></textarea>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <input type="comment" class="hidden invisible" />--}}
-{{--                        <button class="bg-teal-800 hover:bg-gray-100 hover:text-black text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow">Submit</button>--}}
-{{--                    </form>--}}
+                <form action="/contact" method="POST">
+                        {{ csrf_field() }}
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                    Name <span class="text-red-500 text-xs italic">*</span>
+                                </label>
+                                <input class="@error('name') border border-red-500 @enderror appearance-none block w-full bg-gray-200 text-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" name="name" type="text" placeholder="Jane">
+                            </div>
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                                    Email <span class="text-red-500 text-xs italic">*</span>
+                                </label>
+                                <input class="@error('email') border border-red-500 @enderror appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="email" type="email" placeholder="jane@gmail.com">
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                            <div class="w-full px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+                                    Message <span class="text-red-500 text-xs italic">*</span>
+                                </label>
+                                <textarea class="@error('message') border border-red-500 @enderror appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="message" rows="4" cols="50"></textarea>
+                            </div>
+                        </div>
+                        <input type="comment" class="hidden invisible" />
+                        <button class="bg-teal-800 hover:bg-gray-100 hover:text-black text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow">Submit</button>
+                    </form>
             </div>
         </div>
     </div>
