@@ -5,6 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
     <meta name="google" content="notranslate">
+    <link rel="icon" type="image/x-icon" href="/storage/images/grimes-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/storage/images/grimes-icon.png">
+    <meta name="robots" content="INDEX,FOLLOW">
+    <meta name="description" content="The complete sign service. Professional Engravers, Sign Makers, ... We can engrave nameplates & memorial plaques in brass anodised aluminium">
     {{-- Viewport --}}
     @section('viewport')
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -42,37 +46,37 @@
             <div id="main-nav" class="w-full flex-grow lg:flex items-center lg:w-auto hidden bg-gray-900 ">
                 <ul class="container flex flex-col lg:flex-row mx-auto p-2 text-white">
                     <li class="flex-1 text-center py-5 lg:py-0  lg:text-base">
-                        <a href="/commercial-engraving">
+                        <a href="/commercial-engraving" class="hover:text-teal-600">
                             Commercial Engraving
                         </a>
                     </li>
                     <li class="flex-1 text-center py-5 lg:py-0  lg:text-base">
-                        <a href="/commercial-engraving">
+                        <a href="/commercial-engraving" class="hover:text-teal-600">
                             Signs & Plaques
                         </a>
                     </li>
                     <li class="flex-1 text-center py-5 lg:py-0  lg:text-base">
-                        <a href="/trophies-awards">
+                        <a href="/trophies-awards" class="hover:text-teal-600">
                             Trophies & Awards
                         </a>
                     </li>
                     <li class="flex-1 text-center py-5 lg:py-0  lg:text-base">
-                        <a href="/trophies-awards">
+                        <a href="/trophies-awards" class="hover:text-teal-600">
                             Presentation Cups
                         </a>
                     </li>
                     <li class="flex-1 text-center py-5 lg:py-0  lg:text-base">
-                        <a href="/trophies-awards">
+                        <a href="/trophies-awards" class="hover:text-teal-600">
                             Glass Awards
                         </a>
                     </li>
                     <li class="flex-1 text-center py-5 lg:py-0  lg:text-base">
-                        <a href="/industrial-engraving">
+                        <a href="/industrial-engraving" class="hover:text-teal-600">
                             Industrial Engraving
                         </a>
                     </li>
                     <li class="flex-1 text-center py-5 lg:py-0  lg:text-base">
-                        <a href="/contact">
+                        <a href="/contact" class="hover:text-teal-600">
                             Contact
                         </a>
                     </li>
@@ -138,7 +142,7 @@
 {{--        <button class="px-2 opacity-100 hover:opacity-100 focus:opacity-100"><img class="w-full" src="https://stripe.com/img/v3/payments/overview/logos/missguided.svg" alt="" style="max-height: 60px;"></button>--}}
 {{--    </div>--}}
 
-    <footer class="bg-gray-900 p-3 text-gray-100 text-white text-center">
+    <footer class="bg-gray-900 p-3 text-gray-100 text-white text-center mt-10">
         © {{ now()->year }} Grimes Engravers Ltd. All rights reserved.
     </footer>
 @show

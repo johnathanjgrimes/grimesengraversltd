@@ -6,16 +6,16 @@
 
 @section('content')
     <div class="container mx-auto">
-        <h1 class="pb-5 pt-10 text-3xl px-6 py-4">Contact Us</h1>
+        <h1 class="pb-5 pt-10 text-3xl px-6 py-4 text-teal-800">Contact Us</h1>
         <div class="flex flex-col lg:flex-row overflow-hidden px-6 py-4 rounded shadow-lg w-full">
             <div class="pr-0 lg:pr-20 w-full lg:w-1/2">
                 <p>Jot us a note and we’ll get back to you as quickly as possible.</p>
 
-                <h2 class="pb-2 pt-2 text-2xl">Contact Details</h2>
+                <h2 class="pb-2 pt-2 text-2xl text-teal-800">Contact Details</h2>
                 <p>Tel: <span>02920 795 343</span></p>
                 <p>Email: <span><a href="mailto:info@grimesengravers.com">info@grimesengravers.com</a></span</p>
 
-                <h2 class="pb-2 pt-2 text-2xl">Address</h2>
+                <h2 class="pb-2 pt-2 text-2xl text-teal-800">Address</h2>
                 We work by appointment only. If you need our address please get in touch using one of the
                 methods above.
             </div>
@@ -55,7 +55,7 @@
                             </div>
                         </div>
                         <input type="comment" class="hidden invisible" />
-                        <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Submit</button>
+                        <button class="bg-teal-800 hover:bg-gray-100 hover:text-black text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow">Submit</button>
                     </form>
             </div>
         </div>

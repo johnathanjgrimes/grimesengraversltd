@@ -14,7 +14,7 @@
                     The most established Engravers in South Wales. We can provide not only signs but the complete package for all your company's requirements. Please browse our site, we're here to help.                        </p>
                 </p>
 
-                <a href="/contact" class="hover:bg-gray-100 hover:text-black text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                <a href="/contact" class="bg-teal-800 hover:bg-gray-100 hover:text-black text-white font-semibold py-2 px-4 rounded shadow">
                     Contact Us Today
                 </a>
             </div>
@@ -26,7 +26,7 @@
             <!-- Two columns -->
             <div class="flex flex-col lg:flex-row">
                 <div class="bg-center bg-cover bg-gray-400 h-12 w-full lg:w-1/2" style="background-image: url('/storage/images/glass-engraving.jpg'); min-height: 600px;"></div>
-                <div class="bg-yellow-900 h-12 h-auto p-8 lg:p-32 text-center text-gray-100 w-full lg:w-1/2 flex items-center" style="min-height: 600px;">
+                <div class="bg-teal-800 h-12 h-auto p-8 lg:p-32 text-center text-gray-100 w-full lg:w-1/2 flex items-center" style="min-height: 600px;">
                     <div>
                         <h2 class="pb-6 text-2xl font-semibold">Glass Awards</h2>
                         <p class="pb-12">
@@ -45,8 +45,7 @@
                     <div>
                         <h2 class="pb-6 text-2xl font-semibold">Trophies & Awards</h2>
                         <p class="pb-12">
-                            We are one of the biggest supplier of awards and trophies in Wales, and can provide you with medals, trophies and awards to suit all sporting, corporate, leisure and charitable events and special occasions
-                        </p>
+                            We are one of the biggest suppliers of awards and trophies in Wales and can provide you with medals, trophies, and awards to suit all sporting, corporate, leisure and charitable events and special occasions.                        </p>
                         <a href="/trophies-awards-catalogue" class="hover:bg-gray-100 hover:text-black text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow">
                             View Trophies & Awards Catalogue
                         </a>
@@ -59,11 +58,10 @@
             <!-- Two columns -->
             <div class="flex flex-col lg:flex-row">
                 <div class="bg-center bg-cover bg-gray-400 h-12 w-full lg:w-1/2" style="background-image: url('/storage/images/grimes-original.jpg'); min-height: 600px;"></div>
-                <div class="bg-yellow-900 h-12 h-auto p-8 lg:p-32 text-center text-gray-100 w-full lg:w-1/2 flex items-center" style="min-height: 600px;">
+                <div class="bg-teal-800 h-12 h-auto p-8 lg:p-32 text-center text-gray-100 w-full lg:w-1/2 flex items-center" style="min-height: 600px;">
                     <div>
                         <h2 class="pb-6 text-2xl font-semibold">Our Story</h2>
-                        <p>Established in 1947, Grimes Engravers offers excellent service and reliability in all that we do and are competitively priced. We are a small but well established familly business situated in Cardiff offering a wide range of services for your needs, including Ceremony plaques, Lables, Nameplates, Badges, Trophies, Tankards, Jewellery Engraving and glass engraving. and also supply rubber stamps and marking inks with a 24 hour service. A delivery and collection service is available in the Cardiff area, please contact us to arrange an appointment.</p>
-                    </div>
+                        Established in 1947, Grimes Engravers are a small but well-established family business situated in Cardiff offering a wide range of services including Ceremony Plaques, Labels, Nameplates, Badges, Trophies, Glass Awards and much more.               </div>
                 </div>
             </div>
         </div>
