@@ -76,5 +76,3 @@ Route::redirect('/brass-hotel-door-number.html', '/commercial-engraving', 301);
 Route::redirect('/aluminium-room-numbers.html', '/commercial-engraving', 301);
 Route::redirect('/brass-effect-key-fobs.html', '/commercial-engraving', 301);
 Route::redirect('/aluminium-effect-key-fobs.html', '/commercial-engraving', 301);
-Route::redirect('/contact/', '/contact', 301);
-
