@@ -6,17 +6,17 @@
 
 @section('content')
     <div class="container mx-auto">
-        <h1 class="pb-5 pt-10 text-3xl px-6 py-4">Industrial Engraving</h1>
+        <h1 class="pb-5 pt-10 text-3xl px-6 py-4 text-teal-800">Industrial Engraving</h1>
 
             <div class="w-full overflow-hidden rounded shadow-lg">
 {{--                <img class="w-full" src="/storage/images/glass-engraving.jpg" alt="Glass Gifts & Awards">--}}
                 <div class="px-6 py-4">
-                    <div class="font-bold text-xl mb-2">Why Choose us for Industrial Engraving?</div>
+                    <div class="font-bold text-xl mb-2 text-teal-800">Why Choose us for Industrial Engraving?</div>
                     <p class="text-gray-700 text-base">
-                        We have over 60 years experience in industrial engraving. Grimes Engravers has developed a reliable and professional reputation which is why we consistently deliver, enabling us to constantly re-invest in the latest equipment & technology.
-                        <br />  <br />Our 3 generation engravers have passed on the skills and knowledge down the line ensuring that we provide highest standards to you. We can tackle the most complicated job and you can be assured we pay the closest to detail on every job, from start to finish.
-                        <br /> <br />Because we keep up to date with hardware & engraving software you can be assured that whatever file format you send us with your requirements, we will be able toÂ work with. Our commitment to you the customer is unsurpassed offering you our custom engraving services to meet your precise requirements.
-                        <br /> <br />No job is too big, too small or too complicated for us to take on, & you can rest assured it will be to your exacting requirements. We can supply you the total package, whether you are in the Commercial sector Industrial or even just a private client, our dedication remains the same, and withe three generations to back up our name, you can rest assured we will get the job done.
+                        We have over 60 years of experience in industrial engraving. Grimes Engravers has developed a reliable and professional reputation which is why we consistently deliver, enabling us to constantly re-invest in the latest equipment & technology.
+                        <br /><br />Our 3 generation engravers have passed on the skills and knowledge down the line ensuring that we provide the highest standards to you. We can tackle the most complicated job and you can be assured we pay the closest to detail on every job, from start to finish.
+                        <br /><br />Because we keep up to date with hardware & engraving software you can be assured that whatever file format you send us with your requirements, we will be able to work with. Our commitment to you the customer is unsurpassed offering you custom engraving services to meet your precise requirements.
+                        <br /><br />No job is too big, too small or too complicated for us to take on, & you can rest assured it will be to your exacting requirements. We can supply you the total package, whether you are in the Commercial sector Industrial or even just a private client, our dedication remains the same, and with three generations to back up our name, you can rest assured we will get the job done.
                     </p>
                 </div>
                 <div class="px-6 py-4">
