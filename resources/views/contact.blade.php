@@ -54,7 +54,7 @@
                                 <textarea class="@error('message') border border-red-500 @enderror appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="message" rows="4" cols="50"></textarea>
                             </div>
                         </div>
-                        <input type="comment" class="hidden invisible" />
+                        <input type="text" name="comment" class="hidden invisible" />
                         <button class="bg-teal-800 hover:bg-gray-100 hover:text-black text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow">Submit</button>
                     </form>
             </div>
