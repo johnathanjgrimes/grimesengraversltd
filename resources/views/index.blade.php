@@ -47,7 +47,7 @@
                         <p class="pb-12">
                             We are one of the biggest suppliers of awards and trophies in Wales and can provide you with medals, trophies, and awards to suit all sporting, corporate, leisure and charitable events and special occasions.                        </p>
                         <a href="/trophies-awards-catalogue" class="hover:bg-gray-100 hover:text-black text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-                            View Trophies & Awards Catalogue
+                            View Catalogue
                         </a>
                     </div>
                 </div>
