@@ -1,7 +1,20 @@
 <!DOCTYPE html>
 <html lang="en-gb">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta name="google" content="notranslate">
+    <link rel="icon" type="image/x-icon" href="/storage/images/grimes-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/storage/images/grimes-icon.png">
+    <meta name="robots" content="INDEX,FOLLOW">
+    <meta name="description" content="The complete sign service. Professional Engravers, Sign Makers, ... We can engrave nameplates & memorial plaques in brass anodised aluminium">
+
+    {{-- Viewport --}}
+    @section('viewport')
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    @show
+    
     <title>@yield('title') | Grimes Engravers Ltd</title>
 
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
