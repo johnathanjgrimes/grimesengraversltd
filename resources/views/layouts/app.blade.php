@@ -27,7 +27,7 @@
 @section('header')
 <div class="header p-5 border-b-4 border-gray-900 lg:border-none">
     <a href="/">
-        <img src="/storage/images/grimes-logo-black.png" alt="Grimes Engravers Ltd" class="m-auto w-auto"/>
+        <img src="/storage/images/grimes-logo-black.png" alt="Grimes Engravers Ltd" class="m-auto w-48 lg:w-auto"/>
     </a></div>
 
 <div>
