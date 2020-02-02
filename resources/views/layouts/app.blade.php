@@ -45,37 +45,37 @@
             </div>
             <div id="main-nav" class="w-full flex-grow lg:flex items-center lg:w-auto hidden bg-gray-900 ">
                 <ul class="container flex flex-col lg:flex-row mx-auto p-2 text-white items-center">
-                    <li class="flex-1 text-center py-5 lg:py-0  lg:text-base">
+                    <li class="flex-1 text-center py-3 lg:py-0  lg:text-base">
                         <a href="/commercial-engraving" class="hover:text-teal-600">
                             Commercial Engraving
                         </a>
                     </li>
-                    <li class="flex-1 text-center py-5 lg:py-0  lg:text-base">
+                    <li class="flex-1 text-center py-3 lg:py-0  lg:text-base">
                         <a href="/commercial-engraving" class="hover:text-teal-600">
                             Signs & Plaques
                         </a>
                     </li>
-                    <li class="flex-1 text-center py-5 lg:py-0  lg:text-base">
+                    <li class="flex-1 text-center py-3 lg:py-0  lg:text-base">
                         <a href="/trophies-awards" class="hover:text-teal-600">
                             Trophies & Awards
                         </a>
                     </li>
-                    <li class="flex-1 text-center py-5 lg:py-0  lg:text-base">
+                    <li class="flex-1 text-center py-3 lg:py-0  lg:text-base">
                         <a href="/trophies-awards" class="hover:text-teal-600">
                             Presentation Cups
                         </a>
                     </li>
-                    <li class="flex-1 text-center py-5 lg:py-0  lg:text-base">
+                    <li class="flex-1 text-center py-3 lg:py-0  lg:text-base">
                         <a href="/trophies-awards" class="hover:text-teal-600">
                             Glass Awards
                         </a>
                     </li>
-                    <li class="flex-1 text-center py-5 lg:py-0  lg:text-base">
+                    <li class="flex-1 text-center py-3 lg:py-0  lg:text-base">
                         <a href="/industrial-engraving" class="hover:text-teal-600">
                             Industrial Engraving
                         </a>
                     </li>
-                    <li class="flex-1 text-center py-5 lg:py-0  lg:text-base">
+                    <li class="flex-1 text-center py-3 lg:py-0  lg:text-base">
                         <a href="/contact" class="hover:text-teal-600">
                             Contact
                         </a>
