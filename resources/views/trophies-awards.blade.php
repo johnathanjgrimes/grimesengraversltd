@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="container mx-auto">
-        <h1 class="pb-5 pt-10 text-3xl text-teal-800">Trophies & Awards</h1>
+        <h1 class="pb-5 pt-10 text-3xl px-6 py-4 text-teal-800">Trophies & Awards</h1>
         <div class="w-full overflow-hidden rounded shadow-lg">
             <div class="px-6 py-4">
                 <div class="font-bold text-xl mb-2 text-teal-800">Why Choose us for Trophies & Awards?</div>
