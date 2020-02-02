@@ -51,7 +51,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="bg-center bg-cover bg-gray-400 h-12 w-full lg:w-1/2" style="background-image: url('/storage/images/trophies-awards.jpg'); min-height: 600px;"></div>
+                <div class="bg-center bg-cover bg-white h-12 w-full lg:w-1/2 bg-contain bg-no-repeat" style="background-image: url('/storage/images/trophies-awards.jpg'); min-height: 600px;"></div>
 
             </div>
 
