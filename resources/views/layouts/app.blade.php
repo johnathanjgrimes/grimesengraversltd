@@ -160,10 +160,6 @@
         data-close-text="Got it!">
 </script>
 
-<script>
-    document.getElementById("comment").style.display = "none";
-</script>
-
 </body>
 
 </html>

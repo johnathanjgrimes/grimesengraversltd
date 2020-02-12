@@ -69,3 +69,7 @@
     </div>
 @endsection
 
+<script>
+    document.getElementById("comment").style.display = "none";
+</script>
+
