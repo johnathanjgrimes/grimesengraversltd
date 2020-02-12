@@ -20,6 +20,7 @@
     {{-- Custom styles --}}
     @section('styles')
     @show
+<!-- TrustBox script --> <script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script> <!-- End TrustBox script -->
 </head>
 
 <body>
@@ -144,8 +145,11 @@
         </div>
     </div>
 
-    <footer class="bg-gray-900 p-3 text-gray-100 text-white text-center mt-10">
-        © {{ now()->year }} Grimes Engravers Ltd. All rights reserved.
+    <footer class="pt-5 bg-gray-900 p-3 text-gray-100 text-white text-center mt-10">
+        <div>© {{ now()->year }} Grimes Engravers Ltd. All rights reserved.</div>
+        <!-- TrustBox widget - Micro Review Count -->
+        <div class="mt-2 trustpilot-widget" data-locale="en-GB" data-template-id="5419b6a8b0d04a076446a9ad" data-businessunit-id="59391fba0000ff0005a4207e" data-style-height="24px" data-style-width="100%" data-theme="dark"> <a href="https://uk.trustpilot.com/review/grimesengravers.com" target="_blank" rel="noopener">Trustpilot</a>
+        </div> <!-- End TrustBox widget -->
     </footer>
 @show
 <script type="text/javascript" id="cookieinfo"
