@@ -33,6 +33,7 @@
                         <span class="inline-block bg-teal-800 rounded-full px-3 py-1 text-sm font-semibold text-white mb-2">Shields</span>
                         <span class="inline-block bg-teal-800 rounded-full px-3 py-1 text-sm font-semibold text-white mb-2">Medals</span>
                         <span class="inline-block bg-teal-800 rounded-full px-3 py-1 text-sm font-semibold text-white mb-2">Sports Awards</span>
+                        <span class="inline-block bg-teal-800 rounded-full px-3 py-1 text-sm font-semibold text-white mb-2">Glass Awards</span>
                     </div>
                 </div>
             </a>
