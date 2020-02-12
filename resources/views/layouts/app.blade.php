@@ -57,12 +57,12 @@
                     </li>
                     <li class="flex-1 text-center py-3 lg:py-0  lg:text-base">
                         <a href="/trophies-awards" class="hover:text-teal-600">
-                            Trophies & Awards
+                            Trophies & Medals
                         </a>
                     </li>
                     <li class="flex-1 text-center py-3 lg:py-0  lg:text-base">
                         <a href="/trophies-awards" class="hover:text-teal-600">
-                            Presentation Cups
+                            Presentation Trophies
                         </a>
                     </li>
                     <li class="flex-1 text-center py-3 lg:py-0  lg:text-base">
