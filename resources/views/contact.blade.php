@@ -54,10 +54,18 @@
                                 <textarea class="@error('message') border border-red-500 @enderror appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="message" rows="4" cols="50"></textarea>
                             </div>
                         </div>
-                        <input type="text" name="comment" class="hidden invisible" />
+                        <div id="comment" class="flex flex-wrap -mx-3 mb-6">
+                            <div class="w-full px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+                                    Comments <span class="text-red-500 text-xs italic">*</span>
+                                </label>
+                                <textarea class="@error('message') border border-red-500 @enderror appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="comment" rows="4" cols="50"></textarea>
+                            </div>
+                        </div>
                         <button class="bg-teal-800 hover:bg-gray-100 hover:text-black text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow">Submit</button>
                     </form>
             </div>
         </div>
     </div>
 @endsection
+
