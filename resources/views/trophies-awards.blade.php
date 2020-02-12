@@ -18,11 +18,11 @@
             <div class="flex flex-col lg:flex-row">
             <a href="/trophies-awards-catalogue" class="w-full lgw-1/3 sm:mb-12 ml-0 lg:ml-4 mr-0 lg:mr-4 overflow-hidden rounded shadow-md">
                 <div>
-                    <img class="w-full" src="/storage/images/trophies-awards.jpg" alt="Trophies  & Awards">
+                    <img class="w-full" src="/storage/images/trophies-awards.jpg" alt="Trophies & Awards">
                     <div class="px-6 py-4">
                         <div class="font-bold text-xl mb-2">Trophies  & Awards</div>
                         <p class="text-white text-base">
-                            <span class="text-blue-500 hover:text-blue-800" href="">View All Trophies & Awards</span>
+                            <span class="text-blue-500 hover:text-blue-800">View All Trophies & Awards</span>
                         </p>
                     </div>
                     <div class="px-6 py-4">
@@ -43,7 +43,7 @@
                     <div class="px-6 py-4">
                         <div class="font-bold text-xl mb-2">Presentation Cups & Awards</div>
                         <p class="text-white text-base">
-                            <span class="text-blue-500 hover:text-blue-800" href="">View All Presentation Cups & Awards</span>
+                            <span class="text-blue-500 hover:text-blue-800">View All Presentation Cups & Awards</span>
                         </p>
                     </div>
                     <div class="px-6 py-4">
@@ -62,7 +62,7 @@
                     <div class="px-6 py-4">
                         <div class="font-bold text-xl mb-2">Glass Gifts & Awards</div>
                         <p class="text-white text-base">
-                            <span class="text-blue-500 hover:text-blue-800" href="">View All Glass Gifts & Awards</span>
+                            <span class="text-blue-500 hover:text-blue-800">View All Glass Gifts & Awards</span>
                         </p>
                     </div>
                     <div class="px-6 py-4">

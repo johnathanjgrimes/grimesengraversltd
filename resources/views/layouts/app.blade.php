@@ -134,13 +134,15 @@
 @show
 
 @section('footer')
-{{--    <div class="flex items-center justify-between pb-5 pt-5">--}}
-{{--        <button class="px-2 opacity-50 hover:opacity-100 focus:opacity-100"><img class="w-full" src="https://stripe.com/img/v3/payments/overview/logos/kickstarter.svg" alt="" style="max-height: 60px;"></button>--}}
-{{--        <button class="px-2 opacity-50 hover:opacity-100 focus:opacity-100"><img class="w-full" src="https://stripe.com/img/v3/payments/overview/logos/slack.svg" alt="" style="max-height: 60px;"></button>--}}
-{{--        <button class="px-2 opacity-50 hover:opacity-100 focus:opacity-100"><img class="w-full" src="https://stripe.com/img/v3/payments/overview/logos/glossier.svg" alt="" style="max-height: 60px;"></button>--}}
-{{--        <button class="px-2 opacity-50 hover:opacity-100 focus:opacity-100"><img class="w-full" src="https://stripe.com/img/v3/payments/overview/logos/charity_water.svg" alt="" style="max-height: 60px;"></button>--}}
-{{--        <button class="px-2 opacity-100 hover:opacity-100 focus:opacity-100"><img class="w-full" src="https://stripe.com/img/v3/payments/overview/logos/missguided.svg" alt="" style="max-height: 60px;"></button>--}}
-{{--    </div>--}}
+    <div class="container mx-auto pt-10">
+        <div class="flex items-center justify-between pb-5 pt-5">
+            <button class="px-2 opacity-50 hover:opacity-100 focus:opacity-100"><img class="w-full" src="/storage/images/principality.png" alt="Principality client of Grimes Engravers" style="max-width: 150px; filter: grayscale(1);-webkit-filter: grayscale(1);filter: grayscale(1);"></button>
+            <button class="px-2 opacity-50 hover:opacity-100 focus:opacity-100"><img class="w-full" src="/storage/images/royalmint.png" alt="Royal Mint client of Grimes Engravers" style="max-width: 150px; filter: grayscale(1);-webkit-filter: grayscale(1);filter: grayscale(1);"></button>
+            <button class="px-2 opacity-50 hover:opacity-100 focus:opacity-100"><img class="w-full" src="/storage/images/council.jpg" alt="Cardiff City Council client of Grimes Engravers" style="max-width: 60px; filter: grayscale(1);-webkit-filter: grayscale(1);filter: grayscale(1);"></button>
+            <button class="px-2 opacity-50 hover:opacity-100 focus:opacity-100"><img class="w-full" src="/storage/images/bbc.svg" alt="BBC client of Grimes Engravers" style="max-width: 150px; filter: grayscale(1);-webkit-filter: grayscale(1);filter: grayscale(1);"></button>
+            <button class="px-2 opacity-100 hover:opacity-100 focus:opacity-100"><img class="w-full" src="/storage/images/admiral.svg" alt="Admiral client of Grimes Engravers" style="max-width: 150px; filter: grayscale(1);-webkit-filter: grayscale(1);filter: grayscale(1);"></button>
+        </div>
+    </div>
 
     <footer class="bg-gray-900 p-3 text-gray-100 text-white text-center mt-10">
         © {{ now()->year }} Grimes Engravers Ltd. All rights reserved.
