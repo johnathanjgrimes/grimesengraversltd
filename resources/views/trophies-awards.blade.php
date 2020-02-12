@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title','Trophies & Awards')
+@section('description','One of the biggest suppliers of trophies and medals, nickel plated trophy cups, glass trophies, glass awards, football trophies in Cardiff. Enquire today!')
 
 @section('styles')
 @endsection
