@@ -17,11 +17,15 @@
     <title>@yield('title') | Grimes Engravers Ltd</title>
 
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
-    {{-- Custom styles --}}
+{{-- Custom styles --}}
     @section('styles')
     @show
-<!-- TrustBox script --> <script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script> <!-- End TrustBox script -->
+
+    <!-- TrustBox script -->
+    <script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
+    <!-- End TrustBox script -->
 </head>
 
 <body>
@@ -37,7 +41,8 @@
         <nav>
             <div class="block lg:hidden">
                 <button
-                    class="border border-white flex hover:border-white hover:text-white items-center navbar-burger px-3 py-2 rounded absolute mt-5 ml-5 top-0 text-white">
+                    class="border border-white flex hover:border-white hover:text-white items-center navbar-burger
+                    px-3 py-2 rounded absolute mt-5 ml-5 top-0 text-white">
                     <svg class="fill-current h-6 w-6 text-gray-700" viewBox="0 0 20 20"
                          xmlns="http://www.w3.org/2000/svg">
                         <title>Menu</title>
@@ -47,37 +52,37 @@
             </div>
             <div id="main-nav" class="w-full flex-grow lg:flex items-center lg:w-auto hidden bg-gray-900 ">
                 <ul class="container flex flex-col lg:flex-row mx-auto p-2 text-white items-center">
-                    <li class="flex-1 text-center py-3 lg:py-0  lg:text-base">
+                    <li class="menu-item text-center py-3 lg:py-0  lg:text-base">
                         <a href="/commercial-engraving" class="hover:text-teal-600">
                             Commercial Engraving
                         </a>
                     </li>
-                    <li class="flex-1 text-center py-3 lg:py-0  lg:text-base">
+                    <li class="menu-item text-center py-3 lg:py-0  lg:text-base">
                         <a href="/commercial-engraving" class="hover:text-teal-600">
                             Signs & Plaques
                         </a>
                     </li>
-                    <li class="flex-1 text-center py-3 lg:py-0  lg:text-base">
+                    <li class="menu-item text-center py-3 lg:py-0  lg:text-base">
                         <a href="/trophies-awards" class="hover:text-teal-600">
                             Trophies & Medals
                         </a>
                     </li>
-                    <li class="flex-1 text-center py-3 lg:py-0  lg:text-base">
+                    <li class="menu-item text-center py-3 lg:py-0  lg:text-base">
                         <a href="/trophies-awards" class="hover:text-teal-600">
                             Presentation Trophies
                         </a>
                     </li>
-                    <li class="flex-1 text-center py-3 lg:py-0  lg:text-base">
+                    <li class="menu-item text-center py-3 lg:py-0  lg:text-base">
                         <a href="/trophies-awards" class="hover:text-teal-600">
                             Glass Awards
                         </a>
                     </li>
-                    <li class="flex-1 text-center py-3 lg:py-0  lg:text-base">
+                    <li class="menu-item text-center py-3 lg:py-0  lg:text-base">
                         <a href="/industrial-engraving" class="hover:text-teal-600">
                             Industrial Engraving
                         </a>
                     </li>
-                    <li class="flex-1 text-center py-3 lg:py-0  lg:text-base">
+                    <li class="menu-item text-center py-3 lg:py-0  lg:text-base">
                         <a href="/contact" class="hover:text-teal-600">
                             Contact
                         </a>
@@ -138,11 +143,21 @@
 @section('footer')
     <div class="container mx-auto pt-10">
         <div class="flex items-center justify-between pb-5 pt-5">
-            <button class="px-2 opacity-50 hover:opacity-100 focus:opacity-100"><img class="w-full" src="/storage/images/principality.png" alt="Principality client of Grimes Engravers" style="max-width: 150px; filter: grayscale(1);-webkit-filter: grayscale(1);filter: grayscale(1);"></button>
-            <button class="px-2 opacity-50 hover:opacity-100 focus:opacity-100"><img class="w-full" src="/storage/images/royalmint.png" alt="Royal Mint client of Grimes Engravers" style="max-width: 150px; filter: grayscale(1);-webkit-filter: grayscale(1);filter: grayscale(1);"></button>
-            <button class="px-2 opacity-50 hover:opacity-100 focus:opacity-100"><img class="w-full" src="/storage/images/council.jpg" alt="Cardiff City Council client of Grimes Engravers" style="max-width: 60px; filter: grayscale(1);-webkit-filter: grayscale(1);filter: grayscale(1);"></button>
-            <button class="px-2 opacity-50 hover:opacity-100 focus:opacity-100"><img class="w-full" src="/storage/images/bbc.svg" alt="BBC client of Grimes Engravers" style="max-width: 150px; filter: grayscale(1);-webkit-filter: grayscale(1);filter: grayscale(1);"></button>
-            <button class="px-2 opacity-100 hover:opacity-100 focus:opacity-100"><img class="w-full" src="/storage/images/admiral.svg" alt="Admiral client of Grimes Engravers" style="max-width: 150px; filter: grayscale(1);-webkit-filter: grayscale(1);filter: grayscale(1);"></button>
+            <button class="px-2 opacity-50 hover:opacity-100 focus:opacity-100">
+                <img class="w-full" src="/storage/images/principality.png" alt="Principality client of Grimes Engravers" style="max-width: 150px; filter: grayscale(1);-webkit-filter: grayscale(1);filter: grayscale(1);">
+            </button>
+            <button class="px-2 opacity-50 hover:opacity-100 focus:opacity-100">
+                <img class="w-full" src="/storage/images/royalmint.png" alt="Royal Mint client of Grimes Engravers" style="max-width: 150px; filter: grayscale(1);-webkit-filter: grayscale(1);filter: grayscale(1);">
+            </button>
+            <button class="px-2 opacity-50 hover:opacity-100 focus:opacity-100">
+                <img class="w-full" src="/storage/images/council.jpg" alt="Cardiff City Council client of Grimes Engravers" style="max-width: 60px; filter: grayscale(1);-webkit-filter: grayscale(1);filter: grayscale(1);">
+            </button>
+            <button class="px-2 opacity-50 hover:opacity-100 focus:opacity-100">
+                <img class="w-full" src="/storage/images/bbc.svg" alt="BBC client of Grimes Engravers" style="max-width: 150px; filter: grayscale(1);-webkit-filter: grayscale(1);filter: grayscale(1);">
+            </button>
+            <button class="px-2 opacity-100 hover:opacity-100 focus:opacity-100">
+                <img class="w-full" src="/storage/images/admiral.svg" alt="Admiral client of Grimes Engravers" style="max-width: 150px; filter: grayscale(1);-webkit-filter: grayscale(1);filter: grayscale(1);">
+            </button>
         </div>
     </div>
 
