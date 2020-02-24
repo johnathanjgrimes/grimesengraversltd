@@ -36,6 +36,7 @@ Route::get('/contact', function () {
     return view('contact');
 });
 Route::post('contact', 'ContactController@store');
+Route::post('catalogue-enquiry', 'CatalogueEnquiryController@store');
 
 //Redirects
 Route::redirect('/glass-engraving.html', '/trophies-awards', 301);
