@@ -8,14 +8,14 @@
     <link rel="icon" type="image/x-icon" href="/storage/images/grimes-icon.png">
     <link rel="shortcut icon" type="image/x-icon" href="/storage/images/grimes-icon.png">
     <meta name="robots" content="INDEX,FOLLOW">
+    <title>@yield('title') | Grimes Engravers Ltd</title>
     @section('description','Providing trophies and medals, glass awards, glass trophies, personalised plaques, presentation trophies industrial engraving in Cardiff. Enquire today!')
     <meta name="description" content="@yield('description')">
     {{-- Viewport --}}
     @section('viewport')
         <meta name="viewport" content="width=device-width, initial-scale=1">
     @show
-    <title>@yield('title') | Grimes Engravers Ltd</title>
-
+    <link rel="canonical" href="{{ url()->current() }}"/>
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <style>
@@ -168,7 +168,7 @@
     </div>
 
     <footer class="pt-5 bg-gray-900 p-3 text-gray-100 text-white text-center mt-10">
-        <div>© {{ now()->year }} Grimes Engravers Ltd. All rights reserved.</div>
+        <div>© {{ now()->year }} Grimes Engravers Ltd Cardiff. All rights reserved.</div>
         <!-- TrustBox widget - Micro Review Count -->
         <div class="mt-2 trustpilot-widget" data-locale="en-GB" data-template-id="5419b6a8b0d04a076446a9ad" data-businessunit-id="59391fba0000ff0005a4207e" data-style-height="24px" data-style-width="100%" data-theme="dark"> <a href="https://uk.trustpilot.com/review/grimesengravers.com" target="_blank" rel="noopener">Trustpilot</a>
         </div> <!-- End TrustBox widget -->

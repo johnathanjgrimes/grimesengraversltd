@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Trophies & Awards')
+@section('title','Personlised trophies and awards in cardiff')
 @section('description','One of the biggest suppliers of trophies and medals, nickel plated trophy cups, glass trophies, glass awards, football trophies in Cardiff. Enquire today!')
 
 @section('styles')
@@ -12,7 +12,7 @@
             <div class="px-6 py-4">
                 <div class="font-bold text-xl mb-2 text-teal-800">Why Choose us for Trophies & Awards?</div>
                 <p>
-                    We are one of the biggest supplier of awards and trophies in Wales, and can provide you with medals, trophies and awards to suit all sporting, corporate, leisure and charitable events and special occasions. All of our range of trophies are pre-assembled for small quantities or we can custom build larger quantities.
+                    We are one of the biggest supplier of awards and trophies in Cardiff and Wales, and can provide you with medals, trophies and awards to suit all sporting, corporate, leisure and charitable events and special occasions. All of our range of trophies are pre-assembled for small quantities or we can custom build larger quantities.
                     <br /><br />All items have a unique code number to make ordering simple and the Catalogue is fully priced. Just send us the item number of the product(s) and what text you would like to be engraved.
                  </p>
              </div>
