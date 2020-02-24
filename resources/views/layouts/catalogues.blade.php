@@ -15,7 +15,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     @show
 
-    <title>@yield('title') | Grimes Engravers Ltd</title>
+    <title>@yield('title')</title>
 
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css" rel="stylesheet">
