@@ -1,6 +1,6 @@
 <template>
     <div class="bg-white order-now p-5 shadow-lg" v-show="visible" :class="{ 'open z-10': visible }" :style="[visible ? {left: 0} : {}]">
-
+        <i  @click="visible = false" class="fas fa-times absolute cursor-pointer" style="right: 25px"></i>
         <img src="/storage/images/grimes-logo-black.png" alt="Grimes Engravers Ltd" class="pb-5 pt-5 text-center"/>
         <div class="bg-teal-100 border-t-4 border-teal-500 mb-5 px-4 py-3 rounded-b shadow-md text-teal-900" role="alert" v-if="showSuccess">
             <div class="flex items-center">
