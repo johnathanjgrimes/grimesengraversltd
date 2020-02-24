@@ -40,9 +40,13 @@ Route::post('catalogue-enquiry', 'CatalogueEnquiryController@store');
 
 //Redirects
 Route::redirect('/glass-engraving.html', '/trophies-awards', 301);
+Route::redirect('/services/glass-engraving.html', '/trophies-awards', 301);
 Route::redirect('/bottle-engraving.html', '/', 301);
+Route::redirect('/services/bottle-engraving.html', '/', 301);
 Route::redirect('/trophies-awards.html', '/trophies-awards', 301);
+Route::redirect('/services/trophies-awards.html', '/trophies-awards', 301);
 Route::redirect('/industrial-engraving.html', '/industrial-engraving', 301);
+Route::redirect('/services/industrial-engraving.html', '/industrial-engraving', 301);
 Route::redirect('/nameplates-plaques.html', '/commercial-engraving', 301);
 Route::redirect('/nameplates-plaques/memorial-plaques.html', '/commercial-engraving', 301);
 Route::redirect('/badges.html', '/commercial-engraving', 301);

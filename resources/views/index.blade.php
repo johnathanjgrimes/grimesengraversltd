@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Home')
+@section('title','Professional Engravers Cardiff')
 
 @section('styles')
 @endsection
@@ -28,7 +28,7 @@
                 <div class="bg-center bg-cover bg-gray-400 h-12 w-full lg:w-1/2" style="background-image: url('/storage/images/glass-engraving.jpg'); min-height: 600px;"></div>
                 <div class="bg-teal-800 h-12 h-auto p-8 lg:p-32 text-center text-gray-100 w-full lg:w-1/2 flex items-center" style="min-height: 600px;">
                     <div>
-                        <h2 class="pb-6 text-2xl font-semibold">Glass Awards</h2>
+                        <h2 class="pb-6 text-2xl font-semibold">Glass and Crystal Trophies</h2>
                         <p class="pb-12">
                             We can supply and engrave crystal and glass awards for corporate events or sporting occasions, please browse through our catalogues, we can provide an artwork service or you can supply artwork to us in PDF or eps file formats.
                         </p>
@@ -43,9 +43,9 @@
             <div class="flex flex-col lg:flex-row">
                 <div class="bg-gray-900 h-12 h-auto p-8 lg:p-32 text-center text-gray-100 w-full lg:w-1/2 flex items-center" style="min-height: 600px;">
                     <div>
-                        <h2 class="pb-6 text-2xl font-semibold">Trophies & Awards</h2>
+                        <h2 class="pb-6 text-2xl font-semibold">Trophies and Medals</h2>
                         <p class="pb-12">
-                            We are one of the biggest suppliers of awards and trophies in Wales and can provide you with medals, trophies, and awards to suit all sporting, corporate, leisure and charitable events and special occasions.                        </p>
+                            One of the biggest suppliers of trophies and medals, nickel plated trophy cups, glass trophies, glass awards, football trophies in Cardiff.</p>
                         <a href="/trophies-awards-catalogue" class="hover:bg-gray-100 hover:text-black text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow">
                             View Catalogue
                         </a>

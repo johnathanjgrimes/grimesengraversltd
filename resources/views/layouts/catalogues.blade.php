@@ -8,8 +8,8 @@
     <link rel="icon" type="image/x-icon" href="/storage/images/grimes-icon.png">
     <link rel="shortcut icon" type="image/x-icon" href="/storage/images/grimes-icon.png">
     <meta name="robots" content="INDEX,FOLLOW">
-    <meta name="description" content="The complete sign service. Professional Engravers, Sign Makers, ... We can engrave nameplates & memorial plaques in brass anodised aluminium">
-
+    @section('description','One of the biggest suppliers of trophies and medals, nickel plated trophy cups, glass trophies, glass awards, football trophies in Cardiff. Enquire today!')
+    <meta name="description" content="@yield('description')">
     {{-- Viewport --}}
     @section('viewport')
         <meta name="viewport" content="width=device-width, initial-scale=1">
