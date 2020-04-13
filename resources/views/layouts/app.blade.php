@@ -100,6 +100,11 @@
                         </a>
                     </li>
                     <li class="menu-item text-center py-3 lg:py-0  lg:text-base">
+                        <a href="/memorial-plaques" class="hover:text-teal-600">
+                            Memorial Plaques
+                        </a>
+                    </li>
+                    <li class="menu-item text-center py-3 lg:py-0  lg:text-base">
                         <a href="/contact" class="hover:text-teal-600">
                             Contact
                         </a>

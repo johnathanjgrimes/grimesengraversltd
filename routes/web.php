@@ -32,6 +32,9 @@ Route::get('/industrial-engraving', function () {
 Route::get('/commercial-engraving', function () {
     return view('commercial');
 });
+Route::get('/memorial-plaques', function () {
+    return view('memorial-plaques');
+});
 Route::get('/contact', function () {
     return view('contact');
 });
