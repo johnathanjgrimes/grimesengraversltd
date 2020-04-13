@@ -23,6 +23,24 @@
 
     <div class="container mx-auto">
         <div class="shadow-md">
+
+            <!-- Two columns -->
+            <div class="flex flex-col lg:flex-row">
+                <div class="bg-gray-900 h-12 h-auto p-8 lg:p-32 text-center text-gray-100 w-full lg:w-1/2 flex items-center" style="min-height: 600px;">
+                    <div>
+                        <h2 class="pb-6 text-2xl font-semibold">Memorial Plaques</h2>
+                        <p class="pb-12">
+                            In these terrible times, we need to remember our loved ones, when you are ready we are here to help with your needs.</p>
+                        <a href="/memorial-plaques" class="hover:bg-gray-100 hover:text-black text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                            View Memorial Plaques
+                        </a>
+                    </div>
+                </div>
+                <div class="bg-center bg-cover bg-white h-12 w-full lg:w-1/2 bg-contain" style="background-image: url('/storage/images/memorial-plaques/memorial-plaque-slate-home.jpg'); min-height: 600px;"></div>
+
+            </div>
+
+
             <!-- Two columns -->
             <div class="flex flex-col lg:flex-row">
                 <div class="bg-center bg-cover bg-gray-400 h-12 w-full lg:w-1/2" style="background-image: url('/storage/images/glass-engraving.jpg'); min-height: 600px;"></div>
