@@ -50,7 +50,7 @@
                         <p class="pb-12">
                             We can supply and engrave crystal and glass awards for corporate events or sporting occasions, please browse through our catalogues, we can provide an artwork service or you can supply artwork to us in PDF or eps file formats.
                         </p>
-                        <a href="/crystal-catalogue" class="hover:bg-gray-100 hover:text-black text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                        <a href="http://www.logocrystal.co.uk/" target="_blank" class="hover:bg-gray-100 hover:text-black text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow">
                             View Glass Catalogue
                         </a>
                     </div>

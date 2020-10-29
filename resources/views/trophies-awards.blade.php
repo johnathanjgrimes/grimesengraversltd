@@ -67,7 +67,7 @@
                     </div>
                 </div>
             </a>
-            <a href="/crystal-catalogue" class="w-full lgw-1/3 sm:mb-12 mr-0 lg:mr-4 overflow-hidden rounded shadow-md">
+            <a href="http://www.logocrystal.co.uk/" target="_blank" class="w-full lgw-1/3 sm:mb-12 mr-0 lg:mr-4 overflow-hidden rounded shadow-md">
                 <div >
                     <img class="w-full" src="/storage/images/glass-engraving.jpg" alt="Glass Gifts & Awards">
                     <div class="px-6 py-4">
