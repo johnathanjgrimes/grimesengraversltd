@@ -2,5 +2,5 @@
 @section('title','Swatkins Catalogue')
 
 @section('content')
-    @section('catalogue-url','https://www.emagcloud.com/Swatkins/Main_Catalogue/page_1.html')
+    @section('catalogue-url','https://view.flipdocs.com/2022-swatkins-catalogue')
 @endsection
