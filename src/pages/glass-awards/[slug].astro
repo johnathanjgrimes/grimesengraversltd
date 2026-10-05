@@ -34,12 +34,12 @@ const productSchema = {
     <p class="m-0 mb-6 text-sm"><a href="/glass-awards/">Glass awards</a> <span aria-hidden="true">›</span> {a.range}</p>
     <div class="flex flex-wrap gap-10">
       <div class="min-w-0" style="flex: 1 1 22rem">
-        <img src={a.image} alt={a.name} width="800" height="600" class="block w-full rounded-lg bg-white object-contain" style="max-height: 32rem" />
+        <img src={a.image} alt={a.name} width="800" height="800" class="award-hero block w-full rounded-lg bg-white object-contain" />
       </div>
-      <div class="min-w-0" style="flex: 1 1 22rem">
+      <div class="award-info min-w-0" style="flex: 1 1 22rem">
         <p class="m-0 mb-2 text-sm font-bold uppercase tracking-wide text-brand">{a.range}</p>
-        <h1 class="m-0 mb-3 text-3xl font-semibold leading-tight text-teal">{a.name}</h1>
-        <p class="m-0 mb-4 text-lg" style="color: #374151">{blurb}</p>
+        <h1 class="award-title m-0 mb-3 text-3xl font-semibold leading-tight text-teal">{a.name}</h1>
+        <p class="award-blurb m-0 mb-4 text-lg" style="color: #374151">{blurb}</p>
         {sizes.length > 1 && <nav class="mb-5" aria-label="Sizes">
           <p class="m-0 mb-2 font-bold">Choose a size <span class="muted font-normal">({sizes.length} sizes)</span></p>
           <ul class="size-opts">
@@ -61,7 +61,7 @@ const productSchema = {
             style="font-size: 1.1rem; padding: 0.95rem 1.6rem">Add to quote</a>
           <button type="button" class="btn ghost" data-open-quote>View quote</button>
         </div>
-        <ul class="muted m-0 mt-6 list-none space-y-1 p-0">
+        <ul class="award-points muted m-0 mt-6 list-none space-y-1 p-0">
           <li>✓ Minimum order {MIN_QTY} awards</li>
           <li>✓ Your logo and wording engraved: we quote engraving with your order</li>
           <li>✓ Quote within 24 hours, then a proof to approve</li>
@@ -74,7 +74,7 @@ const productSchema = {
 {similar.length > 0 && <section class="px-6 py-12">
   <div class="mx-auto max-w-6xl">
     <h2 class="m-0 mb-6 text-2xl font-semibold text-teal">Similar awards</h2>
-    <ul class="m-0 grid list-none gap-6 p-0" style="grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr))">
+    <ul class="aw-similar m-0 grid list-none gap-6 p-0" style="grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr))">
       {similar.map((s) => <li><a href={awardUrl(s)} class="flex h-full flex-col overflow-hidden rounded-lg border border-solid text-ink no-underline" style="border-color: #D9DEE2">
         <img src={s.image} alt={s.name} loading="lazy" width="400" height="300" class="block w-full object-cover" style="height: 10rem" />
         <span class="p-4 font-bold">{s.name}<br /><span class="font-bold text-teal">{fromPrice(s.price_from)}</span></span></a></li>)}

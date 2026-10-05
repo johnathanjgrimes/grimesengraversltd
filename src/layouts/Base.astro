@@ -67,9 +67,9 @@ posthog.init(phKey, { api_host: phHost, persistence: 'memory', person_profiles: 
 <Footer />
 <div id="quote-bar" class="quote-bar" hidden>
   <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3">
-    <p class="m-0"><strong>Your quote:</strong> <span data-quote-bar-text></span></p>
+    <p class="m-0 quote-bar-text"><strong class="qb-label">Your quote:</strong> <span data-quote-bar-text></span></p>
     <div class="flex flex-wrap gap-2">
-      <button type="button" data-open-quote class="btn" style="background: transparent; border: 2px solid #FFFFFF">View quote</button>
+      <button type="button" data-open-quote class="btn qb-view" style="background: transparent; border: 2px solid #FFFFFF">View quote</button>
       <a href="/quote/" class="btn" style="background: #FFFFFF; color: #23263A">Continue →</a>
     </div>
   </div>
