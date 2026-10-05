@@ -76,7 +76,7 @@ const productSchema = {
     <h2 class="m-0 mb-6 text-2xl font-semibold text-teal">Similar awards</h2>
     <ul class="aw-similar m-0 grid list-none gap-6 p-0" style="grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr))">
       {similar.map((s) => <li><a href={awardUrl(s)} class="flex h-full flex-col overflow-hidden rounded-lg border border-solid text-ink no-underline" style="border-color: #D9DEE2">
-        <img src={s.image} alt={s.name} loading="lazy" width="400" height="300" class="block w-full object-cover" style="height: 10rem" />
+        <img src={s.image} alt={s.name} loading="lazy" width="400" height="400" class="aw-card-img" />
         <span class="p-4 font-bold">{s.name}<br /><span class="font-bold text-teal">{fromPrice(s.price_from)}</span></span></a></li>)}
     </ul>
     <p class="mt-6"><a href="/glass-awards/" class="font-bold">See all glass awards →</a></p>
