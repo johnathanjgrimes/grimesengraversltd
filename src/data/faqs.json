@@ -2,7 +2,7 @@
  "index": [
   {
    "q": "Is there a minimum order for glass awards?",
-   "a": "Yes. Glass award orders start at 10 items."
+   "a": "Yes. Glass award orders start at 10 items in total, and you can mix different awards and sizes to make up the 10."
   },
   {
    "q": "Do catalogue prices include engraving?",
@@ -95,7 +95,7 @@
  "corporate-glass-awards": [
   {
    "q": "Is there a minimum order?",
-   "a": "Glass award orders start at 10 items. For memorial and bench plaques there’s no minimum."
+   "a": "Glass award orders start at 10 items in total, and you can mix different awards and sizes to make up the 10. For memorial and bench plaques there’s no minimum."
   },
   {
    "q": "Are the catalogue prices final?",
