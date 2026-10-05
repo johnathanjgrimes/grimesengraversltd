@@ -1,0 +1,63 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import config from '../data/config.json';
+import { pageSchema } from '../lib/schema';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  faqs?: { q: string; a: string }[];
+  scripts?: string[];
+  fonts?: boolean;
+  noindex?: boolean;
+  image?: string;
+}
+const { title, description, path, faqs = [], scripts = [], fonts = false, noindex = false, image = '/assets/img/glass-award.jpg' } = Astro.props;
+const canonical = `${config.site}${path}`;
+const schema = pageSchema(path, title, description, faqs, image);
+---
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title}</title>
+<meta name="description" content={description}>
+<link rel="canonical" href={canonical}>
+{noindex && <meta name="robots" content="noindex">}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content={config.shortName}>
+<meta property="og:title" content={title}>
+<meta property="og:description" content={description}>
+<meta property="og:url" content={canonical}>
+<meta property="og:image" content={`${config.site}${image}`}>
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#23263A">
+<meta name="geo.region" content="GB-CRF">
+<meta name="geo.placename" content="Cardiff">
+<link rel="icon" type="image/png" href="/assets/img/favicon.png">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="sitemap" href="/sitemap-index.xml">
+<link rel="alternate" type="text/plain" title="LLM summary" href="/llms.txt">
+{fonts && <>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Cormorant+Garamond:ital,wght@1,500&family=Libre+Baskerville&family=Montserrat:wght@500&family=Pinyon+Script&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+</>}
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<Header path={path} />
+<main id="main">
+<slot />
+</main>
+<Footer />
+{scripts.map((s) => <script is:inline src={`/js/${s}`} defer></script>)}
+<script is:inline src="/js/site.js" defer></script>
+</body>
+</html>

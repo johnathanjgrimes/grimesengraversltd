@@ -1,0 +1,136 @@
+{
+ "index": [
+  {
+   "q": "Is there a minimum order for glass awards?",
+   "a": "Yes. Glass award orders start at 10 items."
+  },
+  {
+   "q": "Do catalogue prices include engraving?",
+   "a": "No. Catalogue prices are per award, and engraving is added on top. We confirm the full price in your quote. We are not VAT registered, so no VAT is added."
+  },
+  {
+   "q": "How long does an order take?",
+   "a": "We quote within 24 hours on working days (Monday to Friday). Orders are ready 10–14 working days after you approve our proof."
+  },
+  {
+   "q": "Do you supply trophies or medals?",
+   "a": "No. For awards we only supply glass and crystal."
+  },
+  {
+   "q": "Can you engrave my watch or a single gift?",
+   "a": "No. We don’t engrave personal items or gifts."
+  },
+  {
+   "q": "Do you have a shop I can visit?",
+   "a": "No. We work from a private workshop and can’t take visits or collections. Everything is arranged by email, and every order is delivered to you."
+  },
+  {
+   "q": "Do you still make bench plaques?",
+   "a": "Yes. We engrave memorial bench plaques in brass and stainless steel. Bench plaques have no minimum order."
+  }
+ ],
+ "memorial-bench-plaques": [
+  {
+   "q": "Can I put my own plaque on a council bench?",
+   "a": "Usually not. Most councils only allow plaques through their own dedication scheme, and unofficial plaques may be removed. Contact the council’s parks or bereavement team first."
+  },
+  {
+   "q": "How many words fit on a bench plaque?",
+   "a": "It depends on the size. As a guide, a 6 x 4 inch plaque fits 4–5 lines and an 8 x 3 inch plaque 3–4 lines. We’ll always send a proof so you can see the spacing."
+  },
+  {
+   "q": "Can you engrave in Welsh?",
+   "a": "Yes. We regularly engrave in Welsh, English or both."
+  },
+  {
+   "q": "Can you add a logo?",
+   "a": "Yes. We can add a logo, crest or emblem in full colour or black and white. Send it as a PDF, EPS, SVG or a clear image."
+  },
+  {
+   "q": "Do the plaques come with screws?",
+   "a": "Yes. Every bench plaque comes with stainless steel screws, so it won’t stain the wood."
+  },
+  {
+   "q": "How long does a bench plaque take?",
+   "a": "Typically 10–14 working days from approval of your proof."
+  },
+  {
+   "q": "Can I collect my plaque?",
+   "a": "No. We can’t offer collections. Every plaque is posted to you with its fixings."
+  }
+ ],
+ "can-i-put-a-plaque-on-a-bench": [
+  {
+   "q": "Can I put a plaque on any park bench?",
+   "a": "No. Park benches belong to the council, and most only allow plaques through their own dedication scheme. Unofficial plaques are usually removed."
+  },
+  {
+   "q": "How do I dedicate a bench?",
+   "a": "Contact the council or landowner’s parks or bereavement team. They’ll explain locations, costs and how long the dedication lasts."
+  },
+  {
+   "q": "Can I put a plaque on my own bench?",
+   "a": "Yes. If the bench is yours, you can order a plaque directly from us in any size."
+  }
+ ],
+ "bench-plaque-wording-ideas": [],
+ "plaque-fonts": [
+  {
+   "q": "Can I choose a different font?",
+   "a": "Yes. We have many more engraving fonts than shown here. Tell us what you’d like and we’ll send a proof."
+  },
+  {
+   "q": "Can I mix fonts on one plaque?",
+   "a": "Yes. A script name with Roman or capitals for the other lines is a popular choice."
+  },
+  {
+   "q": "Will my plaque look exactly like the preview?",
+   "a": "Very close. The preview uses web fonts that match our engraving fonts, and we always send an exact proof before engraving."
+  },
+  {
+   "q": "Which font is easiest to read outdoors?",
+   "a": "Classic Roman and Modern are the clearest from a distance, especially on stainless steel."
+  }
+ ],
+ "corporate-glass-awards": [
+  {
+   "q": "Is there a minimum order?",
+   "a": "Glass award orders start at 10 items. For memorial and bench plaques there’s no minimum."
+  },
+  {
+   "q": "Are the catalogue prices final?",
+   "a": "Catalogue prices are per item, and engraving is added on top. We confirm the full price in your quote. We are not VAT registered, so no VAT is added."
+  },
+  {
+   "q": "Can you use our company logo?",
+   "a": "Yes. Send it as a PDF, EPS or SVG and we’ll set it up for engraving."
+  },
+  {
+   "q": "How far ahead should we order?",
+   "a": "We quote within 24 hours (working days), and awards are ready 10–14 working days after you approve our proof. Allow at least 3–4 weeks before your event."
+  },
+  {
+   "q": "Can we reorder the same item next year?",
+   "a": "Yes. We keep your artwork and specification on file, so repeat orders match exactly."
+  }
+ ],
+ "contact": [],
+ "about": [
+  {
+   "q": "How long have Grimes Engravers been in business?",
+   "a": "Since 1947. We’re a family-run business in Cardiff, now in our third generation."
+  },
+  {
+   "q": "Can I visit Grimes Engravers?",
+   "a": "No. We work from a private workshop and can’t take visits or collections. Everything is arranged by email, and every order is delivered."
+  },
+  {
+   "q": "Is there a minimum order?",
+   "a": "There’s no minimum for bench and memorial plaques. Glass awards and signs start at 10 items. We no longer supply trophies or medals."
+  },
+  {
+   "q": "Do you engrave in Welsh?",
+   "a": "Yes, in Welsh, English or both."
+  }
+ ]
+}

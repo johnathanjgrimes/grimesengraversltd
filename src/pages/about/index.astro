@@ -1,0 +1,59 @@
+---
+import Base from '../../layouts/Base.astro';
+import config from '../../data/config.json';
+import faqs from '../../data/faqs.json';
+import services from '../../data/services.json';
+const meta = { url: '/about/', title: 'About Grimes Engravers | Family Engravers in Cardiff Since 1947', description: 'Key facts about Grimes Engravers: family-run engravers in Cardiff since 1947, what we supply and produce, who we work with, minimum orders and how to get a quote.' };
+const facts = [
+  ['Established', `${config.founded} in Cardiff, Wales. Family-run, now in its third generation.`],
+  ['What we supply & produce', 'Engraved glass and crystal awards, with a minimum order of 10 items. Also memorial bench plaques in brass and stainless steel.'],
+  ['Who we work with', 'Companies and organisations ordering glass awards, and families ordering a bench plaque.'],
+  ['Minimum order', config.minimumOrder],
+  ['Quotes & lead times', `Quotes ${config.quoteTime}. Orders take ${config.leadTime}. We work ${config.workingDays}.`],
+  ['Visiting', 'No visits, appointments or collections. We work from a private workshop and deliver every order.'],
+  ['Languages', 'We engrave in English, Welsh or both, including Welsh characters such as ŵ and ŷ.'],
+  ['Areas', `${config.areas.join(', ')}, and anywhere in the UK by post.`],
+  ['What we don’t do', 'Memorial, wall or opening plaques, nameplates, signs or labels, trophies or medals, personal items such as watches, jewellery and gifts, wooden items, while-you-wait engraving, or glass awards under 10 items.'],
+  ['Contact', `By email only: ${config.email}`],
+];
+---
+<Base title={meta.title} description={meta.description} path={meta.url} faqs={faqs['about']}>
+<section class="bg-mist px-6 py-14">
+  <div class="mx-auto max-w-4xl">
+    <p class="m-0 mb-3 text-sm font-bold uppercase tracking-widest text-brand">About us</p>
+    <h1 class="m-0 mb-4 text-4xl font-semibold leading-tight text-teal">Grimes Engravers: family engravers in Cardiff since 1947</h1>
+    <p class="m-0 text-lg text-muted">{config.summary}</p>
+  </div>
+</section>
+<section class="px-6 py-14">
+  <div class="mx-auto max-w-4xl">
+    <h2 class="m-0 mb-6 text-2xl font-semibold text-teal">Key facts</h2>
+    <dl class="m-0 grid gap-x-8 gap-y-4 sm:grid-cols-[12rem_1fr]">
+      {facts.map(([k, v]) => <>
+        <dt class="font-bold text-ink">{k}</dt>
+        <dd class="m-0 text-muted">{v}</dd>
+      </>)}
+    </dl>
+  </div>
+</section>
+<section class="bg-mist px-6 py-14">
+  <div class="mx-auto max-w-4xl">
+    <h2 class="m-0 mb-6 text-2xl font-semibold text-teal">Our services</h2>
+    <ul class="m-0 grid list-none gap-4 p-0 sm:grid-cols-2">
+      {services.map((s) => <li class="rounded-lg bg-white p-5 shadow-sm">
+        <a href={s.url} class="font-bold">{s.name}</a>
+        <p class="m-0 mt-1 text-muted">{s.description}</p>
+      </li>)}
+    </ul>
+  </div>
+</section>
+<section class="px-6 py-14">
+  <div class="mx-auto max-w-4xl">
+    <h2 class="m-0 mb-4 text-2xl font-semibold text-teal">Our story</h2>
+    <figure class="m-0 mb-6"><img src="/assets/img/grimes-original.jpg" alt="The original E J Grimes engravers shop front in Cardiff, in black and white" width="1024" height="684" loading="lazy" class="block h-auto w-full rounded-lg"><figcaption class="mt-2 text-sm text-muted">Our original shop in Cardiff.</figcaption></figure>
+    <p class="text-muted">Grimes Engravers was founded in Cardiff in 1947. Three generations later we’re still a small family workshop, combining traditional hand skills with modern CAD/CAM engraving.</p>
+    <p class="text-muted">Over the decades we’ve engraved for county councils, universities, hospitals, schools, hotels, national organisations and some of Cardiff’s largest employers, as well as for local families marking something that matters.</p>
+    <p class="mt-6"><a class="btn" href="/contact/">Request a quote</a></p>
+  </div>
+</section>
+</Base>

@@ -1,0 +1,29 @@
+{
+  "site": "https://grimesengravers.com",
+  "name": "Grimes Engravers Ltd",
+  "shortName": "Grimes Engravers",
+  "email": "info@grimesengravers.com",
+  "founded": "1947",
+  "locality": "Cardiff",
+  "region": "Wales",
+  "web3formsKey": "REPLACE_WITH_WEB3FORMS_ACCESS_KEY",
+  "trustpilot": "https://uk.trustpilot.com/review/grimesengravers.com",
+  "catalogues": {
+    "glass": "https://www.logocrystal.co.uk/awards-c-9/optical-crystal-awards-gifts-c-32/"
+  },
+  "quoteTime": "within 24 hours (working days)",
+  "leadTime": "10–14 working days from approval of your proof",
+  "workingDays": "Monday to Friday",
+  "areas": [
+    "Cardiff",
+    "Penarth",
+    "Barry",
+    "Vale of Glamorgan",
+    "Newport",
+    "Caerphilly",
+    "Pontypridd",
+    "Bridgend"
+  ],
+  "minimumOrder": "Glass awards: 10 items or more. Bench plaques: no minimum.",
+  "summary": "Family-run engravers in Cardiff, Wales, established in 1947 and now in its third generation. Supplies and produces engraved glass and crystal awards for companies and organisations, with a minimum order of 10 items. Also engraves memorial bench plaques in brass and stainless steel, with no minimum. Contact by email only; no visits or collections, and every order is delivered. Does not supply trophies or medals, or engrave personal items."
+}

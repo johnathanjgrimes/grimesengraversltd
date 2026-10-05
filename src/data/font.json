@@ -1,0 +1,62 @@
+{
+ "fonts": [
+  {
+   "id": "roman",
+   "name": "Classic Roman",
+   "fam": "'Libre Baskerville', Georgia, serif",
+   "fstyle": "normal",
+   "fsize": "1.35rem"
+  },
+  {
+   "id": "italic",
+   "name": "Italic",
+   "fam": "'Cormorant Garamond', Georgia, serif",
+   "fstyle": "italic",
+   "fsize": "1.6rem"
+  },
+  {
+   "id": "script",
+   "name": "Script",
+   "fam": "'Pinyon Script', 'Brush Script MT', cursive",
+   "fstyle": "normal",
+   "fsize": "1.9rem"
+  },
+  {
+   "id": "capitals",
+   "name": "Engraved capitals",
+   "fam": "'Cinzel', Georgia, serif",
+   "fstyle": "normal",
+   "fsize": "1.2rem"
+  },
+  {
+   "id": "modern",
+   "name": "Modern",
+   "fam": "'Montserrat', 'Helvetica Neue', Arial, sans-serif",
+   "fstyle": "normal",
+   "fsize": "1.2rem"
+  },
+  {
+   "id": "gothic",
+   "name": "Old English",
+   "fam": "'UnifrakturMaguntia', 'Old English Text MT', serif",
+   "fstyle": "normal",
+   "fsize": "1.5rem"
+  }
+ ],
+ "mats": [
+  {
+   "id": "brass",
+   "name": "Brass",
+   "bg": "#C9A55C",
+   "edge": "#8C6E2F",
+   "ink": "#2B2009"
+  },
+  {
+   "id": "steel",
+   "name": "Stainless steel",
+   "bg": "#D9DCDF",
+   "edge": "#9AA1A8",
+   "ink": "#1F2933"
+  }
+ ]
+}
