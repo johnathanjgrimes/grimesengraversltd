@@ -30,15 +30,16 @@
       if (!key || key.indexOf('REPLACE') !== -1) { window.location.href = mailtoFrom(form); return; }
       if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
       fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
-        .then(function (r) { return r.json().then(function (j) { if (!r.ok || j.success === false) throw new Error(); }); })
+        .then(function (r) { return r.json().then(function (j) { if (!r.ok || j.success === false) throw new Error(j.message || ''); }); })
         .then(function () {
           form.reset();
           if (window.posthog) window.posthog.capture('quote_form_submitted', { page: location.pathname });
           if (status) { status.hidden = false; status.className = 'status'; status.textContent = 'Thank you. We’ll reply with a quote within 24 hours (working days).'; }
           if (btn) btn.textContent = 'Sent';
         })
-        .catch(function () {
-          if (status) { status.hidden = false; status.className = 'status err'; status.innerHTML = 'Sorry, that didn’t send. <a href="' + mailtoFrom(form) + '">Send it by email instead</a>.'; }
+        .catch(function (err) {
+          if (window.console) console.warn('Form send failed:', err && err.message);
+          if (status) { status.hidden = false; status.className = 'status err'; status.innerHTML = 'Sorry, that didn’t send' + (err && err.message ? ' (' + err.message.replace(/[<>&]/g, '') + ')' : '') + '. <a href="' + mailtoFrom(form) + '">Send it by email instead</a>.'; }
           if (btn) { btn.disabled = false; btn.textContent = 'Try again'; }
         });
     });

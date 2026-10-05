@@ -18,8 +18,8 @@ interface Props {
 const { title, description, path, faqs = [], scripts = [], fonts = false, noindex = false, image = '/assets/img/glass-award.jpg' } = Astro.props;
 const canonical = `${config.site}${path}`;
 // Set in .env locally and as GitHub Actions secrets for deploys. Analytics stays off when the key is missing.
-const posthogKey = import.meta.env.PUBLIC_POSTHOG_KEY ?? '';
-const posthogHost = import.meta.env.PUBLIC_POSTHOG_HOST || 'https://eu.i.posthog.com';
+const posthogKey = (import.meta.env.PUBLIC_POSTHOG_KEY ?? '').trim();
+const posthogHost = (import.meta.env.PUBLIC_POSTHOG_HOST || 'https://eu.i.posthog.com').trim();
 const schema = pageSchema(path, title, description, faqs, image);
 ---
 <!doctype html>
