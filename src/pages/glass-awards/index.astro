@@ -1,0 +1,98 @@
+---
+import Base from "../../layouts/Base.astro";
+import faqs from "../../data/faqs.json";
+import pages from "../../data/pages.json";
+import { awards, products, ranges, awardUrl, quoteUrl, fromPrice, mm, fit, searchTags, MIN_QTY } from "../../lib/awards";
+const meta = pages["glass-awards"];
+const hasSamples = awards.some((a) => a.sample);
+const PAGE = 48;
+---
+<Base title={meta.title} description={meta.description} path={meta.url} faqs={faqs["glass-awards"] ?? []} scripts={["awards.js"]}>
+<section class="bg-navy px-6 py-10 text-white">
+  <div class="mx-auto max-w-6xl">
+    <p class="m-0 mb-3 text-sm font-bold uppercase tracking-widest" style="color: #F3A3A6">Glass &amp; crystal awards</p>
+    <h1 class="m-0 mb-3 text-4xl font-semibold leading-tight">Choose your award</h1>
+    <p class="m-0 max-w-2xl text-lg" style="color: #D1D5DB">Add awards to your quote, then send us the details. We reply within 24 hours with the full price, engraving included.</p>
+    <ul class="m-0 mt-5 flex list-none flex-wrap gap-x-6 gap-y-2 p-0 font-semibold" style="color: #E5E7EB">
+      <li>✓ Minimum order {MIN_QTY}</li><li>✓ Quote within 24 hours</li><li>✓ Proof before we engrave</li><li>✓ Ready 10–14 working days after proof</li>
+    </ul>
+    <div class="aw-search mt-6" role="search">
+      <label for="aw-q" class="sr-only">Search awards</label>
+      <span aria-hidden="true" class="aw-search-icon">⌕</span>
+      <input id="aw-q" type="search" placeholder={`Search ${products.length} awards: try “star”, “blue crystal”, “golf” or a code`} autocomplete="off" enterkeyhint="search" />
+      <kbd class="aw-kbd" aria-hidden="true">/</kbd>
+    </div>
+  </div>
+</section>
+{hasSamples && <p class="m-0 px-6 py-2 text-center text-sm font-bold" style="background: #FDECEC; color: #8A1C1C">Test products shown. Real catalogue coming soon.</p>}
+<section class="bg-mist px-6 py-8">
+  <div class="mx-auto max-w-6xl">
+    <div class="mb-5 flex flex-wrap gap-2" role="group" aria-label="Filter by range">
+      <button type="button" class="opt pill" data-range="" aria-pressed="true">All awards</button>
+      {ranges.map((r) => <button type="button" class="opt pill" data-range={r} aria-pressed="false">{r}</button>)}
+    </div>
+    <div class="mb-5 flex flex-wrap items-center justify-between gap-4">
+      <p id="aw-count" class="m-0 font-semibold" aria-live="polite">{products.length} awards</p>
+      <div class="flex flex-wrap items-center gap-3">
+        <label class="flex items-center gap-2 font-semibold">Price
+          <select id="aw-price" class="inp" style="width: auto">
+            <option value="">Any price</option>
+            <option value="0-20">Under £20</option>
+            <option value="20-40">£20 to £40</option>
+            <option value="40-75">£40 to £75</option>
+            <option value="75-">£75 and over</option>
+          </select>
+        </label>
+        <label class="flex items-center gap-2 font-semibold">Sort
+          <select id="aw-sort" class="inp" style="width: auto">
+            <option value="best">Best match</option>
+            <option value="price-asc">Price: low to high</option>
+            <option value="price-desc">Price: high to low</option>
+            <option value="name">Name</option>
+          </select>
+        </label>
+        <label class="flex items-center gap-2 font-semibold"><input type="checkbox" id="aw-stock" /> In stock only</label>
+      </div>
+    </div>
+    <ul id="aw-grid" class="m-0 grid list-none gap-6 p-0" data-page={PAGE} style="grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr))">
+      {products.map(({ main: a, sizes }, i) => {
+        const f = fit(a.engraving_area_mm);
+        const multi = sizes.length > 1;
+        const title = multi ? a.product.charAt(0).toUpperCase() + a.product.slice(1) : a.name;
+        const anyStock = sizes.some((s) => s.in_stock);
+        return (
+        <li class="aw-card" data-range={a.range} data-price={a.price_from} data-order={i} data-stock={String(anyStock)} data-name={title}
+            data-search={`${sizes.map((s) => `${s.name} ${s.sku} ${s.dimensions_mm}`).join(' ')} ${a.range} ${searchTags(a.name)}`.toLowerCase()} hidden={i >= PAGE}>
+          <a href={awardUrl(a)} class="aw-card-link">
+            <img src={a.image} alt={title} loading="lazy" width="620" height="620" class="aw-card-img" />
+            <span class="flex flex-col gap-1 px-4 pt-4">
+              <span class="text-xs font-bold uppercase tracking-wide text-brand">{a.range}</span>
+              <span class="font-bold leading-snug">{title}</span>
+              <span class="muted text-sm">{multi ? `${sizes.length} sizes: ${sizes.map((s) => s.size).join(', ')}` : mm(a.dimensions_mm)}</span>
+              <span class="pt-1 font-bold text-teal">{fromPrice(a.price_from)}{!anyStock && <span class="muted ml-2 text-sm font-normal">· out of stock</span>}</span>
+            </span>
+          </a>
+          <div class="px-4 pb-4 pt-3">
+            {multi ? <a href={awardUrl(a)} class="aw-add aw-choose">Choose size</a> :
+            <button type="button" class="aw-add" data-add-quote data-sku={a.sku} data-name={a.name} data-image={a.image} data-price={fromPrice(a.price_from)} data-unit={a.price_from}
+              data-size={mm(a.dimensions_mm)} data-area={mm(a.engraving_area_mm)} data-fit-chars={f?.perLine} data-fit-lines={f?.lines}
+              data-url={awardUrl(a)} data-src={a.source_url} data-stock={String(a.in_stock)} aria-pressed="false">Add to quote</button>}
+          </div>
+        </li>
+        );
+      })}
+    </ul>
+    <div id="aw-empty" class="rounded-lg bg-white p-8 text-center" hidden>
+      <p class="m-0 mb-2 text-xl font-semibold text-teal">No awards match that</p>
+      <p class="muted m-0 mb-4">Try fewer words or another range. Or tell us what you’re after and we’ll find it.</p>
+      <a class="btn" href={quoteUrl()}>Ask us to recommend</a>
+    </div>
+    <p class="mt-8 text-center"><button type="button" id="aw-more" class="btn ghost" hidden>Show more awards</button></p>
+    <div class="mt-10 flex flex-wrap items-center justify-between gap-4 rounded-lg bg-white p-6">
+      <div><p class="m-0 text-xl font-semibold text-teal">Not sure which one?</p><p class="muted m-0">Tell us the occasion, numbers and budget and we’ll recommend something.</p></div>
+      <a class="btn" href={quoteUrl()}>Ask us to recommend</a>
+    </div>
+    <p class="muted mt-6 text-sm">Prices are “from” prices per award. Engraving is added on top and confirmed in your quote.</p>
+  </div>
+</section>
+</Base>

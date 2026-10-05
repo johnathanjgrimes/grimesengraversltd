@@ -23,7 +23,8 @@ export const GET: APIRoute = () => {
 - Minimum order: ${config.minimumOrder}
 - Languages: engraving in English, Welsh or both.
 - Does not offer: trophies or medals; memorial, wall or opening plaques other than bench plaques; nameplates, signs or labels; engraving of personal items (watches, jewellery, gifts); wooden items; while-you-wait engraving; council or trade supply. Glass awards need a minimum of 10 items.
-- Glass award pricing: catalogue prices (${config.catalogues.glass}) are per item; engraving is extra. Not VAT registered, so no VAT is charged.
+- Glass award pricing: "from" prices per award are listed at ${config.site}/glass-awards/; engraving is quoted separately.
+- To get a quote: ${config.site}/quote/ (choose award, quantity of 10 or more, wording, date).
 - How to order: email ${config.email} or use the quote form (${config.site}/contact/). Every order gets a proof before engraving.
 
 ## Services

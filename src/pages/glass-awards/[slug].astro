@@ -1,0 +1,85 @@
+---
+import Base from "../../layouts/Base.astro";
+import config from "../../data/config.json";
+import { awards, awardUrl, quoteUrl, fromPrice, mm, fit, describe, sizesOf, MIN_QTY, type AwardWithSlug } from "../../lib/awards";
+
+export function getStaticPaths() {
+  return awards.map((a) => ({ params: { slug: a.slug }, props: { award: a } }));
+}
+const { award: a } = Astro.props as { award: AwardWithSlug };
+const path = awardUrl(a);
+const title = `${a.name} | Engraved Glass Awards | Grimes Engravers`;
+const description = `${a.name} (${a.sku}), ${mm(a.dimensions_mm)}, engraving area ${mm(a.engraving_area_mm)}. ${fromPrice(a.price_from)} per award, minimum order ${MIN_QTY}. Engraved by Grimes Engravers, Cardiff.`;
+const f = fit(a.engraving_area_mm);
+const blurb = describe(a);
+const sizes = sizesOf(a);
+const similar = awards.filter((x) => x.range === a.range && x.family !== a.family && sizesOf(x)[0] === x).slice(0, 4);
+const productSchema = {
+  '@context': 'https://schema.org', '@type': 'Product', '@id': `${config.site}${path}#product`,
+  name: a.name, sku: a.sku, image: `${config.site}${a.image}`, category: a.range, url: `${config.site}${path}`,
+  description: blurb,
+  offers: {
+    '@type': 'AggregateOffer', priceCurrency: 'GBP', lowPrice: a.price_from, offerCount: 1,
+    availability: a.in_stock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+    eligibleQuantity: { '@type': 'QuantitativeValue', minValue: MIN_QTY },
+    seller: { '@id': `${config.site}/#business` },
+  },
+};
+---
+<Base title={title} description={description} path={path} image={a.image} scripts={["awards.js"]}>
+<script type="application/ld+json" set:html={JSON.stringify(productSchema)} />
+{a.sample && <p class="m-0 px-6 py-2 text-center text-sm font-bold" style="background: #FDECEC; color: #8A1C1C">Test product. Real catalogue coming soon.</p>}
+<section class="bg-mist px-6 py-10" data-award-view={a.sku}>
+  <div class="mx-auto max-w-6xl">
+    <p class="m-0 mb-6 text-sm"><a href="/glass-awards/">Glass awards</a> <span aria-hidden="true">›</span> {a.range}</p>
+    <div class="flex flex-wrap gap-10">
+      <div class="min-w-0" style="flex: 1 1 22rem">
+        <img src={a.image} alt={a.name} width="800" height="600" class="block w-full rounded-lg bg-white object-contain" style="max-height: 32rem" />
+      </div>
+      <div class="min-w-0" style="flex: 1 1 22rem">
+        <p class="m-0 mb-2 text-sm font-bold uppercase tracking-wide text-brand">{a.range}</p>
+        <h1 class="m-0 mb-3 text-3xl font-semibold leading-tight text-teal">{a.name}</h1>
+        <p class="m-0 mb-4 text-lg" style="color: #374151">{blurb}</p>
+        {sizes.length > 1 && <nav class="mb-5" aria-label="Sizes">
+          <p class="m-0 mb-2 font-bold">Choose a size <span class="muted font-normal">({sizes.length} sizes)</span></p>
+          <ul class="size-opts">
+            {sizes.map((s) => <li><a href={awardUrl(s)} class="size-opt" aria-current={s.sku === a.sku ? 'true' : undefined}><strong>{s.size || mm(s.dimensions_mm)}</strong><small>{fromPrice(s.price_from)}</small></a></li>)}
+          </ul>
+        </nav>}
+        <p class="m-0 mb-6 text-2xl font-bold text-ink">{fromPrice(a.price_from)} <span class="muted text-base font-normal">per award</span></p>
+        <dl class="m-0 mb-6 grid gap-x-6 gap-y-2" style="grid-template-columns: auto 1fr">
+          <dt class="font-bold">Code</dt><dd class="m-0">{a.sku}</dd>
+          <dt class="font-bold">Size</dt><dd class="m-0">{mm(a.dimensions_mm)}</dd>
+          <dt class="font-bold">Engraving area</dt><dd class="m-0">{mm(a.engraving_area_mm)}{f && <span class="muted block text-sm">Fits roughly {f.perLine} characters a line, up to {f.lines} {f.lines === 1 ? 'line' : 'lines'}</span>}</dd>
+          {a.weight_kg && <><dt class="font-bold">Weight</dt><dd class="m-0">{a.weight_kg < 1 ? `${Math.round(a.weight_kg * 1000)}g` : `${a.weight_kg}kg`}</dd></>}
+          <dt class="font-bold">Availability</dt><dd class="m-0"><span id="stock-status">{a.in_stock ? 'In stock' : 'Currently out of stock: ask us for the restock date'}</span>
+            {a.source_url && <button type="button" class="ml-2 text-sm font-semibold" style="background: none; border: none; padding: 0; color: #0F5257; cursor: pointer; text-decoration: underline; min-height: 44px" data-check-stock="#stock-status" data-src={a.source_url} data-sku={a.sku} hidden>Check stock now</button>}</dd>
+        </dl>
+        <div class="flex flex-wrap items-center gap-3">
+          <a class="btn" href={quoteUrl(a)} data-add-quote data-label="Add to quote" data-sku={a.sku} data-name={a.name} data-image={a.image} data-price={fromPrice(a.price_from)} data-unit={a.price_from}
+            data-size={mm(a.dimensions_mm)} data-area={mm(a.engraving_area_mm)} data-fit-chars={f?.perLine} data-fit-lines={f?.lines} data-url={path} data-src={a.source_url} data-stock={String(a.in_stock)}
+            style="font-size: 1.1rem; padding: 0.95rem 1.6rem">Add to quote</a>
+          <button type="button" class="btn ghost" data-open-quote>View quote</button>
+        </div>
+        <ul class="muted m-0 mt-6 list-none space-y-1 p-0">
+          <li>✓ Minimum order {MIN_QTY} awards</li>
+          <li>✓ Your logo and wording engraved: we quote engraving with your order</li>
+          <li>✓ Quote within 24 hours, then a proof to approve</li>
+          <li>✓ Ready 10–14 working days after you approve the proof</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+{similar.length > 0 && <section class="px-6 py-12">
+  <div class="mx-auto max-w-6xl">
+    <h2 class="m-0 mb-6 text-2xl font-semibold text-teal">Similar awards</h2>
+    <ul class="m-0 grid list-none gap-6 p-0" style="grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr))">
+      {similar.map((s) => <li><a href={awardUrl(s)} class="flex h-full flex-col overflow-hidden rounded-lg border border-solid text-ink no-underline" style="border-color: #D9DEE2">
+        <img src={s.image} alt={s.name} loading="lazy" width="400" height="300" class="block w-full object-cover" style="height: 10rem" />
+        <span class="p-4 font-bold">{s.name}<br /><span class="font-bold text-teal">{fromPrice(s.price_from)}</span></span></a></li>)}
+    </ul>
+    <p class="mt-6"><a href="/glass-awards/" class="font-bold">See all glass awards →</a></p>
+  </div>
+</section>}
+</Base>

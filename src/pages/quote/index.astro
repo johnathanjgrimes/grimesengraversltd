@@ -1,0 +1,122 @@
+---
+import Base from "../../layouts/Base.astro";
+import pages from "../../data/pages.json";
+import { MIN_QTY } from "../../lib/awards";
+const meta = pages["quote"];
+// Trimmed: a pasted secret with a trailing newline makes Web3Forms reject the key.
+const web3formsKey = (import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "").trim();
+---
+<Base title={meta.title} description={meta.description} path={meta.url} scripts={["awards.js"]}>
+<section class="bg-mist px-6 py-10">
+  <div class="mx-auto max-w-3xl">
+    <p class="m-0 mb-2 text-sm"><a href="/glass-awards/" data-browse-more>← Browse more awards</a></p>
+    <h1 class="m-0 mb-2 text-3xl font-semibold text-teal">Request a quote</h1>
+    <p class="muted m-0 mb-6">Check your awards, add the wording, and we’ll email the full price, engraving included, within 24 hours (working days).</p>
+
+    <form id="quote-form" action="https://api.web3forms.com/submit" method="POST" data-ajax data-min={MIN_QTY}
+      data-success="Thank you, your quote request is on its way. We’ll email the full price within 24 hours (working days). If you’re adding a logo, just reply to our email with the file (PDF, EPS, SVG or a clear image)."
+      class="flex flex-col gap-6 rounded-lg bg-white p-6 shadow-sm" style="box-shadow: 0 1px 3px rgba(0,0,0,0.12)">
+
+      <section aria-labelledby="q-awards-title">
+        <div class="mb-3 flex flex-wrap items-baseline justify-between gap-2">
+          <h2 id="q-awards-title" class="m-0 text-xl font-semibold text-ink">Your awards</h2>
+          <p class="muted m-0 text-sm" id="qty-total" aria-live="polite">Minimum order {MIN_QTY} awards in total.</p>
+        </div>
+        <ul id="q-lines" class="m-0 flex list-none flex-col gap-3 p-0"></ul>
+        <div id="q-empty" class="rounded-lg p-5" style="background: #F5F6F7" hidden>
+          <p class="m-0 mb-1 font-bold">You haven’t added any awards yet.</p>
+          <p class="muted m-0 mb-4">Browse the catalogue and add the ones you like, or tell us roughly what you need and we’ll recommend something.</p>
+          <a href="/glass-awards/" class="btn mb-4">Browse glass awards</a>
+          <div class="field" style="max-width: 16rem">
+            <label for="approx_quantity">Roughly how many awards?</label>
+            <input id="approx_quantity" name="approx_quantity" type="number" min={MIN_QTY} inputmode="numeric" class="inp" placeholder={`${MIN_QTY} or more`} />
+          </div>
+        </div>
+        <noscript>
+          <div class="field"><label for="awards_text">Which awards, and how many of each?</label>
+          <textarea id="awards_text" name="awards_text" rows="3" class="inp" placeholder="e.g. 20 × DY1, 5 × FC235"></textarea></div>
+        </noscript>
+        <p class="m-0 mt-3"><a href="/glass-awards/" class="font-bold">+ Add more awards</a></p>
+      </section>
+
+      <div class="grid gap-4" style="grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr))">
+        <fieldset class="m-0 border-0 p-0">
+          <legend class="mb-2 font-bold">Engraving</legend>
+          <label class="flex items-center gap-2"><input type="radio" name="engraving" value="Text only" checked /> Text only</label>
+          <label class="flex items-center gap-2"><input type="radio" name="engraving" value="Logo and text" /> Logo and text</label>
+        </fieldset>
+        <fieldset class="m-0 border-0 p-0">
+          <legend class="mb-2 font-bold">Wording on each award</legend>
+          <label class="flex items-center gap-2"><input type="radio" name="wording_type" value="Same on every award" checked /> Same on every award</label>
+          <label class="flex items-center gap-2"><input type="radio" name="wording_type" value="Different wording on each" /> Different wording on each (e.g. names)</label>
+        </fieldset>
+      </div>
+
+      <div id="logo-box" class="rounded-lg p-4" style="background: #F5F6F7" hidden>
+        <label for="logo-input" class="mb-1 block font-bold">Upload your logo (optional)</label>
+        <p class="muted m-0 mb-3 text-sm">PDF, AI, EPS or SVG work best. A large, clear PNG or JPG is fine too. Up to 10 MB. You can also reply to our email with it.</p>
+        <input id="logo-input" type="file" accept=".pdf,.ai,.eps,.svg,.png,.jpg,.jpeg" class="text-sm" />
+        <p id="logo-status" class="m-0 mt-2 text-sm" aria-live="polite"></p>
+        <input type="hidden" name="logo_file" data-logo-url />
+      </div>
+
+      <div class="field">
+        <label for="wording" data-wording-label>Wording</label>
+        <textarea id="wording" name="wording" rows="4" class="inp" style="resize: vertical" data-wording placeholder="e.g. Salesperson of the Year 2026, Acme Ltd"></textarea>
+        <span class="muted text-sm" data-wording-fit></span>
+      </div>
+
+      <section id="names-box" aria-labelledby="names-title" hidden>
+        <h2 id="names-title" class="m-0 mb-1 text-xl font-semibold text-ink">Wording for each award</h2>
+        <p class="muted m-0 mb-3 text-sm" id="names-hint">One box per award, usually the winner’s name. The size guide is a suggestion: we’ll check it fits on your proof.</p>
+        <label class="mb-4 inline-flex items-center gap-2 rounded-lg px-3 py-2 font-semibold" style="background: #F5F6F7; min-height: 44px"><input type="checkbox" name="ignore_size_guide" value="Size guide turned off: please fit the wording" data-ignore-fit /> Turn off the size guide (we’ll fit the wording for you)</label>
+        <div id="names-groups" class="flex flex-col gap-5"></div>
+        <div class="field" id="names-paste" hidden>
+          <label for="names-paste-input">Paste the wording for each award, one per line</label>
+          <textarea id="names-paste-input" rows="8" class="inp" style="resize: vertical" placeholder="Jane Smith&#10;Ahmed Khan&#10;…"></textarea>
+          <span class="muted text-sm">Or reply to our email with a spreadsheet: whichever is easier.</span>
+        </div>
+      </section>
+
+      <div class="grid gap-4" style="grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr))">
+        <div class="field">
+          <label for="needed_by">Needed by</label>
+          <input id="needed_by" name="needed_by" type="date" data-min-days="14" aria-describedby="needed-hint" class="inp" />
+          <span id="needed-hint" class="muted text-sm">At least 14 days from today.</span>
+        </div>
+        <div class="field">
+          <label for="occasion">Occasion (optional)</label>
+          <input id="occasion" name="occasion" class="inp" placeholder="e.g. staff awards night" />
+        </div>
+        <div class="field">
+          <label for="q-name">Your name *</label>
+          <input id="q-name" name="name" required class="inp" autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="q-email">Email *</label>
+          <input id="q-email" name="email" type="email" required class="inp" autocomplete="email" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="notes">Anything else? (optional)</label>
+        <textarea id="notes" name="notes" rows="3" class="inp" style="resize: vertical" placeholder="Budget, delivery area, an award you saw elsewhere…"></textarea>
+      </div>
+
+      <input type="hidden" name="access_key" value={web3formsKey} />
+      <input type="hidden" name="subject" value="Glass award quote request" data-subject />
+      <input type="hidden" name="from_name" value="Grimes Engravers website" />
+      <input type="hidden" name="order_summary" data-summary />
+      <input type="hidden" name="wording_for_each_award" data-names />
+      <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="display: none" />
+      <div>
+        <p id="stock-summary" class="m-0 mb-3 text-sm" aria-live="polite" hidden></p>
+        <button type="submit" class="btn" style="font-size: 1.1rem; padding: 0.95rem 1.8rem">Send my quote request</button>
+        <p class="muted mt-3 text-sm">Adding a logo? Reply to our email with the file. You don’t need it to get a quote.</p>
+        <div id="stock-warn" class="mt-4 rounded-lg p-4" style="background: #FDECEC; color: #8A1C1C" role="alert" hidden></div>
+        <p data-status hidden role="status"></p>
+      </div>
+    </form>
+  </div>
+</section>
+</Base>

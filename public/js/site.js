@@ -23,7 +23,10 @@
   document.querySelectorAll('form[data-ajax]').forEach(function (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      if (typeof form.onBeforeSend === 'function') form.onBeforeSend();
+      var pre = typeof form.onBeforeSend === 'function' ? form.onBeforeSend() : null;
+      Promise.resolve(pre).then(function (go) { if (go !== false) send(); });
+    });
+    function send() {
       var status = form.querySelector('[data-status]');
       var btn = form.querySelector('[type="submit"]');
       var key = (form.querySelector('[name="access_key"]') || {}).value || '';
@@ -32,9 +35,11 @@
       fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
         .then(function (r) { return r.json().then(function (j) { if (!r.ok || j.success === false) throw new Error(j.message || ''); }); })
         .then(function () {
+          var summary = (form.querySelector('[name="order_summary"]') || {}).value || '';
           form.reset();
-          if (window.posthog) window.posthog.capture('quote_form_submitted', { page: location.pathname });
-          if (status) { status.hidden = false; status.className = 'status'; status.textContent = 'Thank you. We’ll reply with a quote within 24 hours (working days).'; }
+          if (typeof form.onSent === 'function') form.onSent();
+          if (window.posthog) window.posthog.capture('quote_form_submitted', { page: location.pathname, order: summary });
+          if (status) { status.hidden = false; status.className = 'status'; status.textContent = form.dataset.success || 'Thank you. We’ll reply with a quote within 24 hours (working days).'; }
           if (btn) btn.textContent = 'Sent';
         })
         .catch(function (err) {
@@ -42,7 +47,7 @@
           if (status) { status.hidden = false; status.className = 'status err'; status.innerHTML = 'Sorry, that didn’t send' + (err && err.message ? ' (' + err.message.replace(/[<>&]/g, '') + ')' : '') + '. <a href="' + mailtoFrom(form) + '">Send it by email instead</a>.'; }
           if (btn) { btn.disabled = false; btn.textContent = 'Try again'; }
         });
-    });
+    }
   });
 
   // Contact form: prefill from the font preview tool (passed via sessionStorage, never the URL).

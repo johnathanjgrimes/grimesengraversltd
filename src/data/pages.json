@@ -38,5 +38,15 @@
   "url": "/about/",
   "title": "About Grimes Engravers | Family Engravers in Cardiff Since 1947",
   "description": "Key facts about Grimes Engravers: family-run engravers in Cardiff since 1947, what we supply and produce, who we work with, minimum orders and how to get a quote."
+ },
+ "glass-awards": {
+  "url": "/glass-awards/",
+  "title": "Choose a Glass or Crystal Award | Grimes Engravers",
+  "description": "Browse engraved glass and crystal awards with sizes, engraving areas and from prices. Minimum order 10. Request a quote and we reply within 24 hours."
+ },
+ "quote": {
+  "url": "/quote/",
+  "title": "Request a Glass Award Quote | Grimes Engravers",
+  "description": "Request a quote for engraved glass and crystal awards. Choose your award, quantity and wording, and we email the full price within 24 hours."
  }
 }
