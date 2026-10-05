@@ -24,7 +24,8 @@ npm run build    # output in dist/
 
 ## Where to change things
 
-- **Email, areas, minimum order, catalogue links, Web3Forms key**: `src/data/config.json`
+- **Email, areas, minimum order, catalogue links**: `src/data/config.json`
+- **Web3Forms and PostHog keys**: not in the repo. Copy `.env.example` to `.env` for local builds; for deploys they come from the GitHub Actions secrets `PUBLIC_WEB3FORMS_KEY` and `PUBLIC_POSTHOG_KEY`. Without them the form falls back to opening an email and analytics stays off.
 - **Services, prices "from", minimums** (feeds schema and llms.txt): `src/data/services.json`
 - **FAQs** (feeds FAQPage schema and llms-full.txt): `src/data/faqs.json`. Keep in step with the FAQ text on the page.
 - **Page titles and descriptions**: `src/data/pages.json` (used by llms.txt) and the `meta` line at the top of each page

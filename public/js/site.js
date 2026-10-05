@@ -14,7 +14,7 @@
     var subject = (form.querySelector('[name="subject"]') || {}).value || 'Website enquiry';
     var lines = [];
     new FormData(form).forEach(function (v, k) {
-      if (k === 'access_key' || k === 'subject' || !String(v).trim()) return;
+      if (k === 'access_key' || k === 'subject' || k === 'from_name' || k === 'botcheck' || !String(v).trim()) return;
       lines.push(k.replace(/[_-]/g, ' ') + ': ' + v);
     });
     return 'mailto:' + EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n'));
@@ -33,6 +33,7 @@
         .then(function (r) { return r.json().then(function (j) { if (!r.ok || j.success === false) throw new Error(); }); })
         .then(function () {
           form.reset();
+          if (window.posthog) window.posthog.capture('quote_form_submitted', { page: location.pathname });
           if (status) { status.hidden = false; status.className = 'status'; status.textContent = 'Thank you. We’ll reply with a quote within 24 hours (working days).'; }
           if (btn) btn.textContent = 'Sent';
         })
