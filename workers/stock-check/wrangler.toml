@@ -3,14 +3,11 @@ main = "index.js"
 compatibility_date = "2026-10-01"
 workers_dev = true
 
-# Shared stock answers (STOCK) and uploaded logos (FILES). Create each once with:
-#   npx wrangler kv namespace create STOCK
-#   npx wrangler kv namespace create FILES
-# then paste the ids they print below and uncomment.
-# [[kv_namespaces]]
-# binding = "STOCK"
-# id = "PASTE-STOCK-ID-HERE"
-#
-# [[kv_namespaces]]
-# binding = "FILES"
-# id = "PASTE-FILES-ID-HERE"
+# Shared stock answers (STOCK) and uploaded logos (FILES).
+[[kv_namespaces]]
+binding = "STOCK"
+id = "1da45a1b762c431488115e3ff137964c"
+
+[[kv_namespaces]]
+binding = "FILES"
+id = "c6a5883fc6d141c9bb0819435891621a"
