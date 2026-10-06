@@ -2,7 +2,7 @@
 // a count, a slide-out panel to change quantities or remove awards, and "Add to quote" buttons.
 // Other scripts use window.GrimesQuote to read and change it.
 (function () {
-  var KEY = 'grimes-quote-draft', MAX_AGE = 30 * 24 * 3600 * 1000, MIN = 10;
+  var KEY = 'grimes-quote-draft', MAX_AGE = 30 * 24 * 3600 * 1000, MIN = 2;
   var ph = function (e, p) { if (window.posthog) window.posthog.capture(e, p || {}); };
 
   function load() {

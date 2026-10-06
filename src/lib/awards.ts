@@ -67,7 +67,7 @@ export const mm = (s: string) => {
   return parts.every((p) => /^[A-Z]\d+(\.\d+)?$/.test(p)) ? parts.map((p) => p.replace(/^([A-Z])/, '$1 ')).join(' × ') + ' mm' : t;
 };
 
-export const MIN_QTY = 10;
+export const MIN_QTY = 2;
 
 // Rough guide to how much wording fits, assuming clear 5mm lettering (about 3.2mm per character,
 // 8mm per line). Shown as a suggestion only; the proof decides. "85mm Dia" uses the square inside the circle.

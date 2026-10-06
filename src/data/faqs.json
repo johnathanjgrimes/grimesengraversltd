@@ -2,7 +2,7 @@
  "index": [
   {
    "q": "Is there a minimum order for glass awards?",
-   "a": "Yes. Glass award orders start at 10 items in total, and you can mix different awards and sizes to make up the 10."
+   "a": "Yes. Glass award orders start at 2 awards in total, and you can mix different awards and sizes."
   },
   {
    "q": "Do catalogue prices include engraving?",
@@ -95,7 +95,7 @@
  "corporate-glass-awards": [
   {
    "q": "Is there a minimum order?",
-   "a": "Glass award orders start at 10 items in total, and you can mix different awards and sizes to make up the 10. For memorial and bench plaques there’s no minimum."
+   "a": "Glass award orders start at 2 awards in total, and you can mix different awards and sizes. For memorial and bench plaques there’s no minimum."
   },
   {
    "q": "Are the catalogue prices final?",
@@ -126,7 +126,7 @@
   },
   {
    "q": "Is there a minimum order?",
-   "a": "There’s no minimum for bench and memorial plaques. Glass awards and signs start at 10 items. We no longer supply trophies or medals."
+   "a": "There’s no minimum for bench and memorial plaques. Glass awards start at 2. We no longer supply trophies or medals."
   },
   {
    "q": "Do you engrave in Welsh?",
