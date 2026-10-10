@@ -1,0 +1,91 @@
+---
+// Range and occasion landing pages (/star-awards/, /golf-awards/ …) from src/data/collections.json.
+// A scene photo at public/assets/img/collections/<slug>.webp is used in the hero when it exists;
+// otherwise the hero shows photos of awards from the page.
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import Base from "../layouts/Base.astro";
+import AwardCard from "../components/AwardCard.astro";
+import collections from "../data/collections.json";
+import { products, quoteUrl, fromPrice, MIN_QTY } from "../lib/awards";
+
+const SHOW = 24;
+type Match = { ranges?: string[]; include?: string; exclude?: string };
+const matches = (m: Match) => {
+  const inc = m.include ? new RegExp(m.include, "i") : null, exc = m.exclude ? new RegExp(m.exclude, "i") : null;
+  return products.filter(({ sizes }) => sizes.some((a) =>
+    (!m.ranges || m.ranges.includes(a.range)) && (!inc || inc.test(a.name)) && !(exc && exc.test(a.name))));
+};
+
+export function getStaticPaths() {
+  return collections.map((c) => ({ params: { collection: c.slug }, props: { c } }));
+}
+const { c } = Astro.props;
+const path = `/${c.slug}/`;
+const list = matches(c.match as Match);
+const shown = list.slice(0, SHOW);
+const lowest = Math.min(...list.map((p) => p.main.price_from));
+const scene = `/assets/img/collections/${c.slug}.webp`;
+const hasScene = existsSync(join(process.cwd(), "public", scene));
+const collage = list.filter((p) => p.main.thumb.startsWith("/")).slice(0, 4);
+const others = collections.filter((x) => x.slug !== c.slug && x.kind === c.kind);
+const crumb = c.kind === "range" ? "Award ranges" : "Awards by occasion";
+---
+<Base title={c.title} description={c.description} path={path} faqs={c.faqs} image={hasScene ? scene : collage[0]?.main.image} scripts={[]}>
+<section class="bg-navy px-6 py-10 text-white">
+  <div class="mx-auto grid max-w-6xl items-center gap-8 coll-hero">
+    <div>
+      <p class="m-0 mb-3 text-sm font-bold uppercase tracking-widest" style="color: #F3A3A6"><a href="/glass-awards/" style="color: inherit">Glass &amp; crystal awards</a> · {crumb}</p>
+      <h1 class="m-0 mb-3 text-4xl font-semibold leading-tight">{c.h1}</h1>
+      <p class="m-0 max-w-2xl text-lg" style="color: #D1D5DB">{c.intro}</p>
+      <ul class="m-0 mt-5 flex list-none flex-wrap gap-x-6 gap-y-2 p-0 font-semibold" style="color: #E5E7EB">
+        <li>✓ {list.length} designs {fromPrice(lowest)}</li><li>✓ Minimum order {MIN_QTY}</li><li>✓ Quote within 24 hours</li><li>✓ Proof before we engrave</li>
+      </ul>
+      <p class="m-0 mt-6 flex flex-wrap gap-3"><a class="btn" href="#awards">See the awards</a><a class="btn" href={quoteUrl()} style="background: transparent; color: #FFFFFF; border: 2px solid #FFFFFF">Ask us to recommend</a></p>
+    </div>
+    {hasScene
+      ? <img src={scene} alt={c.h1} width="800" height="600" fetchpriority="high" class="coll-scene" />
+      : <div class="coll-collage" aria-hidden="true">{collage.map((p, i) => <img src={p.main.thumb} alt="" width="480" height="480" fetchpriority={i === 0 ? "high" : undefined} />)}</div>}
+  </div>
+</section>
+<section class="bg-mist px-6 py-8" id="awards">
+  <div class="mx-auto max-w-6xl">
+    <h2 class="m-0 mb-5 text-2xl font-semibold text-teal">{c.name}</h2>
+    <ul class="m-0 grid list-none gap-6 p-0 aw-grid" style="grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr))">
+      {shown.map((p, i) => <AwardCard product={p} index={i} attrs={false} />)}
+    </ul>
+    {list.length > SHOW && <p class="mt-8 text-center"><a class="btn ghost" href="/glass-awards/">See all {products.length} awards in the catalogue</a></p>}
+    <p class="muted mt-6 text-sm">Prices are “from” prices per award. Engraving is added on top and confirmed in your quote.</p>
+  </div>
+</section>
+<section class="bg-white px-6 py-12">
+  <div class="mx-auto grid max-w-6xl gap-10 coll-info">
+    <div>
+      <h2 class="m-0 mb-3 text-2xl font-semibold text-teal">About our {c.name.toLowerCase()}</h2>
+      {c.body.map((t) => <p class="m-0 mb-4">{t}</p>)}
+      <h2 class="m-0 mb-3 mt-8 text-2xl font-semibold text-teal">How it works</h2>
+      <ol class="m-0 mb-4 pl-5">
+        <li>Add the awards you like to your quote (at least {MIN_QTY} in total, any mix).</li>
+        <li>Send us your wording and logo. We reply by email within 24 hours with the full price.</li>
+        <li>We email a proof of the engraving for you to approve.</li>
+        <li>Your awards are ready 10–14 working days after you approve the proof, and delivered to you.</li>
+      </ol>
+    </div>
+    <aside class="rounded-lg bg-mist p-6">
+      <h2 class="m-0 mb-3 text-xl font-semibold text-teal">Wording ideas</h2>
+      <ul class="m-0 list-none p-0">{c.wording.map((w) => <li class="border-0 border-b border-solid py-2 italic" style="border-color: #E5E7EB">“{w}”</li>)}</ul>
+      <a class="btn mt-5 block text-center" href={quoteUrl()}>Start your quote</a>
+    </aside>
+  </div>
+</section>
+<section style="background: #FFFFFF; padding: 0 1.5rem 4rem"><div style="max-width: 72rem; margin: 0 auto"><div style="max-width: 48rem">
+  <h2 style="margin: 0 0 0.6rem; color: #3D5A5E; font-weight: 600; font-size: clamp(1.6rem, 3vw, 2.1rem)">Frequently asked questions</h2>
+  {c.faqs.map((f, i) => <details style="border-bottom: 1px solid #E5E7EB; padding: 1rem 0" open={i === 0}><summary style="font-weight: 700; cursor: pointer; color: #1F2933">{f.q}</summary><p style="margin: 0.6rem 0 0; color: #4B5563">{f.a}</p></details>)}
+</div></div></section>
+<section class="bg-mist px-6 py-10">
+  <div class="mx-auto max-w-6xl">
+    <h2 class="m-0 mb-4 text-xl font-semibold text-teal">{c.kind === "range" ? "Other award ranges" : "Awards for other occasions"}</h2>
+    <ul class="m-0 flex list-none flex-wrap gap-2 p-0">{others.map((o) => <li><a class="opt pill" href={`/${o.slug}/`}>{o.name}</a></li>)}</ul>
+  </div>
+</section>
+</Base>

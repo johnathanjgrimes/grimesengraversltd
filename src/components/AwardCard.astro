@@ -1,0 +1,31 @@
+---
+// One award product in a grid: the catalogue and the range/occasion pages.
+import { awardUrl, fromPrice, mm, fit, searchTags } from "../lib/awards";
+const { product, index = 99, attrs = true } = Astro.props;
+const { main: a, sizes } = product;
+const f = fit(a.engraving_area_mm);
+const multi = sizes.length > 1;
+const title = multi ? a.product.charAt(0).toUpperCase() + a.product.slice(1) : a.name;
+const anyStock = sizes.some((s) => s.in_stock);
+const data = attrs ? {
+  "data-range": a.range, "data-price": a.price_from, "data-order": index, "data-stock": String(anyStock), "data-name": title,
+  "data-search": `${sizes.map((s) => `${s.name} ${s.sku} ${s.dimensions_mm}`).join(' ')} ${a.range} ${searchTags(a.name)}`.toLowerCase(),
+} : {};
+---
+<li class="aw-card" {...data} hidden={Astro.props.hidden}>
+  <a href={awardUrl(a)} class="aw-card-link">
+    <img src={a.thumb} alt={title} loading={index < 8 ? "eager" : "lazy"} decoding="async" width="480" height="480" class="aw-card-img" />
+    <span class="aw-card-body flex flex-col gap-1 px-4 pt-4">
+      <span class="text-xs font-bold uppercase tracking-wide text-brand">{a.range}</span>
+      <span class="font-bold leading-snug">{title}</span>
+      <span class="aw-card-sizes muted text-sm">{multi ? `${sizes.length} sizes: ${sizes.map((s) => s.size).join(', ')}` : mm(a.dimensions_mm)}</span>
+      <span class="pt-1 font-bold text-teal">{fromPrice(a.price_from)}{!anyStock && <span class="muted ml-2 text-sm font-normal">· out of stock</span>}</span>
+    </span>
+  </a>
+  <div class="aw-card-foot px-4 pb-4 pt-3">
+    {multi ? <a href={awardUrl(a)} class="aw-add aw-choose">Choose size</a> :
+    <button type="button" class="aw-add" data-add-quote data-sku={a.sku} data-name={a.name} data-image={a.thumb} data-price={fromPrice(a.price_from)} data-unit={a.price_from}
+      data-size={mm(a.dimensions_mm)} data-area={mm(a.engraving_area_mm)} data-fit-chars={f?.perLine} data-fit-lines={f?.lines}
+      data-url={awardUrl(a)} data-src={a.source_url} data-stock={String(a.in_stock)} aria-pressed="false">Add to quote</button>}
+  </div>
+</li>

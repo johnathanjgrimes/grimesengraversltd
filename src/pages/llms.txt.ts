@@ -3,6 +3,7 @@ import type { APIRoute } from 'astro';
 import config from '../data/config.json';
 import pages from '../data/pages.json';
 import services from '../data/services.json';
+import collections from '../data/collections.json';
 
 const p = (slug: string) => (pages as Record<string, { url: string; title: string; description: string }>)[slug];
 const line = (slug: string) => { const x = p(slug); return `- [${x.title.split('|')[0].trim()}](${config.site}${x.url}): ${x.description}`; };
@@ -30,6 +31,10 @@ export const GET: APIRoute = () => {
 ## Services
 
 ${services.map((s) => `- [${s.name}](${config.site}${s.url}): ${s.description}${s.priceFrom ? ` From £${s.priceFrom}.` : ''}${s.minimum ? ` Minimum ${s.minimum} items.` : ''}`).join('\n')}
+
+## Glass award ranges and occasions
+
+${collections.map((c) => `- [${c.h1}](${config.site}/${c.slug}/): ${c.description}`).join('\n')}
 
 ## Guides and tools
 

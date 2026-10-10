@@ -1,8 +1,10 @@
 ---
 import Base from "../../layouts/Base.astro";
+import AwardCard from "../../components/AwardCard.astro";
 import faqs from "../../data/faqs.json";
 import pages from "../../data/pages.json";
-import { awards, products, ranges, awardUrl, quoteUrl, fromPrice, mm, fit, searchTags, MIN_QTY } from "../../lib/awards";
+import collections from "../../data/collections.json";
+import { awards, products, ranges, quoteUrl, MIN_QTY } from "../../lib/awards";
 const meta = pages["glass-awards"];
 const hasSamples = awards.some((a) => a.sample);
 const PAGE = 48;
@@ -31,6 +33,7 @@ const PAGE = 48;
       <button type="button" class="opt pill" data-range="" aria-pressed="true">All awards</button>
       {ranges.map((r) => <button type="button" class="opt pill" data-range={r} aria-pressed="false">{r}</button>)}
     </div>
+    <p class="m-0 mb-5 text-sm"><strong>Shop by occasion:</strong> {collections.filter((c) => c.kind === "occasion").map((c, i) => <>{i > 0 && " · "}<a href={`/${c.slug}/`}>{c.name}</a></>)}</p>
     <div class="mb-5 flex flex-wrap items-center justify-between gap-4">
       <p id="aw-count" class="m-0 font-semibold" aria-live="polite">{products.length} awards</p>
       <div class="flex flex-wrap items-center gap-3">
@@ -55,32 +58,7 @@ const PAGE = 48;
       </div>
     </div>
     <ul id="aw-grid" class="m-0 grid list-none gap-6 p-0" data-page={PAGE} style="grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr))">
-      {products.map(({ main: a, sizes }, i) => {
-        const f = fit(a.engraving_area_mm);
-        const multi = sizes.length > 1;
-        const title = multi ? a.product.charAt(0).toUpperCase() + a.product.slice(1) : a.name;
-        const anyStock = sizes.some((s) => s.in_stock);
-        return (
-        <li class="aw-card" data-range={a.range} data-price={a.price_from} data-order={i} data-stock={String(anyStock)} data-name={title}
-            data-search={`${sizes.map((s) => `${s.name} ${s.sku} ${s.dimensions_mm}`).join(' ')} ${a.range} ${searchTags(a.name)}`.toLowerCase()} hidden={i >= PAGE}>
-          <a href={awardUrl(a)} class="aw-card-link">
-            <img src={a.thumb} alt={title} loading={i < 8 ? "eager" : "lazy"} decoding="async" width="480" height="480" class="aw-card-img" />
-            <span class="aw-card-body flex flex-col gap-1 px-4 pt-4">
-              <span class="text-xs font-bold uppercase tracking-wide text-brand">{a.range}</span>
-              <span class="font-bold leading-snug">{title}</span>
-              <span class="aw-card-sizes muted text-sm">{multi ? `${sizes.length} sizes: ${sizes.map((s) => s.size).join(', ')}` : mm(a.dimensions_mm)}</span>
-              <span class="pt-1 font-bold text-teal">{fromPrice(a.price_from)}{!anyStock && <span class="muted ml-2 text-sm font-normal">· out of stock</span>}</span>
-            </span>
-          </a>
-          <div class="aw-card-foot px-4 pb-4 pt-3">
-            {multi ? <a href={awardUrl(a)} class="aw-add aw-choose">Choose size</a> :
-            <button type="button" class="aw-add" data-add-quote data-sku={a.sku} data-name={a.name} data-image={a.thumb} data-price={fromPrice(a.price_from)} data-unit={a.price_from}
-              data-size={mm(a.dimensions_mm)} data-area={mm(a.engraving_area_mm)} data-fit-chars={f?.perLine} data-fit-lines={f?.lines}
-              data-url={awardUrl(a)} data-src={a.source_url} data-stock={String(a.in_stock)} aria-pressed="false">Add to quote</button>}
-          </div>
-        </li>
-        );
-      })}
+      {products.map((p, i) => <AwardCard product={p} index={i} hidden={i >= PAGE} />)}
     </ul>
     <div id="aw-empty" class="rounded-lg bg-white p-8 text-center" hidden>
       <p class="m-0 mb-2 text-xl font-semibold text-teal">No awards match that</p>

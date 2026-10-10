@@ -9,6 +9,26 @@
     toggle.setAttribute('aria-expanded', String(open));
   });
 
+  // Dropdowns: ▾ opens one at a time; a click elsewhere or Escape closes them.
+  var subs = document.querySelectorAll('.nav-sub');
+  function closeAll(except) {
+    subs.forEach(function (b) {
+      if (b === except) return;
+      b.setAttribute('aria-expanded', 'false');
+      b.parentNode.classList.remove('open');
+    });
+  }
+  subs.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var open = !b.parentNode.classList.contains('open');
+      closeAll(b);
+      b.parentNode.classList.toggle('open', open);
+      b.setAttribute('aria-expanded', String(open));
+    });
+  });
+  document.addEventListener('click', function (e) { if (!e.target.closest('.nav-item')) closeAll(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(); });
+
   // Build a mailto: link from a form, used when Web3Forms isn't set up or the send fails.
   function mailtoFrom(form) {
     var subject = (form.querySelector('[name="subject"]') || {}).value || 'Website enquiry';

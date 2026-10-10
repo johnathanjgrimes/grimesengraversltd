@@ -1,5 +1,11 @@
 ---
+import collections from "../data/collections.json";
 const { path } = Astro.props;
+const ranges = collections.filter((c) => c.kind === "range");
+const occasions = collections.filter((c) => c.kind === "occasion");
+const slugs = collections.map((c) => `/${c.slug}/`);
+const inAwards = path.startsWith("/glass-awards/") || path === "/quote/" || path === "/corporate-glass-awards/" || slugs.includes(path);
+const inPlaques = ["/memorial-bench-plaques/", "/bench-plaque-wording-ideas/", "/plaque-fonts/", "/can-i-put-a-plaque-on-a-bench/"].includes(path);
 ---
 <div style="background: #23263A; color: #E5E7EB; font-size: 0.9rem">
 <div style="max-width: 72rem; margin: 0 auto; padding: 0.5rem 1.5rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.25rem 1.5rem">
@@ -11,6 +17,39 @@ const { path } = Astro.props;
 <a href="/" aria-label="Grimes Engravers home" class="header-logo"><img decoding="async" width="400" height="90" src="/assets/img/logo.webp" alt="Grimes Engravers – Professional Engravers since 1947" style="height: 3.25rem; width: auto; display: block"></a>
 <button type="button" id="quote-open" class="quote-open" hidden aria-haspopup="dialog" aria-controls="quote-panel"><span class="hide-sm">Your </span>quote <span class="quote-count" data-quote-count>0</span></button>
 <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">☰<span class="hide-sm"> Menu</span></button>
-<nav id="site-nav" aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 1.1rem; font-size: 0.95rem"><a href="/glass-awards/" aria-current={path.startsWith("/glass-awards/") ? "page" : undefined} style={`color: ${path.startsWith("/glass-awards/") || path === "/quote/" || path === "/corporate-glass-awards/" ? "#C8202A" : "#3D5A5E"}; font-weight: 600; text-decoration: none; padding: 0.6rem 0`}>Glass awards</a><a href="/memorial-bench-plaques/" aria-current={path === "/memorial-bench-plaques/" ? "page" : undefined} style={`color: ${path === "/memorial-bench-plaques/" ? "#C8202A" : "#3D5A5E"}; font-weight: 600; text-decoration: none; padding: 0.6rem 0`}>Bench plaques</a><a href="/bench-plaque-wording-ideas/" aria-current={path === "/bench-plaque-wording-ideas/" ? "page" : undefined} style={`color: ${path === "/bench-plaque-wording-ideas/" ? "#C8202A" : "#3D5A5E"}; font-weight: 600; text-decoration: none; padding: 0.6rem 0`}>Guides</a>
-<a href="/contact/" style="background: #3D5A5E; color: #FFFFFF; font-weight: 700; text-decoration: none; padding: 0.65rem 1.1rem; border-radius: 6px">Get a quote</a></nav>
+<nav id="site-nav" aria-label="Main" class="site-nav">
+<div class="nav-item">
+  <a href="/glass-awards/" class:list={["nav-link", { active: inAwards }]} aria-current={path === "/glass-awards/" ? "page" : undefined}>Glass awards</a>
+  <button type="button" class="nav-sub" aria-expanded="false" aria-controls="menu-awards" aria-label="Show glass award ranges and occasions"><span aria-hidden="true">▾</span></button>
+  <div id="menu-awards" class="nav-menu nav-mega">
+    <div>
+      <p class="nav-head">By range</p>
+      <a href="/glass-awards/">All glass awards</a>
+      {ranges.map((c) => <a href={`/${c.slug}/`} aria-current={path === `/${c.slug}/` ? "page" : undefined}>{c.name}</a>)}
+    </div>
+    <div>
+      <p class="nav-head">By occasion</p>
+      {occasions.map((c) => <a href={`/${c.slug}/`} aria-current={path === `/${c.slug}/` ? "page" : undefined}>{c.name}</a>)}
+      <a href="/corporate-glass-awards/">Glass awards for companies</a>
+    </div>
+    <div class="nav-promo">
+      <p class="nav-head">Not sure which one?</p>
+      <p>Tell us the occasion, numbers and budget and we’ll recommend something. Minimum order 2.</p>
+      <a href="/quote/" class="nav-btn">Ask us to recommend</a>
+    </div>
+  </div>
+</div>
+<div class="nav-item">
+  <a href="/memorial-bench-plaques/" class:list={["nav-link", { active: inPlaques }]} aria-current={path === "/memorial-bench-plaques/" ? "page" : undefined}>Bench plaques</a>
+  <button type="button" class="nav-sub" aria-expanded="false" aria-controls="menu-plaques" aria-label="Show bench plaque pages and guides"><span aria-hidden="true">▾</span></button>
+  <div id="menu-plaques" class="nav-menu">
+    <a href="/memorial-bench-plaques/">Memorial bench plaques</a>
+    <a href="/bench-plaque-wording-ideas/">Wording ideas</a>
+    <a href="/plaque-fonts/">Font preview</a>
+    <a href="/can-i-put-a-plaque-on-a-bench/">Can I put a plaque on a bench?</a>
+  </div>
+</div>
+<div class="nav-item"><a href="/about/" class:list={["nav-link", { active: path === "/about/" }]}>About</a></div>
+<a href="/contact/" class="nav-cta">Get a quote</a>
+</nav>
 </div></header>
