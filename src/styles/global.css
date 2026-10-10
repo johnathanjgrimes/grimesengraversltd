@@ -305,3 +305,4 @@ header .nav-toggle { order: 4; }
   .nav-item:has(> .nav-mega) { position: static; }
   .nav-mega { left: auto; right: 0; }
 }
+.site-nav .nav-menu { white-space: normal; }
