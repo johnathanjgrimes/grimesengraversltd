@@ -7,6 +7,7 @@ import { join } from "node:path";
 import Base from "../layouts/Base.astro";
 import AwardCard from "../components/AwardCard.astro";
 import Reviews from "../components/Reviews.astro";
+import work from "../data/work.json";
 import { collections, productsIn } from "../lib/collections";
 import { products, quoteUrl, fromPrice, MIN_QTY } from "../lib/awards";
 
@@ -23,6 +24,7 @@ const scene = `/assets/img/collections/${c.slug}.webp`;
 const hasScene = existsSync(join(process.cwd(), "public", scene));
 const collage = list.filter((p) => p.main.thumb.startsWith("/")).slice(0, 4);
 const others = collections.filter((x) => x.slug !== c.slug && x.kind === c.kind);
+const ours = work.awards.filter((w) => w.pages.includes(c.slug));
 const crumb = c.kind === "range" ? "Award ranges" : "Awards by occasion";
 ---
 <Base title={c.title} description={c.description} path={path} faqs={c.faqs} image={hasScene ? scene : collage[0]?.main.image} scripts={[]}>
@@ -52,6 +54,18 @@ const crumb = c.kind === "range" ? "Award ranges" : "Awards by occasion";
     <p class="muted mt-6 text-sm">Prices are “from” prices per award. Engraving is added on top and confirmed in your quote.</p>
   </div>
 </section>
+{ours.length > 0 && <section class="bg-white px-6 pt-12">
+  <div class="mx-auto max-w-6xl">
+    <h2 class="m-0 mb-2 text-2xl font-semibold text-teal">Recently engraved by us</h2>
+    <p class="m-0 mb-6 text-muted">Real awards from our Cardiff workshop. <a href="/our-work/">See more of our work</a>.</p>
+    <div class="work-grid">
+      {ours.map((w) => <figure class="m-0">
+        <img loading="lazy" decoding="async" src={`/assets/img/work/${w.file}-640.webp`} width={w.w} height={w.h} alt={w.alt} class="block h-auto w-full rounded-lg" style={w.pos ? `object-position: ${w.pos}` : undefined}>
+        <figcaption class="mt-2 text-sm text-muted">{w.caption}</figcaption>
+      </figure>)}
+    </div>
+  </div>
+</section>}
 <section class="bg-white px-6 py-12">
   <div class="mx-auto grid max-w-6xl gap-10 coll-info">
     <div>

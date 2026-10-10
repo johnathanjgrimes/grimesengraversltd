@@ -51,6 +51,7 @@ ${['can-i-put-a-plaque-on-a-bench', 'bench-plaque-wording-ideas', 'plaque-fonts'
 ## Optional
 
 - [About Grimes Engravers and key facts](${config.site}/about/)
+- [Our work: photos of awards and bench plaques we have engraved](${config.site}/our-work/)
 - [Full text for AI assistants](${config.site}/llms-full.txt)
 - [Contact and quote form](${config.site}/contact/)
 `;

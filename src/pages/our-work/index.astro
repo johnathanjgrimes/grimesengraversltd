@@ -1,0 +1,46 @@
+---
+import Base from '../../layouts/Base.astro';
+import work from '../../data/work.json';
+const meta = { url: '/our-work/', title: 'Our Work: Engraved Crystal Awards & Bench Plaques | Grimes Engravers', description: 'Photos of real crystal awards and memorial bench plaques we have engraved in our Cardiff workshop, from staff awards to brass and stainless steel plaques.' };
+const img = (w: { file: string }) => `/assets/img/work/${w.file}`;
+---
+<Base title={meta.title} description={meta.description} path={meta.url} image={`${img(work.awards[0])}-1200.webp`}>
+<section class="bg-mist px-6 py-14">
+  <div class="mx-auto max-w-4xl">
+    <p class="m-0 mb-3 text-sm font-bold uppercase tracking-widest text-brand">Our work</p>
+    <h1 class="m-0 mb-4 text-4xl font-semibold leading-tight text-teal">Awards and plaques we’ve engraved</h1>
+    <p class="m-0 text-lg text-muted">Real jobs from our Cardiff workshop, photographed by us. Every one was proofed by email and approved before we engraved it.</p>
+  </div>
+</section>
+<section class="px-6 py-14">
+  <div class="mx-auto max-w-6xl">
+    <h2 class="m-0 mb-2 text-2xl font-semibold text-teal">Glass and crystal awards</h2>
+    <p class="m-0 mb-6 text-muted">Logos, names and categories engraved for awards nights and long service. Minimum order 2 awards. <a href="/glass-awards/">Browse the award catalogue</a>.</p>
+    <div class="work-grid">
+      {work.awards.map((w) => <figure class="m-0">
+        <img loading="lazy" decoding="async" src={`${img(w)}-640.webp`} srcset={`${img(w)}-640.webp 640w, ${img(w)}-1200.webp 1200w`} sizes="(max-width: 760px) 100vw, 24rem" width={w.w} height={w.h} alt={w.alt} class="block h-auto w-full rounded-lg" style={w.pos ? `object-position: ${w.pos}` : undefined}>
+        <figcaption class="mt-2 text-sm text-muted">{w.caption}</figcaption>
+      </figure>)}
+    </div>
+  </div>
+</section>
+<section class="bg-mist px-6 py-14">
+  <div class="mx-auto max-w-6xl">
+    <h2 class="m-0 mb-2 text-2xl font-semibold text-teal">Memorial bench plaques</h2>
+    <p class="m-0 mb-6 text-muted">Solid brass and stainless steel, fitted to park, garden and memorial benches around Cardiff. <a href="/memorial-bench-plaques/">About our bench plaques</a> or see <a href="/bench-plaque-wording-ideas/">wording ideas</a>.</p>
+    <div class="work-grid">
+      {work.plaques.map((w) => <figure class="m-0">
+        <img loading="lazy" decoding="async" src={`${img(w)}-640.webp`} srcset={`${img(w)}-640.webp 640w, ${img(w)}-1200.webp 1200w`} sizes="(max-width: 760px) 100vw, 24rem" width={w.w} height={w.h} alt={w.alt} class="block h-auto w-full rounded-lg" style={w.pos ? `object-position: ${w.pos}` : undefined}>
+        <figcaption class="mt-2 text-sm text-muted">{w.caption}</figcaption>
+      </figure>)}
+    </div>
+  </div>
+</section>
+<section class="px-6 py-14">
+  <div class="mx-auto max-w-4xl">
+    <h2 class="m-0 mb-3 text-2xl font-semibold text-teal">Want something like this?</h2>
+    <p class="m-0 mb-6 text-muted">Email us your wording or logo and we’ll reply within 24 hours with a quote. We send a free proof before anything is engraved.</p>
+    <a class="btn" href="/contact/">Request a quote</a>
+  </div>
+</section>
+</Base>

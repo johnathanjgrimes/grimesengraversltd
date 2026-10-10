@@ -240,3 +240,11 @@ summary { min-height: 44px; display: list-item; }
 .award-more .spec th { width: 34%; font-weight: 700; color: #374151; }
 .award-more .panel { background: #F5F6F7; padding: 1rem 1.1rem; margin-bottom: 1.5rem; color: #374151; }
 .award-more .panel p { margin: 0 0 0.75rem; } .award-more .panel p:last-child { margin: 0; }
+
+/* Our work photo grid */
+.work-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: 1.5rem; align-items: start; }
+.work-grid img { aspect-ratio: 1; object-fit: cover; }
+/* Two photos side by side at the same height (--r is each photo's width / height) */
+.story-pair { display: flex; gap: 1rem; align-items: flex-start; }
+.story-pair figure { flex: var(--r) 1 0; min-width: 0; }
+@media (max-width: 640px) { .story-pair { flex-direction: column; } .story-pair figure { flex: none; width: 100%; } }

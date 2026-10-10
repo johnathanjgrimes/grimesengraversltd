@@ -1,0 +1,123 @@
+{
+  "awards": [
+    {
+      "file": "engraved-crystal-awards-welsh-public-affairs-awards",
+      "w": 1200,
+      "h": 900,
+      "alt": "Three round engraved crystal awards with the Public Affairs Cymru logo for the Welsh Public Affairs Awards 2020",
+      "caption": "A set of round crystal awards for the Welsh Public Affairs Awards 2020. Same logo on each, a different category and winner on every base.",
+      "pages": [
+        "corporate-awards",
+        "optical-crystal-awards",
+        "employee-of-the-year-awards"
+      ]
+    },
+    {
+      "file": "engraved-crystal-award-in-presentation-box",
+      "w": 899,
+      "h": 1200,
+      "alt": "Engraved round crystal award in a blue satin-lined presentation box",
+      "caption": "One of the same awards, ready to go out in its satin-lined presentation box.",
+      "pos": "50% 40%",
+      "pages": [
+        "corporate-awards",
+        "optical-crystal-awards",
+        "crystal-awards-on-bases"
+      ]
+    },
+    {
+      "file": "engraved-glass-sports-award-british-schools-trampoline-finals",
+      "w": 901,
+      "h": 1200,
+      "alt": "Jade glass diamond award engraved with a trampolining logo for the British Schools Trampoline Finals 2018",
+      "caption": "A jade glass award for the British Schools Trampoline Finals: the event logo at the top and the category and place underneath, different on every award.",
+      "pos": "50% 40%",
+      "pages": [
+        "sports-awards",
+        "jade-glass-awards"
+      ]
+    },
+    {
+      "file": "engraved-blue-crystal-long-service-award",
+      "w": 543,
+      "h": 960,
+      "alt": "Tall blue crystal column award engraved with a company name and a 25 years service message",
+      "caption": "A blue crystal column for 25 years’ service: the company name down the front and a short thank-you at the top.",
+      "pos": "50% 45%",
+      "pages": [
+        "long-service-awards",
+        "retirement-awards",
+        "corporate-awards"
+      ]
+    }
+  ],
+  "plaques": [
+    {
+      "file": "stainless-steel-memorial-bench-plaque-roath-park",
+      "w": 1200,
+      "h": 900,
+      "alt": "Stainless steel memorial plaque on a wooden bench in Roath Park, Cardiff",
+      "caption": "Stainless steel, in capitals, on a bench beside the flower beds in Roath Park."
+    },
+    {
+      "file": "brass-memorial-bench-plaque-roath-park-conservatory",
+      "w": 899,
+      "h": 1200,
+      "alt": "Polished brass memorial bench plaque for a couple, on a bench outside a park conservatory",
+      "caption": "Polished brass for a couple, with a line about the roses they planted.",
+      "pos": "50% 35%"
+    },
+    {
+      "file": "stainless-steel-memorial-bench-plaque-cardiff-park",
+      "w": 899,
+      "h": 1200,
+      "alt": "Stainless steel memorial plaque with four lines of text on a new hardwood bench",
+      "caption": "Stainless steel on a new hardwood bench: name, dates and two short lines.",
+      "pos": "50% 25%"
+    },
+    {
+      "file": "stainless-steel-bench-plaque-in-loving-memory",
+      "w": 899,
+      "h": 1200,
+      "alt": "Small stainless steel bench plaque reading In loving memory with two names",
+      "caption": "A short three-line plaque. Fewer words means bigger, easier-to-read letters.",
+      "pos": "50% 35%"
+    },
+    {
+      "file": "engraved-memorial-bench-plaque-serif-lettering",
+      "w": 1200,
+      "h": 900,
+      "alt": "Long memorial bench plaque in a serif font on a weathered park bench",
+      "caption": "A wide plaque in a serif font, still crisp on an older, weathered bench."
+    },
+    {
+      "file": "stainless-steel-park-bench-plaque",
+      "w": 1200,
+      "h": 900,
+      "alt": "Stainless steel memorial plaque in capitals on a red-painted park bench",
+      "caption": "Capitals on stainless steel, fixed to a painted council bench."
+    },
+    {
+      "file": "brass-memorial-bench-plaque-after-years-outdoors",
+      "w": 899,
+      "h": 1200,
+      "alt": "Brass memorial bench plaque that has darkened naturally after many years outdoors",
+      "caption": "Brass after many years outdoors. It darkens naturally, while stainless steel stays bright, so it’s worth thinking about when you choose.",
+      "pos": "50% 45%"
+    },
+    {
+      "file": "engraved-brass-memorial-plaque-two-names",
+      "w": 1200,
+      "h": 900,
+      "alt": "Engraved brass memorial plaque with two names and dates, photographed before fitting",
+      "caption": "A brass plaque for two people, photographed in the workshop before it went out."
+    }
+  ],
+  "shop": {
+    "file": "grimes-engravers-cardiff-shop-front-1998",
+    "w": 899,
+    "h": 1200,
+    "alt": "Grimes Engravers shop front in Cardiff in 1998, with engraving and trophies in the window",
+    "caption": "Our Cardiff shop front in 1998. We now work from a private workshop and deliver every order."
+  }
+}
