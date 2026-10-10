@@ -54,14 +54,8 @@ const productSchema = {
           </ul>
         </nav>}
         <p class="m-0 mb-6 text-2xl font-bold text-ink">{fromPrice(a.price_from)} <span class="muted text-base font-normal">per award</span></p>
-        <dl class="m-0 mb-6 grid gap-x-6 gap-y-2" style="grid-template-columns: auto 1fr">
-          <dt class="font-bold">Code</dt><dd class="m-0">{a.sku}</dd>
-          <dt class="font-bold">Size</dt><dd class="m-0">{mm(a.dimensions_mm)}</dd>
-          <dt class="font-bold">Engraving area</dt><dd class="m-0">{mm(a.engraving_area_mm)}{f && <span class="muted block text-sm">Fits roughly {f.perLine} characters a line, up to {f.lines} {f.lines === 1 ? 'line' : 'lines'}</span>}</dd>
-          {a.weight_kg && <><dt class="font-bold">Weight</dt><dd class="m-0">{a.weight_kg < 1 ? `${Math.round(a.weight_kg * 1000)}g` : `${a.weight_kg}kg`}</dd></>}
-          <dt class="font-bold">Availability</dt><dd class="m-0"><span id="stock-status">{a.in_stock ? 'In stock' : 'Currently out of stock: ask us for the restock date'}</span>
-            {a.source_url && <button type="button" class="ml-2 text-sm font-semibold" style="background: none; border: none; padding: 0; color: #0F5257; cursor: pointer; text-decoration: underline; min-height: 44px" data-check-stock="#stock-status" data-src={a.source_url} data-sku={a.sku} hidden>Check stock now</button>}</dd>
-        </dl>
+        <p class="m-0 mb-5"><strong>Availability:</strong> <span id="stock-status">{a.in_stock ? 'In stock' : 'Currently out of stock: ask us for the restock date'}</span>
+            {a.source_url && <button type="button" class="ml-2 text-sm font-semibold" style="background: none; border: none; padding: 0; color: #0F5257; cursor: pointer; text-decoration: underline; min-height: 44px" data-check-stock="#stock-status" data-src={a.source_url} data-sku={a.sku} hidden>Check stock now</button>}</p>
         <div class="flex flex-wrap items-center gap-3">
           <a class="btn" href={quoteUrl(a)} data-add-quote data-label="Add to quote" data-sku={a.sku} data-name={a.name} data-image={a.thumb} data-price={fromPrice(a.price_from)} data-unit={a.price_from}
             data-size={mm(a.dimensions_mm)} data-area={mm(a.engraving_area_mm)} data-fit-chars={f?.perLine} data-fit-lines={f?.lines} data-url={path} data-src={a.source_url} data-stock={String(a.in_stock)}
@@ -76,6 +70,42 @@ const productSchema = {
         </ul>
       </div>
     </div>
+  </div>
+</section>
+<section class="px-6 pb-4 pt-10">
+  <div class="mx-auto max-w-6xl award-more">
+    <details open>
+      <summary><h2>Product specifications</h2></summary>
+      <div><table class="spec"><tbody>
+        <tr><th scope="row">Code</th><td>{a.sku}</td></tr>
+        <tr><th scope="row">Size</th><td>{mm(a.dimensions_mm)}</td></tr>
+        <tr><th scope="row">Engraving area</th><td>{mm(a.engraving_area_mm)}{f && <span class="muted block text-sm">Fits roughly {f.perLine} characters a line, up to {f.lines} {f.lines === 1 ? 'line' : 'lines'}</span>}</td></tr>
+        {a.weight_kg && <tr><th scope="row">Weight</th><td>{a.weight_kg < 1 ? `${Math.round(a.weight_kg * 1000)}g` : `${a.weight_kg}kg`}</td></tr>}
+        {sizes.length > 1 && <tr><th scope="row">Other sizes</th><td>{sizes.filter((s) => s !== a).map((s, i) => <>{i > 0 && ', '}<a href={awardUrl(s)}>{s.size || mm(s.dimensions_mm)}</a></>)}</td></tr>}
+        <tr><th scope="row">Range</th><td>{a.range}</td></tr>
+        <tr><th scope="row">Packaging</th><td>Supplied in a presentation box</td></tr>
+      </tbody></table></div>
+    </details>
+    <details open>
+      <summary><h2>Engraving and proof</h2></summary>
+      <div class="panel">
+        <p>We engrave your logo and wording on the front of the award. Send your logo as a PDF, EPS or SVG if you have one, or a large clear image, and we’ll set it up for engraving.</p>
+        <p>Before anything is engraved, we email you a proof to check and approve. Awards are ready 10–14 working days after you approve it.</p>
+      </div>
+    </details>
+    <details open>
+      <summary><h2>Delivery information</h2></summary>
+      <div class="panel">
+        <p>Every order is delivered: we don’t offer visits or collections. Your awards are packed in their presentation boxes and well protected for the journey.</p>
+        <p>We deliver anywhere in the UK, and confirm the delivery cost in your quote.</p>
+      </div>
+    </details>
+    <details open>
+      <summary><h2>Help and advice</h2></summary>
+      <div class="panel">
+        <p>Not sure which award or size to choose? Try the <a href="/award-finder/">award finder</a>, or email us at <a href="mailto:info@grimesengravers.com">info@grimesengravers.com</a> with the occasion, numbers and date. We’re open Monday to Friday and reply within 24 hours.</p>
+      </div>
+    </details>
   </div>
 </section>
 {similar.length > 0 && <section class="px-6 py-12">

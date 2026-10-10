@@ -226,3 +226,17 @@ summary { min-height: 44px; display: list-item; }
 .rv-card { background: #fff; border-radius: 10px; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
 .rv-stars { color: #E0A21B; letter-spacing: 0.1em; }
 .rv-cap { margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap; font-size: 0.9rem; }
+
+/* Award page: specifications and information panels */
+.award-more details { border-top: 2px solid #E5E7EB; }
+.award-more details:last-child { border-bottom: 2px solid #E5E7EB; }
+.award-more summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem 0; }
+.award-more summary::-webkit-details-marker { display: none; }
+.award-more summary h2 { margin: 0; font-size: 1.4rem; font-weight: 600; color: #1F2933; }
+.award-more summary::after { content: ""; flex: none; width: 0.6rem; height: 0.6rem; border-right: 3px solid #3D5A5E; border-bottom: 3px solid #3D5A5E; transform: rotate(45deg); margin-right: 0.4rem; transition: transform 0.15s; }
+.award-more details[open] > summary::after { transform: rotate(-135deg); }
+.award-more .spec { width: 100%; border-collapse: collapse; background: #F5F6F7; margin-bottom: 1.5rem; }
+.award-more .spec th, .award-more .spec td { text-align: left; vertical-align: top; padding: 0.9rem 1rem; border-bottom: 1px solid #E5E7EB; }
+.award-more .spec th { width: 34%; font-weight: 700; color: #374151; }
+.award-more .panel { background: #F5F6F7; padding: 1rem 1.1rem; margin-bottom: 1.5rem; color: #374151; }
+.award-more .panel p { margin: 0 0 0.75rem; } .award-more .panel p:last-child { margin: 0; }
