@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import work from '../../data/work.json';
-const meta = { url: '/our-work/', title: 'Our Work: Engraved Crystal Awards & Bench Plaques | Grimes Engravers', description: 'Photos of real crystal awards and memorial bench plaques we have engraved in our Cardiff workshop, from staff awards to brass and stainless steel plaques.' };
+const meta = { url: '/our-work/', title: 'Our Work: Crystal Awards & Bench Plaques | Grimes Engravers', description: 'Photos of real crystal awards and memorial bench plaques we have engraved in our Cardiff workshop, from staff awards to brass and stainless steel plaques.' };
 const img = (w: { file: string }) => `/assets/img/work/${w.file}`;
 ---
 <Base title={meta.title} description={meta.description} path={meta.url} image={`${img(work.awards[0])}-1200.webp`}>

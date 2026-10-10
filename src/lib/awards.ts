@@ -142,15 +142,19 @@ export function searchTags(name: string): string {
 // The main page of an award (its smallest size) leads with the sizes and the lowest price.
 const BRAND = ' | Grimes Engravers';
 const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
-const fit60 = (options: string[]) => options.find((t) => t.length <= 62) ?? options[options.length - 1];
+// Long supplier names get shortened as a last resort: the size and material details are on the page itself.
+const shorten = (n: string) => n.replace(/^[\d.]+cm (Dia )?(x [\d.]+cm )?/i, '').replace(/Optical Crystal/g, 'Crystal').replace(/ mounted on an? /gi, ' on ').replace(/Onyx Black Crystal Base/g, 'Black Base');
+const fit60 = (options: string[]) => options.find((t) => t.length <= 60) ?? options[options.length - 1];
 const gbp = (n: number) => `£${n.toFixed(2)}`;
 function baseTitle(a: AwardWithSlug) {
   const sizes = sizesOf(a);
   if (sizes.length > 1 && sizes[0] === a) {
     const p = cap(a.product), from = `from ${gbp(a.price_from)}`;
-    return fit60([`${p}, ${sizes.length} sizes ${from}${BRAND}`, `${p}, ${from}${BRAND}`, `${p}${BRAND}`, `${p}, ${from}`, p]);
+    const s = cap(shorten(a.product));
+    return fit60([`${p}, ${sizes.length} sizes ${from}${BRAND}`, `${p}, ${from}${BRAND}`, `${p}${BRAND}`, `${p}, ${from}`, `${s}${BRAND}`, `${s}, ${from}`, s]);
   }
-  return fit60([`${a.name}, from ${gbp(a.price_from)}${BRAND}`, `${a.name}${BRAND}`, `${a.name}, from ${gbp(a.price_from)}`, a.name]);
+  const s = shorten(a.name);
+  return fit60([`${a.name}, from ${gbp(a.price_from)}${BRAND}`, `${a.name}${BRAND}`, `${a.name}, from ${gbp(a.price_from)}`, `${s}${BRAND}`, `${s}, from ${gbp(a.price_from)}`, s]);
 }
 // Two different designs sometimes share a name: their titles get the product code to tell them apart.
 const titleCount = new Map<string, number>();
@@ -158,7 +162,8 @@ for (const a of awards) titleCount.set(baseTitle(a), (titleCount.get(baseTitle(a
 export function awardTitle(a: AwardWithSlug) {
   const t = baseTitle(a);
   if (titleCount.get(t)! === 1) return t;
-  return t.includes(BRAND) ? t.replace(BRAND, ` (${a.sku})${BRAND}`) : `${t} (${a.sku})`;
+  const code = ` (${a.sku})`, n = shorten(a.name);
+  return fit60([t.includes(BRAND) ? t.replace(BRAND, `${code}${BRAND}`) : `${t}${code}`, `${a.name}${code}`, `${n}${code}${BRAND}`, `${n}${code}`]);
 }
 export function awardDescription(a: AwardWithSlug) {
   const sizes = sizesOf(a);
@@ -168,5 +173,5 @@ export function awardDescription(a: AwardWithSlug) {
        `Engraved ${a.product} in ${sizes.length} sizes, from ${gbp(a.price_from)} per award.${end}`]
     : [`${a.name}, ${mm(a.dimensions_mm)}, from ${gbp(a.price_from)} per award.${end}`, `${a.name}, from ${gbp(a.price_from)} per award.${end}`];
   const short = opts[opts.length - 1].replace(end, ` Engraved with your logo. Minimum order ${MIN_QTY}.`);
-  return [...opts, short].find((d) => d.length <= 160) ?? short;
+  return [...opts, short].find((d) => d.length <= 155) ?? short;
 }
