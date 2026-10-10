@@ -1,6 +1,7 @@
 // /llms.txt – a plain-text summary for AI assistants and LLM crawlers (https://llmstxt.org).
 import type { APIRoute } from 'astro';
 import config from '../data/config.json';
+import { anniversary } from '../lib/anniversary';
 import pages from '../data/pages.json';
 import services from '../data/services.json';
 import collections from '../data/collections.json';
@@ -15,7 +16,7 @@ export const GET: APIRoute = () => {
 
 ## Key facts
 
-- Established: ${config.founded}, Cardiff, Wales. Family-run, third generation. Celebrating 80 years (1947–2027).
+- Established: ${config.founded}, Cardiff, Wales. Family-run, third generation.${anniversary ? ' Celebrating 80 years (1947–2027).' : ''}
 - Contact: by email only, ${config.email} · ${config.site}. No telephone enquiries.
 - Working days: ${config.workingDays}. Quotes ${config.quoteTime}.
 - Lead time: ${config.leadTime}.

@@ -4,7 +4,7 @@
   "shortName": "Grimes Engravers",
   "email": "info@grimesengravers.com",
   "founded": "1947",
-  "anniversary": "Celebrating 80 years",
+  "anniversary": { "from": "2027-01-01", "label": "Celebrating 80 years" },
   "locality": "Cardiff",
   "region": "Wales",
   "trustpilot": "https://uk.trustpilot.com/review/grimesengravers.com",
@@ -27,5 +27,5 @@
     "Bridgend"
   ],
   "minimumOrder": "Glass awards: 2 or more in total (different awards and sizes can be mixed). Bench plaques: no minimum.",
-  "summary": "Family-run engravers in Cardiff, Wales, established in 1947 and now in its third generation, celebrating 80 years in 2026–27. Supplies and produces engraved glass and crystal awards for companies and organisations, with a minimum order of 2 awards. Also engraves memorial bench plaques in brass and stainless steel, with no minimum. Contact by email only; no visits or collections, and every order is delivered. Does not supply trophies or medals, or engrave personal items."
+  "summary": "Family-run engravers in Cardiff, Wales, established in 1947 and now in its third generation. Supplies and produces engraved glass and crystal awards for companies and organisations, with a minimum order of 2 awards. Also engraves memorial bench plaques in brass and stainless steel, with no minimum. Contact by email only; no visits or collections, and every order is delivered. Does not supply trophies or medals, or engrave personal items."
 }

@@ -1,5 +1,6 @@
 // Schema.org structured data. Used by Google, Bing and AI assistants (ChatGPT, Claude, Perplexity, Gemini)
 // to understand who the business is, what it does, where, and on what terms.
+import { anniversary } from './anniversary';
 import config from '../data/config.json';
 import services from '../data/services.json';
 
@@ -21,7 +22,7 @@ export function business() {
     description: config.summary,
     email: config.email,
     foundingDate: config.founded,
-    slogan: 'Professional engravers since 1947. Celebrating 80 years.',
+    slogan: anniversary ? 'Professional engravers since 1947. Celebrating 80 years.' : 'Professional engravers since 1947',
     knowsLanguage: ['en-GB', 'cy'],
     address: { '@type': 'PostalAddress', addressLocality: config.locality, addressRegion: config.region, addressCountry: 'GB' },
     areaServed: [
