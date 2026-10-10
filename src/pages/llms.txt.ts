@@ -41,6 +41,13 @@ ${collections.map((c) => `- [${c.h1}](${config.site}/${c.slug}/): ${c.descriptio
 
 ${['can-i-put-a-plaque-on-a-bench', 'bench-plaque-wording-ideas', 'plaque-fonts'].map(line).join('\n')}
 
+## For AI agents and tools
+
+- [Award catalogue (JSON)](${config.site}/api/awards.json): every award, size, engraving area and from price, with page links.
+- [Business facts (JSON)](${config.site}/api/business.json): contact, terms, services and review scores.
+- [OpenAPI description](${config.site}/openapi.json) of the above.
+- Every page has a markdown copy: add index.md to its address, e.g. ${config.site}/star-awards/index.md
+
 ## Optional
 
 - [About Grimes Engravers and key facts](${config.site}/about/)

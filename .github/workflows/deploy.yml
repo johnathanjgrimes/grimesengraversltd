@@ -35,3 +35,18 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+  # Tell Bing (and so ChatGPT search and Copilot) about pages changed in the last 2 days: https://www.indexnow.org
+  indexnow:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Submit changed pages to IndexNow
+        run: |
+          sleep 30
+          SINCE=$(date -u -d '2 days ago' +%Y-%m-%d)
+          URLS=$(curl -s https://grimesengravers.com/sitemap-0.xml | grep -o '<url><loc>[^<]*</loc><lastmod>[^<]*' \
+            | sed 's|<url><loc>||; s|</loc><lastmod>| |' | awk -v s="$SINCE" 'substr($2,1,10) >= s {print $1}' | jq -R . | jq -sc .)
+          echo "Changed pages: $(echo "$URLS" | jq length)"
+          [ "$(echo "$URLS" | jq length)" = "0" ] && exit 0
+          curl -s -o /dev/null -w "IndexNow: %{http_code}\n" -X POST https://api.indexnow.org/indexnow -H 'Content-Type: application/json; charset=utf-8' \
+            -d "{\"host\":\"grimesengravers.com\",\"key\":\"921380bfd904a592445a30bb72858bad\",\"keyLocation\":\"https://grimesengravers.com/921380bfd904a592445a30bb72858bad.txt\",\"urlList\":$URLS}"

@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import markdownCopies from './integrations/markdown-copies.mjs';
 import { execSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import { awards, sizesOf, awardUrl } from './src/lib/awards.ts';
@@ -29,7 +30,7 @@ function lastmod(url) {
 export default defineConfig({
   site: SITE,
   trailingSlash: 'always',
-  integrations: [sitemap({
+  integrations: [markdownCopies(), sitemap({
     filter: (url) => !otherSizes.has(url),
     serialize: (item) => { const d = lastmod(item.url); return d ? { ...item, lastmod: d } : item; },
   })],

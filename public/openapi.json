@@ -1,0 +1,34 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Grimes Engravers catalogue",
+    "version": "1.0.0",
+    "description": "Read-only data about Grimes Engravers Ltd (Cardiff, est. 1947): engraved glass and crystal awards (minimum order 2 in total) and memorial bench plaques. Prices are 'from' prices per award before engraving; engraving and delivery are confirmed in a quote by email within 24 hours. To order, send the customer to the quote page.",
+    "contact": { "email": "info@grimesengravers.com", "url": "https://grimesengravers.com/" }
+  },
+  "servers": [{ "url": "https://grimesengravers.com" }],
+  "paths": {
+    "/api/awards.json": {
+      "get": {
+        "operationId": "listAwards",
+        "summary": "Every glass and crystal award with its sizes, dimensions, engraving area, from prices and page links",
+        "responses": { "200": { "description": "Award catalogue", "content": { "application/json": { "schema": { "type": "object" } } } } }
+      }
+    },
+    "/api/business.json": {
+      "get": {
+        "operationId": "getBusiness",
+        "summary": "Contact details, terms (minimum order, lead time, delivery), services, review scores and key page links",
+        "responses": { "200": { "description": "Business facts", "content": { "application/json": { "schema": { "type": "object" } } } } }
+      }
+    },
+    "/quote/": {
+      "get": {
+        "operationId": "openQuote",
+        "summary": "Quote request page for the customer to complete; add ?award={sku} to start with an award",
+        "parameters": [{ "name": "award", "in": "query", "required": false, "schema": { "type": "string" }, "description": "Award code (sku) from listAwards" }],
+        "responses": { "200": { "description": "HTML quote form" } }
+      }
+    }
+  }
+}

@@ -55,6 +55,8 @@ document.addEventListener('error', function (e) {
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 <link rel="sitemap" href="/sitemap-index.xml">
 <link rel="alternate" type="text/plain" title="LLM summary" href="/llms.txt">
+<link rel="alternate" type="application/json" title="Award catalogue" href="/api/awards.json">
+{!noindex && (!canonicalPath || canonicalPath === path) && <link rel="alternate" type="text/markdown" href={`${path}index.md`}>}
 {fonts && <>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
