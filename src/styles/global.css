@@ -120,10 +120,10 @@ summary { min-height: 44px; display: list-item; }
 .nav-menu a { color: #1F2933; text-decoration: none; padding: 0.45rem 0.6rem; border-radius: 6px; font-weight: 500; }
 .nav-menu a:hover, .nav-menu a:focus-visible { background: #F3F5F6; color: #C8202A; }
 .nav-menu a[aria-current] { color: #C8202A; font-weight: 700; }
-.nav-mega { min-width: 46rem; display: none; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; padding: 1.25rem; }
+.nav-mega { width: max-content; min-width: 0; display: none; grid-template-columns: auto auto 15rem; gap: 1rem 1.5rem; padding: 1.25rem; align-items: start; }
 .nav-mega > div { display: flex; flex-direction: column; }
 .nav-head { margin: 0 0 0.4rem; padding: 0 0.6rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #6B7280; }
-.nav-promo { background: #F3F5F6; border-radius: 8px; padding: 0.9rem 0.6rem; }
+.nav-promo { background: #F3F5F6; border-radius: 8px; padding: 0.9rem 0.6rem; align-self: start; }
 .nav-promo p:not(.nav-head) { margin: 0 0.6rem 0.8rem; color: #4B5563; font-size: 0.9rem; }
 .nav-promo .nav-btn, .nav-promo .nav-btn:hover { background: #3D5A5E; color: #fff; font-weight: 700; text-align: center; margin: 0 0.6rem; }
 .nav-item.open > .nav-menu { display: flex; }
@@ -163,7 +163,6 @@ summary { min-height: 44px; display: list-item; }
   .header-logo { margin-right: auto; }
   header img { height: 2.2rem !important; }
   .hide-sm { display: none; }
-  .quote-open { padding: 0.4rem 0.7rem !important; font-size: 0.95rem !important; text-transform: capitalize; }
   .nav-toggle { padding: 0.4rem 0.8rem; font-size: 1.2rem; }
   .aw-card-body .text-xs { display: none; }
 
@@ -248,3 +247,61 @@ summary { min-height: 44px; display: list-item; }
 .story-pair { display: flex; gap: 1rem; align-items: flex-start; }
 .story-pair figure { flex: var(--r) 1 0; min-width: 0; }
 @media (max-width: 640px) { .story-pair { flex-direction: column; } .story-pair figure { flex: none; width: 100%; } }
+
+/* Site search (header button and pop-up box) */
+.search-open { font-weight: 700; min-height: 44px; padding: 0.5rem 0.9rem; border: 2px solid #3D5A5E; border-radius: 6px; background: #fff; color: #3D5A5E; text-decoration: none; display: inline-flex; align-items: center; gap: 0.45rem; }
+.search-open:hover { background: #F5F6F7; }
+.site-search { width: min(40rem, calc(100vw - 2rem)); max-height: calc(100vh - 4rem); margin: 2rem auto auto; padding: 0; border: 0; border-radius: 10px; box-shadow: 0 20px 50px rgba(0,0,0,.3); }
+.site-search::backdrop { background: rgba(35, 38, 58, 0.6); }
+.ss-inner { display: flex; flex-direction: column; max-height: calc(100vh - 4rem); }
+.ss-bar { display: flex; align-items: center; gap: 0.6rem; padding: 0.75rem 1rem; border-bottom: 1px solid #E5E7EB; color: #3D5A5E; }
+.ss-bar input { flex: 1; min-width: 0; font: inherit; font-size: 1.1rem; border: 0; outline: 0; padding: 0.4rem 0; color: #1F2933; }
+.ss-close { font: inherit; font-weight: 700; border: 2px solid #E5E7EB; background: #fff; border-radius: 6px; padding: 0.35rem 0.7rem; cursor: pointer; color: #3D5A5E; }
+.ss-results { overflow-y: auto; padding: 0.5rem 0 1rem; }
+.ss-results ul { list-style: none; margin: 0; padding: 0; }
+.ss-head { margin: 0.75rem 1rem 0.25rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #C8202A; }
+.ss-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 1rem; text-decoration: none; color: #1F2933; }
+.ss-item:hover, .ss-item.on, .ss-item:focus { background: #F5F6F7; outline: 0; }
+.ss-item img { width: 3.5rem; height: 3.5rem; object-fit: cover; border-radius: 6px; flex: none; background: #F5F6F7; }
+.ss-icon { width: 3.5rem; height: 2.25rem; flex: none; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #3D5A5E; background: #EEF2F2; border-radius: 6px; }
+.ss-item span { display: flex; flex-direction: column; min-width: 0; }
+.ss-item small { color: #6B7280; font-size: 0.85rem; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.ss-more, .ss-hint { margin: 0.5rem 1rem; color: #4B5563; }
+.ss-more a { font-weight: 700; }
+@media (max-width: 760px) {
+  .search-open { padding: 0.4rem 0.6rem; }
+  .search-label { display: none; }
+  .site-search { margin-top: 0.75rem; max-height: calc(100vh - 1.5rem); }
+  .ss-inner { max-height: calc(100vh - 1.5rem); }
+}
+
+/* Header order: logo, menu, search, then "Your quote" far right. On phones: logo, quote, search, menu button. */
+header > div > .header-logo { order: 0; }
+header .site-nav { order: 1; margin-left: auto; }
+header .search-open { order: 2; }
+header .nav-toggle { order: 4; }
+@media (max-width: 1100px) and (min-width: 761px) { .topbar-extra { display: none; } .search-label { display: none; } .search-open { padding: 0.5rem 0.6rem; } }
+@media (min-width: 761px) { header > div { flex-wrap: nowrap !important; } header .site-nav { flex-wrap: nowrap; white-space: nowrap; } }
+@media (min-width: 761px) and (max-width: 1100px) { header .site-nav { gap: 0.25rem 0.7rem; font-size: 0.9rem; } header .nav-cta { padding: 0.55rem 0.8rem; } }
+@media (max-width: 760px) {
+  header .site-nav { order: 4; margin-left: 0; }
+  header .search-open { padding: 0.4rem 0.55rem; }
+}
+@media (max-width: 400px) {
+  header > div { gap: 0.35rem !important; padding: 0.6rem 0.75rem !important; }
+  header .header-logo img { height: 1.9rem !important; }
+}
+
+/* "Your quote" button in the dark top bar */
+.topbar-right { display: inline-flex; align-items: center; gap: 0.9rem; }
+.topbar .quote-open { min-height: 0; padding: 0.15rem 0.3rem 0.15rem 0.7rem; font-size: 0.85rem; border: 1.5px solid #FFFFFF; border-radius: 999px; background: transparent; color: #FFFFFF; gap: 0.4rem; }
+.topbar .quote-open:hover { background: rgba(255,255,255,0.12); }
+.topbar .quote-open .quote-count { background: #C8202A; color: #FFFFFF; min-width: 1.35rem; line-height: 1.35rem; font-size: 0.8rem; }
+@media (max-width: 760px) { .topbar { padding: 0.35rem 1rem !important; } .topbar-right { width: 100%; justify-content: space-between; } }
+.topbar .quote-open { white-space: nowrap; }
+@media (max-width: 360px) { .topbar { font-size: 0.8rem; padding: 0.35rem 0.75rem !important; } }
+/* The menu sits on the right of the header, so line the big awards menu up with the menu's right edge. */
+@media (min-width: 761px) {
+  .nav-item:has(> .nav-mega) { position: static; }
+  .nav-mega { left: auto; right: 0; }
+}

@@ -100,7 +100,18 @@ posthog.init(phKey, { api_host: phHost, persistence: 'memory', person_profiles: 
     </div>
   </div>
 </div>
+<dialog id="site-search" class="site-search" aria-label="Search the site">
+  <div class="ss-inner">
+    <div class="ss-bar">
+      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
+      <input type="search" data-search-input placeholder="Search awards, plaques and help" aria-label="Search awards, plaques and help" autocomplete="off" enterkeyhint="search">
+      <button type="button" data-search-close class="ss-close">Close<span class="sr-only"> search</span></button>
+    </div>
+    <div data-search-results class="ss-results" aria-live="polite"></div>
+  </div>
+</dialog>
 <script is:inline src="/js/basket.js" defer></script>
+<script is:inline src="/js/search.js" defer></script>
 {scripts.map((s) => <script is:inline src={`/js/${s}`} defer></script>)}
 <script is:inline src="/js/site.js" defer></script>
 </body>
