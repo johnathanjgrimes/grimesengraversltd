@@ -21,7 +21,7 @@ export function business() {
     description: config.summary,
     email: config.email,
     foundingDate: config.founded,
-    slogan: 'Professional engravers since 1947',
+    slogan: 'Professional engravers since 1947. Celebrating 80 years.',
     knowsLanguage: ['en-GB', 'cy'],
     address: { '@type': 'PostalAddress', addressLocality: config.locality, addressRegion: config.region, addressCountry: 'GB' },
     areaServed: [

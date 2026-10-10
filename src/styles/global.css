@@ -289,7 +289,7 @@ header .nav-toggle { order: 4; }
 }
 @media (max-width: 400px) {
   header > div { gap: 0.35rem !important; padding: 0.6rem 0.75rem !important; }
-  header .header-logo img { height: 1.9rem !important; }
+  header .header-logo img { height: 2.3rem !important; }
 }
 
 /* "Your quote" button in the dark top bar */
@@ -306,3 +306,10 @@ header .nav-toggle { order: 4; }
   .nav-mega { left: auto; right: 0; }
 }
 .site-nav .nav-menu { white-space: normal; }
+
+/* 80th anniversary badge (home hero, About). */
+.anniv-badge { display: inline-block; margin: 0 0 1rem; border: 1.5px solid #E2C27A; color: #F2DDA4; font-family: Marcellus, 'Optima', 'Candara', serif; font-weight: 400; font-size: 0.95rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.3rem 0.8rem; border-radius: 999px; }
+.anniv-badge.anniv-light { display: table; color: #7A5A12; border-color: #C9A24A; background: #FFF8E6; }
+/* Heritage wordmark in the style of our old shop-window lettering. */
+.heritage-mark { display: block; width: min(18rem, 100%); height: auto; margin: 0 0 1.5rem; }
+@media (max-width: 380px) { .anniv-badge { font-size: 0.78rem; letter-spacing: 0.06em; padding: 0.3rem 0.65rem; } }

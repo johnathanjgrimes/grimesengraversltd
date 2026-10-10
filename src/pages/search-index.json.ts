@@ -16,7 +16,7 @@ const extra: Record<string, string> = {
   '/plaque-fonts/': 'font fonts lettering preview style typeface script',
   '/corporate-glass-awards/': 'company corporate business staff awards night logo',
   '/contact/': 'contact email quote enquiry get in touch help',
-  '/about/': 'about history family 1947 who we are terms delivery lead time',
+  '/about/': 'about history family 1947 80 years anniversary who we are terms delivery lead time',
   '/glass-awards/': 'catalogue all awards shop browse trophy trophies',
   '/quote/': 'quote basket order price request',
   '/our-work/': 'our work photos gallery examples portfolio previous jobs',

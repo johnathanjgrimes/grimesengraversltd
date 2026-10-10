@@ -15,7 +15,7 @@ export const GET: APIRoute = () => {
 
 ## Key facts
 
-- Established: ${config.founded}, Cardiff, Wales. Family-run, third generation.
+- Established: ${config.founded}, Cardiff, Wales. Family-run, third generation. Celebrating 80 years (1947–2027).
 - Contact: by email only, ${config.email} · ${config.site}. No telephone enquiries.
 - Working days: ${config.workingDays}. Quotes ${config.quoteTime}.
 - Lead time: ${config.leadTime}.
