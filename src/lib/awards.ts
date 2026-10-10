@@ -1,6 +1,8 @@
 // Glass and crystal awards catalogue. Data lives in src/data/awards.json (generated from the
 // supplier catalogue); this file gives every page the same slugs, labels and price formatting.
 import raw from '../data/awards.json';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 
 export interface Award {
   sku: string;
@@ -28,7 +30,14 @@ export function splitSize(name: string): { size: string; product: string } {
 
 // Sizes of the same product share a family. The supplier sometimes uses one name for two designs
 // (e.g. two different "20cm Arch Award"s); when a size repeats, the code series (FC2…, SY2…) splits them.
-const base = (raw as Award[]).map((a) => ({ ...a, slug: slugify(`${a.name}-${a.sku}`), ...splitSize(a.name) }));
+// Photos: our own WebP copies (scripts/fetch-award-images.py) when they exist, otherwise the supplier's.
+// `image` is the large one for the award page, `thumb` the small one for cards and the basket.
+const PHOTOS = join(process.cwd(), 'public', 'assets', 'awards');
+const photos = (a: Award) => {
+  const local = (size: number) => (existsSync(join(PHOTOS, `${a.sku}-${size}.webp`)) ? `/assets/awards/${a.sku}-${size}.webp` : a.image);
+  return { image: local(1000), thumb: local(480), supplierImage: a.image };
+};
+const base = (raw as Award[]).map((a) => ({ ...a, ...photos(a), slug: slugify(`${a.name}-${a.sku}`), ...splitSize(a.name) }));
 const byName = new Map<string, typeof base>();
 for (const a of base) {
   const k = `${a.range}|${a.product.toLowerCase()}`;
