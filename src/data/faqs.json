@@ -73,7 +73,28 @@
    "a": "Yes. If the bench is yours, you can order a plaque directly from us in any size."
   }
  ],
- "bench-plaque-wording-ideas": [],
+ "bench-plaque-wording-ideas": [
+  {
+   "q": "What should I write on a memorial bench plaque?",
+   "a": "Most families choose a name, dates and one short line, such as “In loving memory of” or something about why the place mattered. Keep it to a few lines so the letters are large enough to read from the path."
+  },
+  {
+   "q": "How many words fit on a bench plaque?",
+   "a": "It depends on the size. As a guide, a 6 x 4 inch plaque fits 4–5 lines and an 8 x 3 inch plaque 3–4 lines. We’ll always send a proof so you can see the spacing."
+  },
+  {
+   "q": "Can I put a poem or verse on a bench plaque?",
+   "a": "Yes, if it’s short. A two-line verse works well; a longer poem needs a bigger plaque and smaller letters. Send us the words and we’ll suggest a size."
+  },
+  {
+   "q": "Can I put my dog’s name on a memorial bench plaque?",
+   "a": "Yes, on your own bench or garden bench. On council benches the dedication scheme decides what’s allowed, so check with the parks team first."
+  },
+  {
+   "q": "Can you engrave the plaque in Welsh?",
+   "a": "Yes. We regularly engrave in Welsh, English or both, with accents such as ŵ and ŷ."
+  }
+ ],
  "plaque-fonts": [
   {
    "q": "Can I choose a different font?",
@@ -131,6 +152,28 @@
   {
    "q": "Do you engrave in Welsh?",
    "a": "Yes, in Welsh, English or both."
+  }
+ ],
+ "award-wording-ideas": [
+  {
+   "q": "What should I write on an employee of the year award?",
+   "a": "Usually your logo, the event (for example “Staff Awards 2026”), the award title and the winner’s name. Add a short line such as the year or “in recognition of outstanding commitment” if there’s room."
+  },
+  {
+   "q": "How much text fits on a glass award?",
+   "a": "It depends on the award. Every award page shows its engraving area, and as a rule four to six short lines look best. We send a free proof so you can see the layout before anything is engraved."
+  },
+  {
+   "q": "Can every award in a set have different wording?",
+   "a": "Yes. Most sets keep the same logo and event and change the category and name on each award. Send us a list and we’ll proof each one."
+  },
+  {
+   "q": "Can you engrave our company or club logo?",
+   "a": "Yes. Send it as a PDF, EPS or SVG and we’ll set it up for engraving."
+  },
+  {
+   "q": "Is there a minimum order?",
+   "a": "Yes. Glass award orders start at 2 awards in total, and you can mix different awards and sizes."
   }
  ]
 }

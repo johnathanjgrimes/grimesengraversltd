@@ -40,7 +40,7 @@ ${collections.map((c) => `- [${c.h1}](${config.site}/${c.slug}/): ${c.descriptio
 
 ## Guides and tools
 
-${['can-i-put-a-plaque-on-a-bench', 'bench-plaque-wording-ideas', 'plaque-fonts'].map(line).join('\n')}
+${['award-wording-ideas', 'can-i-put-a-plaque-on-a-bench', 'bench-plaque-wording-ideas', 'plaque-fonts'].map(line).join('\n')}
 
 ## For AI agents and tools
 

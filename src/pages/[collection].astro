@@ -82,6 +82,7 @@ const crumb = c.kind === "range" ? "Award ranges" : "Awards by occasion";
     <aside class="rounded-lg bg-mist p-6">
       <h2 class="m-0 mb-3 text-xl font-semibold text-teal">Wording ideas</h2>
       <ul class="m-0 list-none p-0">{c.wording.map((w) => <li class="border-0 border-b border-solid py-2 italic" style="border-color: #E5E7EB">“{w}”</li>)}</ul>
+      <p class="m-0 mt-4"><a href="/award-wording-ideas/" class="font-bold">More wording and category ideas →</a></p>
       <a class="btn mt-5 block text-center" href={quoteUrl()}>Start your quote</a>
     </aside>
   </div>

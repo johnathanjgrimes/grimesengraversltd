@@ -1,0 +1,51 @@
+---
+import Base from "../../layouts/Base.astro";
+import faqs from "../../data/faqs.json";
+const meta = {"url": "/award-wording-ideas/", "title": "Award Wording & Staff Award Category Ideas | Grimes Engravers", "description": "Wording examples for engraved glass awards: employee of the year, long service, retirement, golf and sports, plus staff award category ideas."};
+// Each group is an occasion people search for, with example wording and the awards that suit it.
+// Names, companies and dates are placeholders.
+const groups = [
+  { id: "employee", title: "Employee of the year award wording", link: ["/employee-of-the-year-awards/", "Employee of the year awards"],
+    examples: ["[Company logo]\nEmployee of the Year 2026\nSarah Williams", "Presented to\nTom Richards\nEmployee of the Year\nin recognition of outstanding\ncommitment and hard work", "[Company logo]\nOutstanding Contribution\nAwarded to Priya Shah\nAwards Night 2026"] },
+  { id: "long-service", title: "Long service award wording", link: ["/long-service-awards/", "Long service awards"],
+    examples: ["[Company logo]\n25 Years of Service\nDavid Price\n2001 – 2026", "Presented to\nLynne Jenkins\nin recognition of 30 years’\nloyal service to [Company]", "Thank you, Mike\n20 years of dedication\nfrom everyone at [Company]"] },
+  { id: "retirement", title: "Retirement award wording", link: ["/retirement-awards/", "Retirement awards"],
+    examples: ["Happy Retirement\nCarol Bevan\nWith thanks for 35 years", "Presented to\nRoger Hale\non his retirement\nwith best wishes from\nall your colleagues", "[Company logo]\nCongratulations Janet\nEnjoy every moment\n1989 – 2026"] },
+  { id: "golf", title: "Golf award wording", link: ["/golf-awards/", "Golf awards"],
+    examples: ["[Club crest]\nCaptain’s Day 2026\nWinner\nGareth Morgan", "[Company logo]\nCharity Golf Day\nNearest the Pin", "Annual Society Golf Day\nLongest Drive\n2026"] },
+  { id: "sports", title: "Football and sports award wording", link: ["/sports-awards/", "Sports awards"],
+    examples: ["[Club badge]\nPlayers’ Player of the Season\n2025/26\nOwen Jones", "[League logo]\nDivision One Champions\n2025/26", "[School crest]\nSports Personality\nof the Year 2026"] },
+  { id: "corporate", title: "Sales, team and corporate award wording", link: ["/corporate-awards/", "Corporate awards"],
+    examples: ["[Company logo]\nSalesperson of the Year\nRachel Hughes\n2026", "[Company logo]\nTeam of the Year\nCustomer Services\nAwards 2026", "[Event logo]\nWelsh Business Awards 2026\nWinner\nBest Small Business"] },
+];
+const categories = ["Employee of the Year", "Rising Star", "Team of the Year", "Manager of the Year", "Leader of the Year", "Customer Service Award", "Salesperson of the Year", "Apprentice of the Year", "Newcomer of the Year", "Innovation Award", "Unsung Hero", "Going the Extra Mile", "Outstanding Contribution", "Lifetime Achievement", "Long Service", "Volunteer of the Year", "Health & Safety Champion", "Community Award", "Above and Beyond", "Chair’s Award"];
+const card = "background: #FFFFFF; border: 1px solid #D9DEE2; border-radius: 6px; padding: 0.9rem 1rem; text-align: center; white-space: pre-line";
+---
+<Base image="/assets/img/work/engraved-crystal-awards-welsh-public-affairs-awards-1200.webp" title={meta.title} description={meta.description} path={meta.url} faqs={faqs["award-wording-ideas"]} scripts={[]}>
+<section style="background: #F5F6F7; padding: 3.5rem 1.5rem"><div style="max-width: 52rem; margin: 0 auto">
+<p style="margin: 0 0 0.75rem; color: #C8202A; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase">Guide</p>
+<h1 style="margin: 0 0 1rem; color: #3D5A5E; font-weight: 600; font-size: clamp(2rem, 4.5vw, 2.8rem); line-height: 1.15">Award wording ideas and staff award categories</h1>
+<p style="margin: 0 0 1.25rem; font-size: 1.15rem; color: #4B5563">What to put on a glass or crystal award, with examples for staff awards, long service, retirements, golf days and sports clubs, plus a list of award categories for your awards night.</p>
+<nav aria-label="Wording ideas by occasion"><ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem">
+  {[...groups.map((g) => [g.id, g.title.replace(/ award wording$/, "").replace(/^./, (c) => c.toUpperCase())]), ["categories", "Award categories"], ["layout", "What goes on an award"]].map(([id, label]) => <li><a href={`#${id}`} style="display: inline-block; background: #FFFFFF; border: 1px solid #D9DEE2; border-radius: 999px; padding: 0.35rem 0.8rem; font-size: 0.95rem; text-decoration: none; color: #3D5A5E; font-weight: 600">{label}</a></li>)}
+</ul></nav>
+</div></section>
+<section style="background: #FFFFFF; padding: 4rem 1.5rem"><div style="max-width: 72rem; margin: 0 auto"><div style="max-width: 52rem; margin: 0 auto">
+<div id="layout" style="margin-bottom: 3rem; scroll-margin-top: 6rem"><h2 style="margin: 0 0 0.6rem; color: #3D5A5E; font-weight: 600; font-size: clamp(1.6rem, 3vw, 2.1rem)">What goes on an award</h2>
+<p style="margin: 0 0 1rem; color: #4B5563">Most awards follow the same order, top to bottom. Leave out anything you don’t need: fewer lines means bigger, clearer engraving.</p>
+<ol style="margin: 0 0 1rem; padding-left: 1.25rem; color: #1F2933; line-height: 1.8"><li><strong>Logo or crest</strong>: your company, club or event logo</li><li><strong>Event</strong>: for example “Staff Awards 2026”</li><li><strong>Award title</strong>: the category, such as “Employee of the Year”</li><li><strong>Winner’s name</strong></li><li><strong>A short line</strong>: a date, a thank-you or the reason for the award</li></ol>
+<p style="margin: 0; color: #4B5563">Ordering a set? The logo and event usually stay the same and only the category and name change on each one. Every award page shows its engraving area, and we send a free proof before anything is engraved.</p></div>
+{groups.map((g) => <div id={g.id} style="margin-bottom: 2.5rem; scroll-margin-top: 6rem"><h2 style="margin: 0 0 1rem; font-size: 1.3rem; color: #1F2933">{g.title}</h2><ul style="list-style: none; margin: 0 0 0.75rem; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 0.75rem">{g.examples.map((e) => <li style={card}>{e}</li>)}</ul><p style="margin: 0"><a href={g.link[0]} style="font-weight: 700">{g.link[1]} →</a></p></div>)}
+<div id="categories" style="margin-bottom: 1rem; scroll-margin-top: 6rem"><h2 style="margin: 0 0 0.6rem; color: #3D5A5E; font-weight: 600; font-size: clamp(1.6rem, 3vw, 2.1rem)">Staff award category ideas</h2>
+<p style="margin: 0 0 1rem; color: #4B5563">Popular categories for awards nights and staff recognition. Mix and match: the minimum order is 2 awards in total, and they don’t all have to be the same design.</p>
+<ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem">{categories.map((c) => <li style="background: #F5F6F7; border-radius: 6px; padding: 0.45rem 0.8rem; color: #1F2933">{c}</li>)}</ul></div>
+<p style="margin: 2rem 0 0; font-size: 1.1rem"><a href="/award-finder/" style="font-weight: 700">Not sure which award? Try the award finder →</a> &nbsp; <a href="/our-work/" style="font-weight: 700">See awards we’ve engraved →</a></p>
+</div></div></section>
+<section style="background: #F5F6F7; padding: 4rem 1.5rem"><div style="max-width: 72rem; margin: 0 auto"><div style="max-width: 48rem"><h2 style="margin: 0 0 0.6rem; color: #3D5A5E; font-weight: 600; font-size: clamp(1.6rem, 3vw, 2.1rem)">Frequently asked questions</h2>
+{faqs["award-wording-ideas"].map((f, i) => <details style="border-bottom: 1px solid #E5E7EB; padding: 1rem 0" open={i === 0}><summary style="font-weight: 700; cursor: pointer; color: #1F2933">{f.q}</summary><p style="margin: 0.6rem 0 0; color: #4B5563">{f.a}</p></details>)}
+</div></div></section>
+<section style="background: #3D5A5E; color: #FFFFFF; padding: 3.5rem 1.5rem"><div style="max-width: 72rem; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem">
+<div style="flex: 1 1 24rem"><h2 style="margin: 0 0 0.4rem; font-size: 1.8rem; font-weight: 600">Got your wording?</h2><p style="margin: 0; color: #E5ECEC">Email it with your logo and we’ll reply within 24 hours with a quote, then send a free proof.</p></div>
+<div style="display: flex; flex-wrap: wrap; gap: 0.75rem"><a href="/glass-awards/" style="background: #FFFFFF; color: #3D5A5E; font-weight: 700; text-decoration: none; padding: 0.85rem 1.4rem; border-radius: 6px">Choose your awards</a>
+<a href="mailto:info@grimesengravers.com" style="border: 2px solid #FFFFFF; color: #FFFFFF; font-weight: 700; text-decoration: none; padding: 0.75rem 1.3rem; border-radius: 6px">Email us</a></div></div></section>
+</Base>

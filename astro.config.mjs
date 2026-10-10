@@ -55,5 +55,8 @@ export default defineConfig({
     '/can-we-engrave-it': '/contact/',
     '/bench-plaque-cost': '/memorial-bench-plaques/',
     '/glass-and-crystal-trophies': '/corporate-glass-awards/',
+    // Old catalogue pages Google still showed in Search Console (Oct 2026).
+    '/trophies-awards-catalogue': '/glass-awards/',
+    '/swatkins-catalogue': '/glass-awards/',
   },
 });
