@@ -14,9 +14,11 @@ interface Props {
   fonts?: boolean;
   noindex?: boolean;
   image?: string;
+  // The address Google should index when it isn't this page's own (other sizes of an award point to the main one).
+  canonical?: string;
 }
-const { title, description, path, faqs = [], scripts = [], fonts = false, noindex = false, image = '/assets/img/glass-award.jpg' } = Astro.props;
-const canonical = `${config.site}${path}`;
+const { title, description, path, faqs = [], scripts = [], fonts = false, noindex = false, image = '/assets/img/glass-award.jpg', canonical: canonicalPath } = Astro.props;
+const canonical = `${config.site}${canonicalPath ?? path}`;
 // Set in .env locally and as GitHub Actions secrets for deploys. Analytics stays off when the key is missing.
 const posthogKey = (import.meta.env.PUBLIC_POSTHOG_KEY ?? '').trim();
 const posthogHost = (import.meta.env.PUBLIC_POSTHOG_HOST || 'https://eu.i.posthog.com').trim();

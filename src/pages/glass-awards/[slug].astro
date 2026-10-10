@@ -2,32 +2,38 @@
 import Base from "../../layouts/Base.astro";
 import config from "../../data/config.json";
 import { absUrl } from "../../lib/schema";
-import { awards, awardUrl, quoteUrl, fromPrice, mm, fit, describe, sizesOf, MIN_QTY, type AwardWithSlug } from "../../lib/awards";
+import { awards, awardUrl, quoteUrl, fromPrice, mm, fit, describe, sizesOf, awardTitle, awardDescription, MIN_QTY, type AwardWithSlug } from "../../lib/awards";
 
 export function getStaticPaths() {
   return awards.map((a) => ({ params: { slug: a.slug }, props: { award: a } }));
 }
 const { award: a } = Astro.props as { award: AwardWithSlug };
 const path = awardUrl(a);
-const title = `${a.name} | Engraved Glass Awards | Grimes Engravers`;
-const description = `${a.name} (${a.sku}), ${mm(a.dimensions_mm)}, engraving area ${mm(a.engraving_area_mm)}. ${fromPrice(a.price_from)} per award, minimum order ${MIN_QTY}. Engraved by Grimes Engravers, Cardiff.`;
+const sizes = sizesOf(a);
+// Every size of an award has its own page, but Google is pointed at the smallest size (the main page),
+// so the sizes don't compete with each other in search. Only main pages go in the sitemap (astro.config.mjs).
+const main = sizes[0];
+const isMain = main === a;
+const canonical = awardUrl(main);
+const title = awardTitle(a);
+const description = awardDescription(a);
 const f = fit(a.engraving_area_mm);
 const blurb = describe(a);
-const sizes = sizesOf(a);
 const similar = awards.filter((x) => x.range === a.range && x.family !== a.family && sizesOf(x)[0] === x).slice(0, 4);
 const productSchema = {
   '@context': 'https://schema.org', '@type': 'Product', '@id': `${config.site}${path}#product`,
   name: a.name, sku: a.sku, image: absUrl(a.image), category: a.range, url: `${config.site}${path}`,
   description: blurb,
   offers: {
-    '@type': 'AggregateOffer', priceCurrency: 'GBP', lowPrice: a.price_from, offerCount: 1,
+    '@type': 'AggregateOffer', priceCurrency: 'GBP', lowPrice: isMain ? Math.min(...sizes.map((s) => s.price_from)) : a.price_from,
+    ...(isMain && sizes.length > 1 ? { highPrice: Math.max(...sizes.map((s) => s.price_from)) } : {}), offerCount: isMain ? sizes.length : 1,
     availability: a.in_stock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
     eligibleQuantity: { '@type': 'QuantitativeValue', minValue: MIN_QTY },
     seller: { '@id': `${config.site}/#business` },
   },
 };
 ---
-<Base title={title} description={description} path={path} image={a.image} scripts={["awards.js"]}>
+<Base title={title} description={description} path={path} canonical={canonical} image={a.image} scripts={["awards.js"]}>
 <script type="application/ld+json" set:html={JSON.stringify(productSchema)} />
 {a.sample && <p class="m-0 px-6 py-2 text-center text-sm font-bold" style="background: #FDECEC; color: #8A1C1C">Test product. Real catalogue coming soon.</p>}
 <section class="bg-mist px-6 py-10" data-award-view={a.sku}>

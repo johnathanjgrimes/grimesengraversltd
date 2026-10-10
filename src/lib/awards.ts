@@ -137,3 +137,36 @@ export function searchTags(name: string): string {
   if (/heart/.test(n)) tags.push('heart love');
   return tags.join(' ');
 }
+
+// Search titles (up to about 60 characters, so Google doesn't cut them off) and descriptions (up to 160).
+// The main page of an award (its smallest size) leads with the sizes and the lowest price.
+const BRAND = ' | Grimes Engravers';
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+const fit60 = (options: string[]) => options.find((t) => t.length <= 62) ?? options[options.length - 1];
+const gbp = (n: number) => `£${n.toFixed(2)}`;
+function baseTitle(a: AwardWithSlug) {
+  const sizes = sizesOf(a);
+  if (sizes.length > 1 && sizes[0] === a) {
+    const p = cap(a.product), from = `from ${gbp(a.price_from)}`;
+    return fit60([`${p}, ${sizes.length} sizes ${from}${BRAND}`, `${p}, ${from}${BRAND}`, `${p}${BRAND}`, `${p}, ${from}`, p]);
+  }
+  return fit60([`${a.name}, from ${gbp(a.price_from)}${BRAND}`, `${a.name}${BRAND}`, `${a.name}, from ${gbp(a.price_from)}`, a.name]);
+}
+// Two different designs sometimes share a name: their titles get the product code to tell them apart.
+const titleCount = new Map<string, number>();
+for (const a of awards) titleCount.set(baseTitle(a), (titleCount.get(baseTitle(a)) ?? 0) + 1);
+export function awardTitle(a: AwardWithSlug) {
+  const t = baseTitle(a);
+  if (titleCount.get(t)! === 1) return t;
+  return t.includes(BRAND) ? t.replace(BRAND, ` (${a.sku})${BRAND}`) : `${t} (${a.sku})`;
+}
+export function awardDescription(a: AwardWithSlug) {
+  const sizes = sizesOf(a);
+  const end = ` Your logo and wording engraved. Minimum order ${MIN_QTY}, quote within 24 hours.`;
+  const opts = sizes.length > 1 && sizes[0] === a
+    ? [`Engraved ${a.product} in ${sizes.length} sizes (${sizes.map((s) => s.size).join(', ')}), from ${gbp(a.price_from)} per award.${end}`,
+       `Engraved ${a.product} in ${sizes.length} sizes, from ${gbp(a.price_from)} per award.${end}`]
+    : [`${a.name}, ${mm(a.dimensions_mm)}, from ${gbp(a.price_from)} per award.${end}`, `${a.name}, from ${gbp(a.price_from)} per award.${end}`];
+  const short = opts[opts.length - 1].replace(end, ` Engraved with your logo. Minimum order ${MIN_QTY}.`);
+  return [...opts, short].find((d) => d.length <= 160) ?? short;
+}
