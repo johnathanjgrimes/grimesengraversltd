@@ -4,6 +4,8 @@ import config from '../data/config.json';
 import services from '../data/services.json';
 
 const SITE = config.site;
+// Full address for an image: our own paths get the site in front, supplier photos are already full.
+export const absUrl = (u: string) => (/^https?:\/\//.test(u) ? u : `${SITE}${u}`);
 const BUSINESS_ID = `${SITE}/#business`;
 
 export function business() {
@@ -55,7 +57,7 @@ export function webPage(path: string, title: string, description: string, image:
     '@context': 'https://schema.org', '@type': 'WebPage', '@id': `${SITE}${path}#webpage`,
     url: `${SITE}${path}`, name: title, description, isPartOf: { '@id': `${SITE}/#website` },
     about: { '@id': BUSINESS_ID }, inLanguage: 'en-GB',
-    primaryImageOfPage: { '@type': 'ImageObject', url: `${SITE}${image}` },
+    primaryImageOfPage: { '@type': 'ImageObject', url: absUrl(image) },
   };
 }
 

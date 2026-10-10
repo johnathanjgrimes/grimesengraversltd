@@ -1,6 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
 import config from "../../data/config.json";
+import { absUrl } from "../../lib/schema";
 import { awards, awardUrl, quoteUrl, fromPrice, mm, fit, describe, sizesOf, MIN_QTY, type AwardWithSlug } from "../../lib/awards";
 
 export function getStaticPaths() {
@@ -16,7 +17,7 @@ const sizes = sizesOf(a);
 const similar = awards.filter((x) => x.range === a.range && x.family !== a.family && sizesOf(x)[0] === x).slice(0, 4);
 const productSchema = {
   '@context': 'https://schema.org', '@type': 'Product', '@id': `${config.site}${path}#product`,
-  name: a.name, sku: a.sku, image: `${config.site}${a.image}`, category: a.range, url: `${config.site}${path}`,
+  name: a.name, sku: a.sku, image: absUrl(a.image), category: a.range, url: `${config.site}${path}`,
   description: blurb,
   offers: {
     '@type': 'AggregateOffer', priceCurrency: 'GBP', lowPrice: a.price_from, offerCount: 1,
