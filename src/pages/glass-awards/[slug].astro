@@ -18,6 +18,8 @@ const canonical = awardUrl(main);
 const title = awardTitle(a);
 const description = awardDescription(a);
 const f = fit(a.engraving_area_mm);
+// Two different designs sometimes share a supplier name: show the product code so their headings differ.
+const twin = awards.some((o) => o.name === a.name && o.family !== a.family);
 const blurb = describe(a);
 const similar = awards.filter((x) => x.range === a.range && x.family !== a.family && sizesOf(x)[0] === x).slice(0, 4);
 const productSchema = {
@@ -45,7 +47,7 @@ const productSchema = {
       </div>
       <div class="award-info min-w-0" style="flex: 1 1 22rem">
         <p class="m-0 mb-2 text-sm font-bold uppercase tracking-wide text-brand">{a.range}</p>
-        <h1 class="award-title m-0 mb-3 text-3xl font-semibold leading-tight text-teal">{a.name}</h1>
+        <h1 class="award-title m-0 mb-3 text-3xl font-semibold leading-tight text-teal">{a.name}{twin && ` (${a.sku})`}</h1>
         <p class="award-blurb m-0 mb-4 text-lg" style="color: #374151">{blurb}</p>
         {sizes.length > 1 && <nav class="mb-5" aria-label="Sizes">
           <p class="m-0 mb-2 font-bold">Choose a size <span class="muted font-normal">({sizes.length} sizes)</span></p>

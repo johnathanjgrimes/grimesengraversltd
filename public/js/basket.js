@@ -108,7 +108,8 @@
     document.querySelectorAll('[data-add-quote]').forEach(function (b) {
       var inQ = d.lines.some(function (l) { return l.sku === b.dataset.sku; });
       b.textContent = inQ ? '✓ In your quote' : (b.dataset.label || 'Add to quote');
-      b.setAttribute('aria-pressed', String(inQ));
+      // aria-pressed is only valid on buttons; the award page's link says "✓ In your quote" instead.
+      if (b.tagName === 'BUTTON') b.setAttribute('aria-pressed', String(inQ));
     });
     if (!list) return;
     list.innerHTML = n ? d.lines.map(function (l) {

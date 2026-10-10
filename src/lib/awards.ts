@@ -167,11 +167,11 @@ export function awardTitle(a: AwardWithSlug) {
 }
 export function awardDescription(a: AwardWithSlug) {
   const sizes = sizesOf(a);
-  const end = ` Your logo and wording engraved. Minimum order ${MIN_QTY}, quote within 24 hours.`;
+  const end = ` Your logo and wording engraved. Minimum ${MIN_QTY}, quotes in 24 hours.`;
   const opts = sizes.length > 1 && sizes[0] === a
     ? [`Engraved ${a.product} in ${sizes.length} sizes (${sizes.map((s) => s.size).join(', ')}), from ${gbp(a.price_from)} per award.${end}`,
        `Engraved ${a.product} in ${sizes.length} sizes, from ${gbp(a.price_from)} per award.${end}`]
     : [`${a.name}, ${mm(a.dimensions_mm)}, from ${gbp(a.price_from)} per award.${end}`, `${a.name}, from ${gbp(a.price_from)} per award.${end}`];
   const short = opts[opts.length - 1].replace(end, ` Engraved with your logo. Minimum order ${MIN_QTY}.`);
-  return [...opts, short].find((d) => d.length <= 155) ?? short;
+  return [...opts, short].find((d) => d.length <= 148) ?? short;
 }
