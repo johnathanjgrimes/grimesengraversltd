@@ -207,3 +207,22 @@ summary { min-height: 44px; display: list-item; }
 @media (max-width: 640px) {
   .coll-collage { grid-template-columns: repeat(4, 1fr); gap: 0.4rem; }
 }
+
+/* Award finder */
+.fd-q { border: 0; margin: 0; padding: 0; min-width: 0; }
+.fd-q legend { font-weight: 700; font-size: 1.15rem; color: #1F2933; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.6rem; padding: 0; }
+.fd-n { display: inline-flex; align-items: center; justify-content: center; width: 1.8rem; height: 1.8rem; border-radius: 50%; background: #3D5A5E; color: #fff; font-size: 0.95rem; }
+.fd-opts { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.fd-opt { position: relative; cursor: pointer; }
+.fd-opt input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.fd-opt span { display: inline-flex; align-items: center; min-height: 44px; padding: 0.5rem 1rem; border: 2px solid #D1D5DB; border-radius: 999px; font-weight: 600; color: #3D5A5E; background: #fff; }
+.fd-opt:hover span { border-color: #3D5A5E; }
+.fd-opt input:checked + span { background: #3D5A5E; border-color: #3D5A5E; color: #fff; }
+.fd-opt input:focus-visible + span { outline: 3px solid #C8202A; outline-offset: 2px; }
+.fd-tip { background: #FFF7E6; border-left: 4px solid #D99A1E; padding: 0.75rem 1rem; border-radius: 6px; color: #4B3A12; }
+
+/* Reviews */
+.rv-grid { display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr)); }
+.rv-card { background: #fff; border-radius: 10px; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.rv-stars { color: #E0A21B; letter-spacing: 0.1em; }
+.rv-cap { margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap; font-size: 0.9rem; }

@@ -1,0 +1,39 @@
+---
+// Customer reviews, copied by hand from Trustpilot and Google into src/data/reviews.json (no widget,
+// so nothing slows the page). Each review: { "name": "Sarah J.", "text": "…", "rating": 5,
+// "source": "trustpilot" | "google" }. General reviews of the business, not of individual products.
+// The section only appears once there is at least one review.
+import data from "../data/reviews.json";
+const { limit = 6, bg = "#F5F6F7" } = Astro.props;
+type Review = { name: string; text: string; rating: number; source: "trustpilot" | "google" };
+const reviews = (data.reviews as Review[]).slice(0, limit);
+const stars = (n: number) => "★★★★★".slice(0, Math.round(n)) + "☆☆☆☆☆".slice(0, 5 - Math.round(n));
+const sources = (["trustpilot", "google"] as const).filter((s) => data[s].count > 0 && data[s].url);
+const label = { trustpilot: "Trustpilot", google: "Google" };
+// Trustpilot's figure is its TrustScore, not a plain average, so it is labelled as such.
+const summary = sources.map((s) => s === "trustpilot"
+  ? `TrustScore ${data[s].rating ? `${data[s].rating.toFixed(1)} · ` : ""}${data[s].count} reviews on Trustpilot`
+  : `${data[s].rating ? `${data[s].rating.toFixed(1)} from ` : ""}${data[s].count} Google reviews`).join(" · ");
+---
+{reviews.length > 0 && <section class="px-6 py-14" style={`background: ${bg}`} aria-labelledby="reviews-title">
+  <div class="mx-auto max-w-6xl">
+    <div class="mb-8 text-center">
+      <p class="m-0 mb-2 text-sm font-bold uppercase tracking-widest text-brand">Reviews</p>
+      <h2 id="reviews-title" class="m-0 mb-3 text-3xl font-semibold text-teal">What our customers say</h2>
+      {summary && <p class="muted m-0 text-lg"><span class="rv-stars" aria-hidden="true">★★★★★</span>{" "}{summary}</p>}
+    </div>
+    <ul class="rv-grid m-0 list-none p-0">
+      {reviews.map((r) => <li class="rv-card">
+        <figure class="m-0 flex h-full flex-col">
+          <div class="rv-stars mb-2" aria-label={`${r.rating} out of 5 stars`}>{stars(r.rating)}</div>
+          <blockquote class="m-0 flex-1 leading-relaxed">“{r.text}”</blockquote>
+          <figcaption class="rv-cap"><strong>{r.name}</strong><span class="muted">{label[r.source]}</span></figcaption>
+        </figure>
+      </li>)}
+    </ul>
+    <p class="m-0 mt-8 flex flex-wrap justify-center gap-3">
+      {sources.map((s) => <a class="btn" href={data[s].url} target="_blank" rel="noopener">Read all reviews on {label[s]}</a>)}
+      {(["google", "trustpilot"] as const).filter((s) => data[s].writeUrl).slice(0, 1).map((s) => <a class="btn ghost" href={data[s].writeUrl} target="_blank" rel="noopener">Leave us a review</a>)}
+    </p>
+  </div>
+</section>}

@@ -6,23 +6,17 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import Base from "../layouts/Base.astro";
 import AwardCard from "../components/AwardCard.astro";
-import collections from "../data/collections.json";
+import Reviews from "../components/Reviews.astro";
+import { collections, productsIn } from "../lib/collections";
 import { products, quoteUrl, fromPrice, MIN_QTY } from "../lib/awards";
 
 const SHOW = 24;
-type Match = { ranges?: string[]; include?: string; exclude?: string };
-const matches = (m: Match) => {
-  const inc = m.include ? new RegExp(m.include, "i") : null, exc = m.exclude ? new RegExp(m.exclude, "i") : null;
-  return products.filter(({ sizes }) => sizes.some((a) =>
-    (!m.ranges || m.ranges.includes(a.range)) && (!inc || inc.test(a.name)) && !(exc && exc.test(a.name))));
-};
-
 export function getStaticPaths() {
   return collections.map((c) => ({ params: { collection: c.slug }, props: { c } }));
 }
 const { c } = Astro.props;
 const path = `/${c.slug}/`;
-const list = matches(c.match as Match);
+const list = productsIn(c);
 const shown = list.slice(0, SHOW);
 const lowest = Math.min(...list.map((p) => p.main.price_from));
 const scene = `/assets/img/collections/${c.slug}.webp`;
@@ -41,7 +35,7 @@ const crumb = c.kind === "range" ? "Award ranges" : "Awards by occasion";
       <ul class="m-0 mt-5 flex list-none flex-wrap gap-x-6 gap-y-2 p-0 font-semibold" style="color: #E5E7EB">
         <li>✓ {list.length} designs {fromPrice(lowest)}</li><li>✓ Minimum order {MIN_QTY}</li><li>✓ Quote within 24 hours</li><li>✓ Proof before we engrave</li>
       </ul>
-      <p class="m-0 mt-6 flex flex-wrap gap-3"><a class="btn" href="#awards">See the awards</a><a class="btn" href={quoteUrl()} style="background: transparent; color: #FFFFFF; border: 2px solid #FFFFFF">Ask us to recommend</a></p>
+      <p class="m-0 mt-6 flex flex-wrap gap-3"><a class="btn" href="#awards">See the awards</a><a class="btn" href={`/award-finder/${c.kind === "occasion" ? `?for=${c.slug}` : ""}`} style="background: transparent; color: #FFFFFF; border: 2px solid #FFFFFF">Use the award finder</a></p>
     </div>
     {hasScene
       ? <img src={scene} alt={c.h1} width="800" height="600" fetchpriority="high" class="coll-scene" />
@@ -82,6 +76,7 @@ const crumb = c.kind === "range" ? "Award ranges" : "Awards by occasion";
   <h2 style="margin: 0 0 0.6rem; color: #3D5A5E; font-weight: 600; font-size: clamp(1.6rem, 3vw, 2.1rem)">Frequently asked questions</h2>
   {c.faqs.map((f, i) => <details style="border-bottom: 1px solid #E5E7EB; padding: 1rem 0" open={i === 0}><summary style="font-weight: 700; cursor: pointer; color: #1F2933">{f.q}</summary><p style="margin: 0.6rem 0 0; color: #4B5563">{f.a}</p></details>)}
 </div></div></section>
+<Reviews limit={3} />
 <section class="bg-mist px-6 py-10">
   <div class="mx-auto max-w-6xl">
     <h2 class="m-0 mb-4 text-xl font-semibold text-teal">{c.kind === "range" ? "Other award ranges" : "Awards for other occasions"}</h2>

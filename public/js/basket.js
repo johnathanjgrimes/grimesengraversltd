@@ -207,7 +207,7 @@
       e.preventDefault();
       if (Q.has(add.dataset.sku)) { openPanel(); return; }
       Q.add({ sku: add.dataset.sku, name: add.dataset.name, image: add.dataset.image, price: add.dataset.price, unit: parseFloat(add.dataset.unit) || undefined, size: add.dataset.size, area: add.dataset.area,
-        fitChars: parseInt(add.dataset.fitChars, 10) || null, fitLines: parseInt(add.dataset.fitLines, 10) || null, url: add.dataset.url, src: add.dataset.src, stock: add.dataset.stock !== 'false' });
+        fitChars: parseInt(add.dataset.fitChars, 10) || null, fitLines: parseInt(add.dataset.fitLines, 10) || null, url: add.dataset.url, src: add.dataset.src, stock: add.dataset.stock !== 'false', qty: parseInt(add.dataset.qty, 10) || undefined });
       toast(add.dataset.name);
     }
   });

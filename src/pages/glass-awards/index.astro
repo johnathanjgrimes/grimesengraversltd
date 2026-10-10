@@ -1,6 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
 import AwardCard from "../../components/AwardCard.astro";
+import Reviews from "../../components/Reviews.astro";
 import faqs from "../../data/faqs.json";
 import pages from "../../data/pages.json";
 import collections from "../../data/collections.json";
@@ -24,6 +25,7 @@ const PAGE = 48;
       <input id="aw-q" type="search" placeholder={`Search ${products.length} awards: try “star”, “blue crystal”, “golf” or a code`} autocomplete="off" enterkeyhint="search" />
       <kbd class="aw-kbd" aria-hidden="true">/</kbd>
     </div>
+    <p class="m-0 mt-3" style="color: #D1D5DB">Not sure where to start? <a href="/award-finder/" style="color: #FFFFFF; font-weight: 700">Try the award finder →</a></p>
   </div>
 </section>
 {hasSamples && <p class="m-0 px-6 py-2 text-center text-sm font-bold" style="background: #FDECEC; color: #8A1C1C">Test products shown. Real catalogue coming soon.</p>}
@@ -67,10 +69,11 @@ const PAGE = 48;
     </div>
     <p class="mt-8 text-center"><button type="button" id="aw-more" class="btn ghost" hidden>Show more awards</button></p>
     <div class="mt-10 flex flex-wrap items-center justify-between gap-4 rounded-lg bg-white p-6">
-      <div><p class="m-0 text-xl font-semibold text-teal">Not sure which one?</p><p class="muted m-0">Tell us the occasion, numbers and budget and we’ll recommend something.</p></div>
-      <a class="btn" href={quoteUrl()}>Ask us to recommend</a>
+      <div><p class="m-0 text-xl font-semibold text-teal">Not sure which one?</p><p class="muted m-0">Answer three quick questions in the award finder, or tell us what you need and we’ll recommend something.</p></div>
+      <div class="flex flex-wrap gap-2"><a class="btn" href="/award-finder/">Try the award finder</a><a class="btn ghost" href={quoteUrl()}>Ask us to recommend</a></div>
     </div>
     <p class="muted mt-6 text-sm">Prices are “from” prices per award. Engraving is added on top and confirmed in your quote.</p>
   </div>
 </section>
+<Reviews bg="#FFFFFF" />
 </Base>

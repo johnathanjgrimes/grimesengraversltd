@@ -25,6 +25,7 @@ export const GET: APIRoute = () => {
 - Languages: engraving in English, Welsh or both.
 - Does not offer: trophies or medals; memorial, wall or opening plaques other than bench plaques; nameplates, signs or labels; engraving of personal items (watches, jewellery, gifts); wooden items; while-you-wait engraving; council or trade supply. Glass awards need a minimum of 2 in total.
 - Glass award pricing: "from" prices per award are listed at ${config.site}/glass-awards/; engraving is quoted separately.
+- Award finder: ${config.site}/award-finder/ (choose occasion, quantity and budget per award to see matching awards).
 - To get a quote: ${config.site}/quote/ (choose award, quantity of 2 or more, wording, date).
 - How to order: email ${config.email} or use the quote form (${config.site}/contact/). Every order gets a proof before engraving.
 

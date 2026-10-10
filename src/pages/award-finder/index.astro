@@ -1,0 +1,79 @@
+---
+// Award finder: three questions (occasion, how many, budget) filter the catalogue. No AI: it can only
+// suggest awards we actually supply. Every product is in the page; public/js/finder.js shows the matches.
+import Base from "../../layouts/Base.astro";
+import AwardCard from "../../components/AwardCard.astro";
+import { collections, productsIn } from "../../lib/collections";
+import { products, quoteUrl, MIN_QTY } from "../../lib/awards";
+
+const OCCASIONS: [string, string][] = [
+  ["employee-of-the-year-awards", "Employee or team of the year"],
+  ["corporate-awards", "Company or sales awards"],
+  ["long-service-awards", "Long service"],
+  ["retirement-awards", "Retirement"],
+  ["golf-awards", "Golf"],
+  ["football-awards", "Football"],
+  ["sports-awards", "Other sports"],
+  ["", "Something else"],
+];
+const BUDGETS: [string, string][] = [["0-20", "Under £20"], ["20-40", "£20 to £40"], ["40-75", "£40 to £75"], ["75-", "£75 and over"], ["", "Not sure yet"]];
+const member = new Map<string, string[]>();
+for (const [slug] of OCCASIONS) {
+  const c = collections.find((x) => x.slug === slug);
+  if (c) for (const p of productsIn(c)) member.set(p.main.sku, [...(member.get(p.main.sku) ?? []), slug]);
+}
+const title = "Award Finder: Find the Right Glass Award | Grimes Engravers";
+const description = "Answer three quick questions (what the awards are for, how many and your budget) and see glass and crystal awards that fit. Minimum order 2.";
+---
+<Base title={title} description={description} path="/award-finder/" scripts={["finder.js"]}>
+<section class="bg-navy px-6 py-10 text-white">
+  <div class="mx-auto max-w-6xl">
+    <p class="m-0 mb-3 text-sm font-bold uppercase tracking-widest" style="color: #F3A3A6"><a href="/glass-awards/" style="color: inherit">Glass &amp; crystal awards</a> · Award finder</p>
+    <h1 class="m-0 mb-3 text-4xl font-semibold leading-tight">Find the right award</h1>
+    <p class="m-0 max-w-2xl text-lg" style="color: #D1D5DB">Three quick questions and we’ll show you awards that fit. Add the ones you like to your quote, and we reply within 24 hours with the full price, engraving included.</p>
+  </div>
+</section>
+<section class="bg-mist px-6 py-8">
+  <form id="finder" class="mx-auto flex max-w-6xl flex-col gap-6 rounded-lg bg-white p-6" onsubmit="return false">
+    <fieldset class="fd-q">
+      <legend><span class="fd-n">1</span> What are the awards for?</legend>
+      <div class="fd-opts">{OCCASIONS.map(([v, l], i) => <label class="fd-opt"><input type="radio" name="for" value={v} checked={i === 0} /><span>{l}</span></label>)}</div>
+    </fieldset>
+    <fieldset class="fd-q">
+      <legend><span class="fd-n">2</span> How many awards do you need?</legend>
+      <div class="flex flex-wrap items-center gap-3">
+        <input type="number" name="qty" id="fd-qty" class="inp" min={MIN_QTY} value={MIN_QTY} inputmode="numeric" style="width: 7rem" aria-label="Number of awards" />
+        <span class="muted text-sm">Minimum {MIN_QTY} in total. You can mix different awards and sizes.</span>
+      </div>
+    </fieldset>
+    <fieldset class="fd-q">
+      <legend><span class="fd-n">3</span> Budget per award?</legend>
+      <div class="fd-opts">{BUDGETS.map(([v, l]) => <label class="fd-opt"><input type="radio" name="budget" value={v} checked={v === ""} /><span>{l}</span></label>)}</div>
+      <p class="muted m-0 mt-2 text-sm">Prices are “from” prices per award. Engraving is added on top and confirmed in your quote.</p>
+    </fieldset>
+    <a href="#fd-results" id="fd-jump" class="btn self-start">See the awards ↓</a>
+  </form>
+</section>
+<section class="bg-mist px-6 pb-10">
+  <div class="mx-auto max-w-6xl">
+    <div id="fd-results" class="mb-5 flex flex-wrap items-baseline justify-between gap-3" style="scroll-margin-top: 1rem">
+      <h2 id="fd-count" class="m-0 text-2xl font-semibold text-teal" aria-live="polite">Awards that fit</h2>
+      <a id="fd-more-link" class="font-semibold" href="/glass-awards/">Browse all {products.length} awards</a>
+    </div>
+    <p id="fd-tip" class="fd-tip m-0 mb-5" hidden></p>
+    <ul id="fd-grid" class="m-0 grid list-none gap-6 p-0 aw-grid" style="grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr))">
+      {products.map((p, i) => <AwardCard product={p} index={i} hidden={i >= 12} extra={{ "data-for": (member.get(p.main.sku) ?? []).join(" ") }} />)}
+    </ul>
+    <p class="mt-8 text-center"><button type="button" id="fd-show" class="btn ghost" hidden>Show more</button></p>
+    <div id="fd-empty" class="rounded-lg bg-white p-8 text-center" hidden>
+      <p class="m-0 mb-2 text-xl font-semibold text-teal">Nothing in that price range</p>
+      <p class="muted m-0 mb-4">Try a different budget, or tell us what you’re after and we’ll recommend something.</p>
+      <a class="btn" href={quoteUrl()}>Ask us to recommend</a>
+    </div>
+    <div class="mt-10 flex flex-wrap items-center justify-between gap-4 rounded-lg bg-white p-6">
+      <div><p class="m-0 text-xl font-semibold text-teal">Still not sure?</p><p class="muted m-0">Tell us the occasion, numbers and budget and we’ll recommend something by email.</p></div>
+      <a class="btn" href={quoteUrl()}>Ask us to recommend</a>
+    </div>
+  </div>
+</section>
+</Base>

@@ -1,7 +1,7 @@
 ---
 // One award product in a grid: the catalogue and the range/occasion pages.
 import { awardUrl, fromPrice, mm, fit, searchTags } from "../lib/awards";
-const { product, index = 99, attrs = true } = Astro.props;
+const { product, index = 99, attrs = true, extra = {} } = Astro.props;
 const { main: a, sizes } = product;
 const f = fit(a.engraving_area_mm);
 const multi = sizes.length > 1;
@@ -12,7 +12,7 @@ const data = attrs ? {
   "data-search": `${sizes.map((s) => `${s.name} ${s.sku} ${s.dimensions_mm}`).join(' ')} ${a.range} ${searchTags(a.name)}`.toLowerCase(),
 } : {};
 ---
-<li class="aw-card" {...data} hidden={Astro.props.hidden}>
+<li class="aw-card" {...data} {...extra} hidden={Astro.props.hidden}>
   <a href={awardUrl(a)} class="aw-card-link">
     <img src={a.thumb} alt={title} loading={index < 8 ? "eager" : "lazy"} decoding="async" width="480" height="480" class="aw-card-img" />
     <span class="aw-card-body flex flex-col gap-1 px-4 pt-4">

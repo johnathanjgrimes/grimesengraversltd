@@ -3,6 +3,7 @@ import Base from "../../layouts/Base.astro";
 import config from "../../data/config.json";
 import faqs from "../../data/faqs.json";
 const meta = {"url": "/memorial-bench-plaques/", "title": "Memorial Bench Plaques Cardiff | Grimes Engravers", "description": "Engraved brass and stainless steel memorial bench plaques. Welsh & English, free proof, screws included, UK delivery. Family engravers since 1947."};
+import Reviews from "../../components/Reviews.astro";
 ---
 <Base image="/assets/img/bench-plaque.jpg" title={meta.title} description={meta.description} path={meta.url} faqs={faqs["memorial-bench-plaques"]} scripts={[]}>
 <section style="background: #F5F6F7; padding: 3.5rem 1.5rem">
@@ -23,7 +24,9 @@ const meta = {"url": "/memorial-bench-plaques/", "title": "Memorial Bench Plaque
 <div><h3 style="margin: 0 0 0.4rem; font-size: 1.1rem">Engravers in Cardiff</h3><p style="margin: 0; color: #4B5563">Canton, Llandaff, Whitchurch, Rhiwbina, Roath, Cyncoed, Llanishen, Radyr, Fairwater, Ely, Grangetown, Cardiff Bay</p></div>
 <div><h3 style="margin: 0 0 0.4rem; font-size: 1.1rem">South Wales</h3><p style="margin: 0; color: #4B5563">Penarth, Barry, Dinas Powys, Cowbridge, Vale of Glamorgan, Newport, Caerphilly, Pontypridd, Llantrisant, Bridgend</p></div>
 <div><h3 style="margin: 0 0 0.4rem; font-size: 1.1rem">UK-wide</h3><p style="margin: 0; color: #4B5563">Bench plaques posted securely anywhere in the UK.</p></div>
-</div></div></section><section style="background: #3D5A5E; color: #FFFFFF; padding: 3.5rem 1.5rem"><div style="max-width: 72rem; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem">
+</div></div></section>
+<Reviews />
+<section style="background: #3D5A5E; color: #FFFFFF; padding: 3.5rem 1.5rem"><div style="max-width: 72rem; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem">
 <div style="flex: 1 1 24rem"><h2 style="margin: 0 0 0.4rem; font-size: 1.8rem; font-weight: 600">Order a bench plaque</h2><p style="margin: 0; color: #E5ECEC">Send us your wording and size and we’ll email a proof.</p></div>
 <div style="display: flex; flex-wrap: wrap; gap: 0.75rem"><a href="/contact/" style="background: #FFFFFF; color: #3D5A5E; font-weight: 700; text-decoration: none; padding: 0.85rem 1.4rem; border-radius: 6px">Request a quote</a>
 <a href="mailto:info@grimesengravers.com" style="border: 2px solid #FFFFFF; color: #FFFFFF; font-weight: 700; text-decoration: none; padding: 0.75rem 1.3rem; border-radius: 6px">Email us</a></div></div></section>
