@@ -5,7 +5,7 @@ const ranges = collections.filter((c) => c.kind === "range");
 const occasions = collections.filter((c) => c.kind === "occasion");
 const slugs = collections.map((c) => `/${c.slug}/`);
 const inAwards = path.startsWith("/glass-awards/") || path === "/quote/" || path === "/corporate-glass-awards/" || path === "/award-wording-ideas/" || slugs.includes(path);
-const inPlaques = ["/memorial-bench-plaques/", "/bench-plaque-wording-ideas/", "/plaque-fonts/", "/can-i-put-a-plaque-on-a-bench/"].includes(path);
+const inPlaques = ["/memorial-bench-plaques/", "/design-a-bench-plaque/", "/brass-bench-plaques/", "/stainless-steel-bench-plaques/", "/pet-memorial-bench-plaques/", "/memorial-bench-plaque-for-mum-and-dad/", "/bench-plaque-wording-ideas/", "/plaque-fonts/", "/can-i-put-a-plaque-on-a-bench/"].includes(path);
 ---
 <div style="background: #23263A; color: #E5E7EB; font-size: 0.9rem">
 <div class="topbar" style="max-width: 72rem; margin: 0 auto; padding: 0.4rem 1.5rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.25rem 1.5rem">
@@ -47,6 +47,9 @@ const inPlaques = ["/memorial-bench-plaques/", "/bench-plaque-wording-ideas/", "
   <button type="button" class="nav-sub" aria-expanded="false" aria-controls="menu-plaques" aria-label="Show bench plaque pages and guides"><span aria-hidden="true">▾</span></button>
   <div id="menu-plaques" class="nav-menu">
     <a href="/memorial-bench-plaques/">Memorial bench plaques</a>
+    <a href="/brass-bench-plaques/">Brass plaques</a>
+    <a href="/stainless-steel-bench-plaques/">Stainless steel plaques</a>
+    <a href="/design-a-bench-plaque/">Design your plaque</a>
     <a href="/bench-plaque-wording-ideas/">Wording ideas</a>
     <a href="/plaque-fonts/">Font preview</a>
     <a href="/can-i-put-a-plaque-on-a-bench/">Can I put a plaque on a bench?</a>

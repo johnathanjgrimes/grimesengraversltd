@@ -3,6 +3,7 @@ import type { APIRoute } from 'astro';
 import config from '../data/config.json';
 import { anniversary } from '../lib/anniversary';
 import pages from '../data/pages.json';
+import plaquePages from '../data/plaque-pages.json';
 import services from '../data/services.json';
 import collections from '../data/collections.json';
 
@@ -40,7 +41,8 @@ ${collections.map((c) => `- [${c.h1}](${config.site}/${c.slug}/): ${c.descriptio
 
 ## Guides and tools
 
-${['award-wording-ideas', 'can-i-put-a-plaque-on-a-bench', 'bench-plaque-wording-ideas', 'plaque-fonts'].map(line).join('\n')}
+${Object.entries(plaquePages).map(([slug, x]) => `- [${x.h1}](${config.site}/${slug}/): ${x.description}`).join('\n')}
+${['award-wording-ideas', 'design-a-bench-plaque', 'can-i-put-a-plaque-on-a-bench', 'bench-plaque-wording-ideas', 'plaque-fonts'].map(line).join('\n')}
 
 ## For AI agents and tools
 

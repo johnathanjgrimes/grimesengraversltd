@@ -313,3 +313,14 @@ header .nav-toggle { order: 4; }
 /* Heritage wordmark in the style of our old shop-window lettering. */
 .heritage-mark { display: block; width: min(18rem, 100%); height: auto; margin: 0 0 1.5rem; }
 @media (max-width: 380px) { .anniv-badge { font-size: 0.78rem; letter-spacing: 0.06em; padding: 0.3rem 0.65rem; } }
+
+/* Bench plaque designer */
+.pq-set { margin: 0; border: 0; padding: 0; min-width: 0; }
+.pq-set legend { font-weight: 700; margin-bottom: 0.5rem; padding: 0; }
+.pq-opts { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.pq-opt { display: inline-flex; align-items: center; gap: 0.45rem; min-height: 2.75rem; padding: 0.4rem 0.9rem; border: 2px solid #9CA3AF; border-radius: 6px; cursor: pointer; font-weight: 600; background: #FFFFFF; }
+.pq-opt:hover { border-color: #3D5A5E; }
+.pq-opt:has(input:checked) { border-color: #3D5A5E; background: #EEF3F3; }
+.pq-opt:has(input:focus-visible) { outline: 3px solid #3D5A5E; outline-offset: 2px; }
+.pq-opt input { accent-color: #3D5A5E; margin: 0; }
+@media (min-width: 60rem) { .pq-preview { position: sticky; top: 6rem; } }

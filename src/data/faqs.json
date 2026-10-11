@@ -175,5 +175,99 @@
    "q": "Is there a minimum order?",
    "a": "Yes. Glass award orders start at 2 awards in total, and you can mix different awards and sizes."
   }
+ ],
+ "design-a-bench-plaque": [
+  {
+   "q": "How does the plaque designer work?",
+   "a": "Choose your wording, metal, size, font and options and you’ll see a preview as you go. Send it to us and we’ll email a quote within 24 hours (working days), then a free proof showing the exact layout before we engrave."
+  },
+  {
+   "q": "Is there a minimum order for bench plaques?",
+   "a": "No. You can order a single bench plaque. Glass awards have a minimum of 2, but plaques don’t."
+  },
+  {
+   "q": "Which size bench plaque should I choose?",
+   "a": "As a guide, an 8 x 3 inch plaque fits 3–4 lines and a 6 x 4 inch plaque 4–5 lines. The designer tells you if your wording would be small for the size you’ve picked. If the bench already has plaques, send a photo and we’ll match them."
+  },
+  {
+   "q": "Do the plaques come with screws?",
+   "a": "Yes. Plaques with screw holes come with stainless steel screws, so they won’t stain the wood. You can also choose a self-adhesive backing with no holes, or no fixings at all if you’re fitting it another way."
+  },
+  {
+   "q": "Can I add my own logo or emblem?",
+   "a": "Yes. Choose “My own logo or emblem” and reply to our email with the file (PDF, EPS, SVG or a clear photo). We engrave logos in black and white or full colour."
+  }
+ ],
+ "brass-bench-plaques": [
+  {
+   "q": "Will a brass bench plaque go dark?",
+   "a": "Yes, over time. Brass naturally darkens outdoors unless it’s polished, and many families like the way it mellows. If you’d rather it stayed bright with no care, choose stainless steel."
+  },
+  {
+   "q": "How do I clean a brass plaque?",
+   "a": "Use a little metal polish on a soft cloth, then buff it dry. Avoid scouring pads, which scratch the surface and the engraving."
+  },
+  {
+   "q": "What size brass plaque do I need?",
+   "a": "An 8 x 3 inch plaque fits about 3–4 lines and a 6 x 4 inch plaque about 4–5 lines. The plaque designer shows how your wording fits each size."
+  },
+  {
+   "q": "Do brass plaques come with screws?",
+   "a": "Yes. Plaques with screw holes come with stainless steel screws, so they won’t stain the wood."
+  }
+ ],
+ "stainless-steel-bench-plaques": [
+  {
+   "q": "Will a stainless steel plaque rust?",
+   "a": "No. Stainless steel won’t rust or tarnish outdoors, which is why it’s often chosen for exposed and coastal spots."
+  },
+  {
+   "q": "Is stainless steel or brass better for a bench?",
+   "a": "Both last well outdoors. Stainless steel stays silver with almost no care. Brass has a warmer, traditional look and darkens with age unless it’s polished."
+  },
+  {
+   "q": "How do I clean a stainless steel plaque?",
+   "a": "Wipe it with warm soapy water and a soft cloth, then dry it. That’s usually all it needs."
+  },
+  {
+   "q": "Do stainless steel plaques come with screws?",
+   "a": "Yes. Plaques with screw holes come with stainless steel screws, so they won’t stain the wood."
+  }
+ ],
+ "pet-memorial-bench-plaques": [
+  {
+   "q": "What do you write on a pet memorial plaque?",
+   "a": "Usually their name, a short line and the years, such as “For Max, our faithful friend, 2011 – 2025”. A favourite walk or spot makes it personal. See the examples above or our wording ideas page."
+  },
+  {
+   "q": "Can I add a paw print?",
+   "a": "Yes. Choose the paw print or heart in the plaque designer, or send us your own emblem and we’ll show it on your proof."
+  },
+  {
+   "q": "Can I put a pet memorial plaque on a park bench?",
+   "a": "Only if the bench owner allows it. Council bench schemes set their own rules about dedications, so check with them first. Garden and private benches are up to you."
+  },
+  {
+   "q": "Which size suits a pet memorial plaque?",
+   "a": "An 8 x 3 inch plaque suits a name and a short line. For a longer message or a larger emblem, choose 6 x 4 inches or bigger."
+  }
+ ],
+ "memorial-bench-plaque-for-mum-and-dad": [
+  {
+   "q": "What do you write on a memorial plaque for mum or dad?",
+   "a": "Most families choose their name and years with a short line, such as “In loving memory of our wonderful Mum” or “Who loved this view”. See the examples above or our full wording ideas."
+  },
+  {
+   "q": "Can one plaque have both parents’ names?",
+   "a": "Yes. Two names and dates fit comfortably on a 6 x 4 or 7 x 5 inch plaque, with a short line underneath."
+  },
+  {
+   "q": "Can you match a plaque already on the bench?",
+   "a": "Yes. Send us a photo of the existing plaque and we’ll match the metal, size and font as closely as we can."
+  },
+  {
+   "q": "Can the plaque be in Welsh?",
+   "a": "Yes. We engrave Welsh wording and accents correctly, in Welsh, English or both."
+  }
  ]
 }

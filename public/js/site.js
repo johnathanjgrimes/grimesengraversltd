@@ -84,6 +84,13 @@
     } catch (e) {}
   }
 
+  // "Use this wording" and "Design a … plaque" links: carry the wording, metal or emblem to the plaque designer.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('[data-use-wording], [data-use-material], [data-use-emblem]');
+    if (!a) return;
+    try { sessionStorage.setItem('plaque-preview', JSON.stringify({ wording: a.getAttribute('data-use-wording'), material: a.getAttribute('data-use-material'), emblem: a.getAttribute('data-use-emblem') })); } catch (err) {}
+  });
+
   // "Needed by" dates: block anything sooner than our lead time. Set here, not at build time, so it moves with today.
   document.querySelectorAll('input[type="date"][data-min-days]').forEach(function (inp) {
     var d = new Date();

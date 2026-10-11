@@ -1,0 +1,70 @@
+---
+// One bench plaque landing page (brass, stainless steel, pets, mum and dad). Copy lives in src/data/plaque-pages.json.
+import Base from "../layouts/Base.astro";
+import pages from "../data/plaque-pages.json";
+import faqs from "../data/faqs.json";
+import work from "../data/work.json";
+import plaque from "../data/plaque.json";
+import Reviews from "./Reviews.astro";
+const { slug } = Astro.props;
+const p = (pages as any)[slug];
+const url = `/${slug}/`;
+const hero = work.plaques.find((w) => w.file === p.image)!;
+const photos = p.photos.map((f: string) => work.plaques.find((w) => w.file === f)).filter(Boolean);
+const preset = { "data-use-material": p.preset.material, "data-use-emblem": p.preset.emblem };
+const h2 = "margin: 0 0 0.6rem; color: #3D5A5E; font-weight: 600; font-size: clamp(1.6rem, 3vw, 2.1rem)";
+const card = "background: #FFFFFF; border: 1px solid #D9DEE2; border-radius: 6px; padding: 0.9rem 1rem; text-align: center; font-family: Georgia, 'Times New Roman', serif; white-space: pre-line";
+---
+<Base image={`/assets/img/work/${p.image}-1200.webp`} title={p.title} description={p.description} path={url} faqs={faqs[slug as keyof typeof faqs]} scripts={[]}>
+<section style="background: #F5F6F7; padding: 3.5rem 1.5rem"><div style="max-width: 72rem; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 2.5rem">
+<div style="flex: 1 1 26rem; min-width: 0">
+<p style="margin: 0 0 0.75rem; color: #C8202A; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase">{p.eyebrow}</p>
+<h1 style="margin: 0 0 1rem; color: #3D5A5E; font-weight: 600; font-size: clamp(2rem, 4.5vw, 3rem); line-height: 1.15">{p.h1}</h1>
+<p style="margin: 0 0 1.75rem; font-size: 1.15rem; color: #4B5563">{p.intro} Engraved in our Cardiff workshop, with a free proof before anything is engraved and no minimum order.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 0.75rem">
+<a href="/design-a-bench-plaque/" {...preset} style="background: #3D5A5E; color: #FFFFFF; font-weight: 700; text-decoration: none; padding: 0.85rem 1.4rem; border-radius: 6px">{p.cta}</a>
+<a href="mailto:info@grimesengravers.com" style="border: 2px solid #3D5A5E; color: #3D5A5E; font-weight: 700; text-decoration: none; padding: 0.75rem 1.3rem; border-radius: 6px">Email us</a>
+</div></div>
+<div style="flex: 1 1 22rem; min-width: 0"><img decoding="async" fetchpriority="high" src={`/assets/img/work/${p.image}-1200.webp`} alt={p.imageAlt} width={hero.w} height={hero.h} style={`width: 100%; height: 20rem; object-fit: cover; object-position: ${hero.pos ?? "50% 50%"}; border-radius: 8px; display: block`}></div>
+</div></section>
+
+<section style="background: #FFFFFF; padding: 4rem 1.5rem"><div style="max-width: 72rem; margin: 0 auto">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1.5rem">{p.points.map((x: any) => <div style="background: #F5F6F7; border-radius: 8px; padding: 1.5rem"><h2 style="margin: 0 0 0.4rem; font-size: 1.15rem; color: #1F2933">{x.h}</h2><p style="margin: 0; color: #4B5563" set:html={x.p} /></div>)}</div>
+</div></section>
+
+<section style="background: #F5F6F7; padding: 4rem 1.5rem"><div style="max-width: 72rem; margin: 0 auto">
+<h2 style={h2}>Wording ideas</h2>
+<p style="margin: 0 0 1.5rem; color: #4B5563; max-width: 44rem">Pick one to start from and change the names and dates in the designer. <a href="/bench-plaque-wording-ideas/">More wording ideas</a>.</p>
+<ul style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 0.75rem">{p.examples.map((e: any) => <li style={card}><span style="display: block; font-family: system-ui, sans-serif; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #6B7280; margin-bottom: 0.4rem">{e.h}</span>{e.t}<a href="/design-a-bench-plaque/" data-use-wording={e.t} {...preset} style="display: block; margin-top: 0.6rem; font-family: system-ui, sans-serif; font-size: 0.9rem; font-weight: 700; white-space: normal" aria-label={`Use this wording in the plaque designer: ${e.t.split("\n")[0]}`}>Use this wording →</a></li>)}</ul>
+</div></section>
+
+<section style="background: #FFFFFF; padding: 4rem 1.5rem"><div style="max-width: 72rem; margin: 0 auto">
+<h2 style={h2}>Sizes</h2>
+<p style="margin: 0 0 1.5rem; color: #4B5563; max-width: 44rem">A guide to how much wording fits at a size that’s easy to read. Other sizes are available, and we can match a plaque already on the bench.</p>
+<div style="overflow-x: auto"><table style="border-collapse: collapse; width: 100%; min-width: 22rem; max-width: 44rem">
+<thead><tr style="text-align: left; border-bottom: 2px solid #D9DEE2"><th scope="col" style="padding: 0.6rem 0.75rem">Size</th><th scope="col" style="padding: 0.6rem 0.75rem">Millimetres</th><th scope="col" style="padding: 0.6rem 0.75rem">Lines of wording</th></tr></thead>
+<tbody>{plaque.sizes.map((s) => <tr style="border-bottom: 1px solid #E5E7EB"><td style="padding: 0.6rem 0.75rem; font-weight: 700">{s.name}</td><td style="padding: 0.6rem 0.75rem">{s.mm}</td><td style="padding: 0.6rem 0.75rem">Up to about {s.lines}</td></tr>)}</tbody>
+</table></div>
+<p style="margin: 1.25rem 0 0; color: #4B5563">Every plaque with screw holes comes with stainless steel screws, so it won’t stain the wood. Usually ready 10–14 working days after you approve the proof, then posted to you.</p>
+</div></section>
+
+{photos.length > 0 && <section style="background: #F5F6F7; padding: 4rem 1.5rem"><div style="max-width: 72rem; margin: 0 auto">
+<h2 style={h2}>Plaques we’ve engraved</h2>
+<p style="margin: 0 0 1.5rem; color: #4B5563">Real plaques from our Cardiff workshop. <a href="/our-work/">See more of our work</a>.</p>
+<div class="work-grid">{photos.map((w: any) => <figure style="margin: 0"><img loading="lazy" decoding="async" src={`/assets/img/work/${w.file}-640.webp`} width={w.w} height={w.h} alt={w.alt} style={`display: block; width: 100%; height: auto; border-radius: 8px${w.pos ? `; object-position: ${w.pos}` : ""}`}>{w.caption && <figcaption style="margin-top: 0.5rem; font-size: 0.9rem; color: #4B5563">{w.caption}</figcaption>}</figure>)}</div>
+</div></section>}
+
+<Reviews limit={3} bg="#FFFFFF" />
+
+<section style="background: #F5F6F7; padding: 4rem 1.5rem"><div style="max-width: 72rem; margin: 0 auto"><div style="max-width: 48rem"><h2 style={h2}>Frequently asked questions</h2>
+{faqs[slug as keyof typeof faqs].map((f, i) => <details style="border-bottom: 1px solid #E5E7EB; padding: 1rem 0" open={i === 0}><summary style="font-weight: 700; cursor: pointer; color: #1F2933">{f.q}</summary><p style="margin: 0.6rem 0 0; color: #4B5563">{f.a}</p></details>)}
+</div>
+<h2 style="margin: 3rem 0 1rem; font-size: 1.3rem; color: #1F2933">More bench plaques</h2>
+<ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.75rem">{p.related.map((r: string) => <li><a href={`/${r}/`} style="display: inline-block; background: #FFFFFF; border: 1px solid #D9DEE2; border-radius: 999px; padding: 0.5rem 1rem; font-weight: 700; text-decoration: none; color: #3D5A5E">{(pages as any)[r].h1}</a></li>)}<li><a href="/memorial-bench-plaques/" style="display: inline-block; background: #FFFFFF; border: 1px solid #D9DEE2; border-radius: 999px; padding: 0.5rem 1rem; font-weight: 700; text-decoration: none; color: #3D5A5E">All memorial bench plaques</a></li></ul>
+</div></section>
+
+<section style="background: #3D5A5E; color: #FFFFFF; padding: 3.5rem 1.5rem"><div style="max-width: 72rem; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem">
+<div style="flex: 1 1 24rem"><h2 style="margin: 0 0 0.4rem; font-size: 1.8rem; font-weight: 600">See your plaque before you order</h2><p style="margin: 0; color: #E5ECEC">Try your wording, size and font in the designer, then send it for a quote within 24 hours.</p></div>
+<div style="display: flex; flex-wrap: wrap; gap: 0.75rem"><a href="/design-a-bench-plaque/" {...preset} style="background: #FFFFFF; color: #3D5A5E; font-weight: 700; text-decoration: none; padding: 0.85rem 1.4rem; border-radius: 6px">{p.cta}</a>
+<a href="mailto:info@grimesengravers.com" style="border: 2px solid #FFFFFF; color: #FFFFFF; font-weight: 700; text-decoration: none; padding: 0.75rem 1.3rem; border-radius: 6px">Email us</a></div></div></section>
+</Base>

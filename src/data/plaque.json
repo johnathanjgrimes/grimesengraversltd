@@ -1,0 +1,94 @@
+{
+ "_note": "Bench plaque sizes (inches) with a rough guide to how many lines and characters per line fit at a readable size, and preview-only emblem outlines.",
+ "sizes": [
+  {
+   "id": "8x3",
+   "name": "8 x 3\"",
+   "mm": "203 x 76mm",
+   "w": 8,
+   "h": 3,
+   "lines": 4,
+   "chars": 30
+  },
+  {
+   "id": "6x4",
+   "name": "6 x 4\"",
+   "mm": "152 x 102mm",
+   "w": 6,
+   "h": 4,
+   "lines": 5,
+   "chars": 26
+  },
+  {
+   "id": "7x5",
+   "name": "7 x 5\"",
+   "mm": "178 x 127mm",
+   "w": 7,
+   "h": 5,
+   "lines": 6,
+   "chars": 30
+  },
+  {
+   "id": "10x5",
+   "name": "10 x 5\"",
+   "mm": "254 x 127mm",
+   "w": 10,
+   "h": 5,
+   "lines": 6,
+   "chars": 40
+  },
+  {
+   "id": "8x6",
+   "name": "8 x 6\"",
+   "mm": "203 x 152mm",
+   "w": 8,
+   "h": 6,
+   "lines": 7,
+   "chars": 34
+  },
+  {
+   "id": "a4",
+   "name": "A4 (10.7 x 8.2\")",
+   "mm": "272 x 208mm",
+   "w": 10.7,
+   "h": 8.2,
+   "lines": 10,
+   "chars": 44
+  }
+ ],
+ "emblems": [
+  {
+   "id": "none",
+   "name": "None"
+  },
+  {
+   "id": "cross",
+   "name": "Cross",
+   "svg": "<path d=\"M10 2h4v6h6v4h-6v10h-4V12H4V8h6z\"/>"
+  },
+  {
+   "id": "heart",
+   "name": "Heart",
+   "svg": "<path d=\"M12 21C5 16.5 2 13 2 9a5 5 0 0 1 10-1 5 5 0 0 1 10 1c0 4-3 7.5-10 12z\"/>"
+  },
+  {
+   "id": "star",
+   "name": "Star",
+   "svg": "<path d=\"M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 20.9l1.6-7L2 9.2l7.1-.6z\"/>"
+  },
+  {
+   "id": "paw",
+   "name": "Paw print",
+   "svg": "<ellipse cx=\"12\" cy=\"16\" rx=\"5\" ry=\"4.2\"/><ellipse cx=\"5\" cy=\"10\" rx=\"2.1\" ry=\"2.6\"/><ellipse cx=\"9.3\" cy=\"5.6\" rx=\"2.1\" ry=\"2.7\"/><ellipse cx=\"14.7\" cy=\"5.6\" rx=\"2.1\" ry=\"2.7\"/><ellipse cx=\"19\" cy=\"10\" rx=\"2.1\" ry=\"2.6\"/>"
+  },
+  {
+   "id": "flower",
+   "name": "Flower",
+   "svg": "<circle cx=\"12\" cy=\"6\" r=\"3.6\"/><circle cx=\"17.7\" cy=\"10.2\" r=\"3.6\"/><circle cx=\"15.5\" cy=\"16.9\" r=\"3.6\"/><circle cx=\"8.5\" cy=\"16.9\" r=\"3.6\"/><circle cx=\"6.3\" cy=\"10.2\" r=\"3.6\"/><circle cx=\"12\" cy=\"12\" r=\"2.6\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\"/>"
+  },
+  {
+   "id": "own",
+   "name": "My own logo or emblem"
+  }
+ ]
+}

@@ -3,6 +3,7 @@
 import type { APIRoute } from 'astro';
 import pages from '../data/pages.json';
 import faqs from '../data/faqs.json';
+import plaquePages from '../data/plaque-pages.json';
 import { collections } from '../lib/collections';
 import { products, awardUrl, fromPrice, searchTags } from '../lib/awards';
 
@@ -14,6 +15,7 @@ const extra: Record<string, string> = {
   '/can-i-put-a-plaque-on-a-bench/': 'council permission park cemetery dedicate bench rules',
   '/bench-plaque-wording-ideas/': 'wording words verse poem phrases welsh cymraeg inscription what to write mum dad husband wife parents nan grandad son daughter friend dog pet',
   '/award-wording-ideas/': 'wording words what to write inscription award categories ideas employee of the year long service retirement golf sports staff awards night',
+  '/design-a-bench-plaque/': 'design create build my own plaque designer preview quote order bench plaque size emblem',
   '/plaque-fonts/': 'font fonts lettering preview style typeface script',
   '/corporate-glass-awards/': 'company corporate business staff awards night logo',
   '/contact/': 'contact email quote enquiry get in touch help',
@@ -29,6 +31,8 @@ export const GET: APIRoute = () => {
   // Shorter names where a page's search title would look like another page's.
   const names: Record<string, string> = { '/': 'Home', '/corporate-glass-awards/': 'Glass awards for companies', '/glass-awards/': 'All glass awards (catalogue)', '/quote/': 'Your quote', '/contact/': 'Contact us' };
   for (const p of Object.values(pages)) items.push({ t: 'page', name: names[p.url] ?? short(p.title), url: p.url, desc: p.description, k: extra[p.url] ?? '' });
+  const plaqueWords: Record<string, string> = { 'brass-bench-plaques': 'brass gold polished', 'stainless-steel-bench-plaques': 'stainless steel silver metal coastal', 'pet-memorial-bench-plaques': 'pet dog cat paw print animal', 'memorial-bench-plaque-for-mum-and-dad': 'mum dad mam parents nan grandad couple' };
+  for (const [slug, x] of Object.entries(plaquePages)) items.push({ t: 'page', name: x.h1, url: `/${slug}/`, desc: x.description, k: `bench plaque ${plaqueWords[slug] ?? ''}` });
   items.push({ t: 'page', name: 'Our work', url: '/our-work/', desc: 'Photos of crystal awards and memorial bench plaques we have engraved.', k: extra['/our-work/'] });
   items.push({ t: 'page', name: 'Award finder', url: '/award-finder/', desc: 'Answer three quick questions and see awards that suit your occasion and budget.', k: extra['/award-finder/'] });
   for (const c of collections) items.push({ t: 'page', name: c.name, url: `/${c.slug}/`, desc: c.description, k: `${c.slug.replace(/-/g, ' ')} ${c.kind === 'occasion' ? 'occasion' : 'range'}` });
