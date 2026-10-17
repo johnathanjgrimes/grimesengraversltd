@@ -47,7 +47,7 @@ export default defineConfig({
     // We no longer supply trophies or medals.
     '/trophies-cardiff': '/sports-awards/',
     '/club-medals-trophies-cost': '/sports-awards/',
-    // No council or trade supply any more.
+    // Old council/trade page: send to the main bench plaque page.
     '/bench-plaque-supplier': '/memorial-bench-plaques/',
     // Bench plaques are the only plaques we still make.
     '/memorial-plaques': '/memorial-bench-plaques/',

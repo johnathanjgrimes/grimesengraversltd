@@ -15,7 +15,7 @@ export const GET: APIRoute = () => {
     minimum_order: config.minimumOrder, glass_award_minimum: MIN_QTY,
     languages: ['English', 'Welsh'],
     services: services.map((s) => ({ name: s.name, description: s.description, url: `${config.site}${s.url}` })),
-    does_not_offer: ['Trophies or medals', 'Plaques other than memorial bench plaques', 'Nameplates, signs or labels', 'Engraving personal items', 'Visits or collections', 'Council or trade supply'],
+    does_not_offer: ['Trophies or medals', 'Plaques other than memorial bench plaques', 'Nameplates, signs or labels', 'Engraving personal items', 'Visits or collections'],
     pages: {
       catalogue: `${config.site}/glass-awards/`, award_finder: `${config.site}/award-finder/`, quote: `${config.site}/quote/`,
       collections: collections.map((c) => ({ name: c.name, kind: c.kind, url: `${config.site}/${c.slug}/` })),
