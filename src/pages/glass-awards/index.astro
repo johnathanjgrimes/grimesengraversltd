@@ -75,5 +75,19 @@ const PAGE = 48;
     <p class="muted mt-6 text-sm">Prices are “from” prices per award. Engraving is added on top and confirmed in your quote.</p>
   </div>
 </section>
+<section class="bg-white px-6 py-12">
+  <div class="mx-auto max-w-3xl">
+    <h2 class="m-0 mb-3 text-2xl font-semibold text-teal">Engraved glass awards and glass trophies, made to order</h2>
+    <p class="m-0 mb-4">Every award above is engraved by us in Cardiff with your logo, the award title and each winner’s name. Whether you call them glass awards, glass trophies or crystal awards, they’re bespoke to your event: you choose the shape and size, and we lay out the engraving and send a free proof before anything is engraved.</p>
+    <div class="grid gap-6" style="grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr))">
+      <div><h3 class="m-0 mb-1 text-lg font-semibold">Glass or crystal?</h3><p class="m-0">Jade and clear glass awards are the lower-cost choice for category and team awards. Optical crystal is clearer and heavier, ideal for the headline award. <a href="/glass-vs-crystal-awards/">Compare glass and crystal</a>.</p></div>
+      <div><h3 class="m-0 mb-1 text-lg font-semibold">For companies, clubs and events</h3><p class="m-0">Staff awards nights, <a href="/long-service-awards/">long service</a>, <a href="/retirement-awards/">retirements</a>, <a href="/golf-awards/">golf days</a> and <a href="/corporate-awards/">corporate awards</a>. Minimum order {MIN_QTY} awards in total, in any mix.</p></div>
+      <div><h3 class="m-0 mb-1 text-lg font-semibold">Your logo and wording</h3><p class="m-0">Send your logo as a PDF, EPS or SVG and we set it up for engraving. Need help with the words? See our <a href="/award-wording-ideas/">award wording ideas</a>.</p></div>
+      <div><h3 class="m-0 mb-1 text-lg font-semibold">Lead times and delivery</h3><p class="m-0">Quotes within 24 hours on working days. Awards are ready 10–14 working days after you approve the proof and delivered anywhere in the UK. Planning an event? See our <a href="/awards-night-planning/">awards night timeline</a>.</p></div>
+    </div>
+    <h2 class="m-0 mb-3 mt-10 text-2xl font-semibold text-teal">Frequently asked questions</h2>
+    {(faqs["glass-awards"] ?? []).map((f, i) => <details class="py-4" style="border-bottom: 1px solid #E5E7EB" open={i === 0}><summary class="cursor-pointer font-bold">{f.q}</summary><p class="muted m-0 mt-2">{f.a}</p></details>)}
+  </div>
+</section>
 <Reviews bg="#FFFFFF" />
 </Base>
