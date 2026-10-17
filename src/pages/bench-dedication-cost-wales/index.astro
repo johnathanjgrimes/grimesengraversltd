@@ -1,0 +1,62 @@
+---
+import Base from "../../layouts/Base.astro";
+import faqs from "../../data/faqs.json";
+import pages from "../../data/pages.json";
+const meta = pages["bench-dedication-cost-wales"];
+// Guide targeting "cost to dedicate a bench" / "memorial bench cost" searches in South Wales.
+// Prices are as published by each council in 2026; check their pages before relying on them.
+const rows = [
+  { who: "Cardiff Bereavement Services (cemeteries and crematoria)", what: "Plaque on a shared bench, 10-year lease", price: "£330", src: "https://www.cardiffbereavement.co.uk/pricing/" },
+  { who: "Cardiff Bereavement Services", what: "Personal seat with one plaque, 10-year lease", price: "£1,000", src: "https://www.cardiffbereavement.co.uk/pricing/" },
+  { who: "Cardiff Bereavement Services", what: "Lease renewal after 10 years", price: "£90 a year", src: "https://www.cardiffbereavement.co.uk/pricing/" },
+  { who: "Vale of Glamorgan Council", what: "Plaque on a shared bench", price: "£310", src: "https://www.valeofglamorgan.gov.uk/en/enjoying/Coast-and-Countryside/Dedications-and-Memorials.aspx" },
+  { who: "Vale of Glamorgan Council", what: "Plaque on an exclusive bench", price: "£770", src: "https://www.valeofglamorgan.gov.uk/en/enjoying/Coast-and-Countryside/Dedications-and-Memorials.aspx" },
+  { who: "Vale of Glamorgan Council", what: "New bench on an existing plinth, parks and open spaces", price: "from £1,420", src: "https://www.valeofglamorgan.gov.uk/en/enjoying/Coast-and-Countryside/Dedications-and-Memorials.aspx" },
+  { who: "Torfaen Council", what: "Brass 6 x 3\" plaque on a council park bench, up to 100 characters", price: "£245", src: "https://www.torfaen.gov.uk/en/LeisureParksEvents/ParksandOpenSpaces/Memorial-bench-plaques/Memorial-bench-plaques.aspx" },
+  { who: "Swansea Council (crematorium)", what: "Additional plaque on an existing memorial bench", price: "£140", src: "https://www.swansea.gov.uk/chargesmemorialisation" },
+];
+const box = "background: #F5F6F7; border-radius: 8px; padding: 1.5rem";
+const h2 = "margin: 0 0 0.6rem; color: #3D5A5E; font-weight: 600; font-size: clamp(1.6rem, 3vw, 2.1rem)";
+---
+<Base image="/assets/img/bench-plaque.jpg" title={meta.title} description={meta.description} path={meta.url} faqs={faqs["bench-dedication-cost-wales"]} scripts={[]}>
+<section style="background: #F5F6F7; padding: 3.5rem 1.5rem"><div style="max-width: 52rem; margin: 0 auto">
+<p style="margin: 0 0 0.75rem; color: #C8202A; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase">Guide</p>
+<h1 style="margin: 0 0 1rem; color: #3D5A5E; font-weight: 600; font-size: clamp(2rem, 4.5vw, 2.8rem); line-height: 1.15">How much does it cost to dedicate a bench in South Wales?</h1>
+<p style="margin: 0; font-size: 1.15rem; color: #4B5563">Through a council scheme, a plaque on an existing bench in South Wales typically costs <strong>£140–£330</strong>, and a bench of your own <strong>£770–£1,420 or more</strong>, usually for a 10-year period. Here’s what each council charges, what’s included and how it compares with a bench and plaque of your own.</p>
+</div></section>
+
+<section style="background: #FFFFFF; padding: 4rem 1.5rem"><div style="max-width: 52rem; margin: 0 auto">
+<h2 style={h2}>Council bench and plaque prices in South Wales</h2>
+<p style="margin: 0 0 1rem; color: #4B5563">Prices as published by each council in 2026, including VAT where stated. Councils change their fees, usually each April, so always check the council’s own page before applying.</p>
+<div style="overflow-x: auto"><table style="width: 100%; min-width: 36rem; border-collapse: collapse; text-align: left">
+<thead><tr style="border-bottom: 2px solid #3D5A5E"><th style="padding: 0.7rem">Council</th><th style="padding: 0.7rem">What you get</th><th style="padding: 0.7rem">Price</th></tr></thead>
+<tbody>{rows.map((r) => <tr style="border-bottom: 1px solid #E5E7EB"><td style="padding: 0.7rem; vertical-align: top"><a href={r.src} rel="noopener">{r.who}</a></td><td style="padding: 0.7rem; color: #4B5563; vertical-align: top">{r.what}</td><td style="padding: 0.7rem; vertical-align: top; font-weight: 700; white-space: nowrap">{r.price}</td></tr>)}</tbody>
+</table></div>
+<p style="margin: 1rem 0 0; color: #4B5563">Cardiff Bereavement Services covers Cardiff’s cemeteries and crematoria. Benches in Cardiff’s parks, such as Roath Park or Bute Park, are handled by the parks team, so ask them directly.</p>
+
+<h2 style={`${h2}; margin-top: 3rem`}>What a council scheme usually includes</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1.5rem">
+<div style={box}><h3 style="margin: 0 0 0.4rem; font-size: 1.15rem; color: #1F2933">A fixed term, not forever</h3><p style="margin: 0; color: #4B5563">Most schemes are a lease, often 10 years. At the end you can usually renew, or the plaque is removed and returned to you.</p></div>
+<div style={box}><h3 style="margin: 0 0 0.4rem; font-size: 1.15rem; color: #1F2933">The council’s own plaque</h3><p style="margin: 0; color: #4B5563">Many councils supply and fit the plaque themselves, with limits on size and wording. Torfaen, for example, allows up to 100 characters.</p></div>
+<div style={box}><h3 style="margin: 0 0 0.4rem; font-size: 1.15rem; color: #1F2933">No plaques of your own</h3><p style="margin: 0; color: #4B5563">Plaques added without permission are usually removed. Always go through the scheme for a public bench.</p></div>
+</div>
+<p style="margin: 1.5rem 0 0; color: #4B5563">Not sure whose bench it is? Use our <a href="/can-i-put-a-plaque-on-a-bench/">“Can I put a plaque on a bench?” check</a>.</p>
+
+<h2 style={`${h2}; margin-top: 3rem`}>Your own bench: a lower-cost alternative</h2>
+<p style="margin: 0 0 1rem; color: #4B5563">If you have a garden, or a club, church or school that agrees, a bench and plaque of your own is often far cheaper than a public scheme and has no lease to renew. Garden benches start from a couple of hundred pounds, and an engraved plaque from us is a small part of that cost.</p>
+<ul style="margin: 0 0 1rem; padding-left: 1.25rem; color: #1F2933; line-height: 1.9">
+<li>Solid brass or stainless steel, from 8 x 3 inches to A4</li>
+<li>Your own wording in English, Welsh or both, with no character limit beyond what fits</li>
+<li>Free proof before engraving, stainless steel screws included, UK delivery</li>
+</ul>
+<p style="margin: 2rem 0 0; font-size: 1.1rem"><a href="/design-a-bench-plaque/" style="font-weight: 700">Design your plaque and get a price →</a> &nbsp; <a href="/bench-plaque-wording-ideas/" style="font-weight: 700">Wording ideas →</a> &nbsp; <a href="/brass-vs-stainless-steel-bench-plaques/" style="font-weight: 700">Brass or stainless steel? →</a></p>
+</div></section>
+
+<section style="background: #F5F6F7; padding: 4rem 1.5rem"><div style="max-width: 72rem; margin: 0 auto"><div style="max-width: 48rem"><h2 style={h2}>Frequently asked questions</h2>
+{faqs["bench-dedication-cost-wales"].map((f, i) => <details style="border-bottom: 1px solid #E5E7EB; padding: 1rem 0" open={i === 0}><summary style="font-weight: 700; cursor: pointer; color: #1F2933">{f.q}</summary><p style="margin: 0.6rem 0 0; color: #4B5563">{f.a}</p></details>)}
+</div></div></section>
+<section style="background: #3D5A5E; color: #FFFFFF; padding: 3.5rem 1.5rem"><div style="max-width: 72rem; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem">
+<div style="flex: 1 1 24rem"><h2 style="margin: 0 0 0.4rem; font-size: 1.8rem; font-weight: 600">Dedicating your own bench?</h2><p style="margin: 0; color: #E5ECEC">Design the plaque online and we’ll reply with a price and a free proof.</p></div>
+<div style="display: flex; flex-wrap: wrap; gap: 0.75rem"><a href="/design-a-bench-plaque/" style="background: #FFFFFF; color: #3D5A5E; font-weight: 700; text-decoration: none; padding: 0.85rem 1.4rem; border-radius: 6px">Design your plaque</a>
+<a href="mailto:info@grimesengravers.com" style="border: 2px solid #FFFFFF; color: #FFFFFF; font-weight: 700; text-decoration: none; padding: 0.75rem 1.3rem; border-radius: 6px">Email us</a></div></div></section>
+</Base>

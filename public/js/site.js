@@ -59,6 +59,8 @@
           form.reset();
           if (typeof form.onSent === 'function') form.onSent();
           if (window.posthog) window.posthog.capture('quote_form_submitted', { page: location.pathname, order: summary });
+          // Send people to a thank-you page so enquiries can be counted (PostHog, Google Ads).
+          if (form.dataset.thanks) { setTimeout(function () { window.location.href = form.dataset.thanks; }, 300); return; }
           if (status) { status.hidden = false; status.className = 'status'; status.textContent = form.dataset.success || 'Thank you. We’ll reply with a quote within 24 hours (working days).'; }
           if (btn) btn.textContent = 'Sent';
         })

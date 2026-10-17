@@ -42,7 +42,7 @@ ${collections.map((c) => `- [${c.h1}](${config.site}/${c.slug}/): ${c.descriptio
 ## Guides and tools
 
 ${Object.entries(plaquePages).map(([slug, x]) => `- [${x.h1}](${config.site}/${slug}/): ${x.description}`).join('\n')}
-${['award-wording-ideas', 'glass-vs-crystal-awards', 'awards-night-planning', 'design-a-bench-plaque', 'can-i-put-a-plaque-on-a-bench', 'bench-plaque-wording-ideas', 'plaque-fonts'].map(line).join('\n')}
+${['award-wording-ideas', 'glass-vs-crystal-awards', 'awards-night-planning', 'design-a-bench-plaque', 'can-i-put-a-plaque-on-a-bench', 'bench-dedication-cost-wales', 'brass-vs-stainless-steel-bench-plaques', 'bench-plaque-wording-ideas', 'plaque-fonts'].map(line).join('\n')}
 
 ## For AI agents and tools
 

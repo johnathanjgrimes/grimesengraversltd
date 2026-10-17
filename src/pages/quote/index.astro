@@ -11,9 +11,9 @@ const web3formsKey = (import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "").trim();
   <div class="mx-auto max-w-3xl">
     <p class="m-0 mb-2 text-sm"><a href="/glass-awards/" data-browse-more>← Browse more awards</a></p>
     <h1 class="m-0 mb-2 text-3xl font-semibold text-teal">Your glass award quote</h1>
-    <p class="muted m-0 mb-6">Check your awards, add the wording, and we’ll email the full price, engraving included, within 24 hours (working days).</p>
+    <p class="muted m-0 mb-6">Check your awards, add the wording, and we’ll email the full price, including engraving and delivery, within 24 hours (working days).</p>
 
-    <form id="quote-form" action="https://api.web3forms.com/submit" method="POST" data-ajax data-min={MIN_QTY}
+    <form id="quote-form" action="https://api.web3forms.com/submit" method="POST" data-ajax data-min={MIN_QTY} data-thanks="/thank-you/"
       data-success="Thank you, your quote request is on its way. We’ll email the full price within 24 hours (working days). If you’re adding a logo, just reply to our email with the file (PDF, EPS, SVG or a clear image)."
       class="flex flex-col gap-6 rounded-lg bg-white p-6 shadow-sm" style="box-shadow: 0 1px 3px rgba(0,0,0,0.12)">
 
@@ -101,6 +101,22 @@ const web3formsKey = (import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "").trim();
       <div class="field">
         <label for="notes">Anything else? (optional)</label>
         <textarea id="notes" name="notes" rows="3" class="inp" style="resize: vertical" placeholder="Budget, delivery area, an award you saw elsewhere…"></textarea>
+      </div>
+
+      <div class="field" style="max-width: 22rem">
+        <label for="heard_about">How did you find us? (optional)</label>
+        <select id="heard_about" name="heard_about" class="inp">
+          <option value="">Choose one</option>
+          <option>Google search</option>
+          <option>Google Maps</option>
+          <option>Google ad</option>
+          <option>Recommended to us</option>
+          <option>We've ordered before</option>
+          <option>Directory (Yell, FreeIndex etc.)</option>
+          <option>Social media</option>
+          <option>AI assistant (ChatGPT etc.)</option>
+          <option>Other</option>
+        </select>
       </div>
 
       <input type="hidden" name="access_key" value={web3formsKey} />

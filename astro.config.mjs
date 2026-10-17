@@ -31,7 +31,7 @@ export default defineConfig({
   site: SITE,
   trailingSlash: 'always',
   integrations: [markdownCopies(), sitemap({
-    filter: (url) => !otherSizes.has(url),
+    filter: (url) => !otherSizes.has(url) && !url.endsWith('/thank-you/'),
     serialize: (item) => { const d = lastmod(item.url); return d ? { ...item, lastmod: d } : item; },
   })],
   // The stylesheet is small, so put it in each page rather than making the browser wait for a separate file.
@@ -41,11 +41,12 @@ export default defineConfig({
     '/contact-us': '/contact/',
     '/industrial-engraving': '/',
     '/commercial-engraving': '/',
-    '/trophies-awards': '/corporate-glass-awards/',
-    '/trophies-and-awards': '/corporate-glass-awards/',
+    // Old trophy pages: send to crystal sports awards, the closest thing we still make.
+    '/trophies-awards': '/sports-awards/',
+    '/trophies-and-awards': '/sports-awards/',
     // We no longer supply trophies or medals.
-    '/trophies-cardiff': '/corporate-glass-awards/',
-    '/club-medals-trophies-cost': '/corporate-glass-awards/',
+    '/trophies-cardiff': '/sports-awards/',
+    '/club-medals-trophies-cost': '/sports-awards/',
     // No council or trade supply any more.
     '/bench-plaque-supplier': '/memorial-bench-plaques/',
     // Bench plaques are the only plaques we still make.

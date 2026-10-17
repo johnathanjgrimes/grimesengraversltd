@@ -5,7 +5,7 @@ const ranges = collections.filter((c) => c.kind === "range");
 const occasions = collections.filter((c) => c.kind === "occasion");
 const slugs = collections.map((c) => `/${c.slug}/`);
 const inAwards = path.startsWith("/glass-awards/") || path === "/quote/" || path === "/corporate-glass-awards/" || path === "/award-wording-ideas/" || path === "/glass-vs-crystal-awards/" || path === "/awards-night-planning/" || slugs.includes(path);
-const inPlaques = ["/memorial-bench-plaques/", "/design-a-bench-plaque/", "/brass-bench-plaques/", "/stainless-steel-bench-plaques/", "/pet-memorial-bench-plaques/", "/memorial-bench-plaque-for-mum-and-dad/", "/bench-plaque-wording-ideas/", "/plaque-fonts/", "/can-i-put-a-plaque-on-a-bench/"].includes(path);
+const inPlaques = ["/memorial-bench-plaques/", "/design-a-bench-plaque/", "/brass-bench-plaques/", "/stainless-steel-bench-plaques/", "/pet-memorial-bench-plaques/", "/memorial-bench-plaque-for-mum-and-dad/", "/bench-plaque-wording-ideas/", "/plaque-fonts/", "/can-i-put-a-plaque-on-a-bench/", "/bench-dedication-cost-wales/", "/brass-vs-stainless-steel-bench-plaques/"].includes(path);
 ---
 <div style="background: #23263A; color: #E5E7EB; font-size: 0.9rem">
 <div class="topbar" style="max-width: 72rem; margin: 0 auto; padding: 0.4rem 1.5rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.25rem 1.5rem">
@@ -55,6 +55,8 @@ const inPlaques = ["/memorial-bench-plaques/", "/design-a-bench-plaque/", "/bras
     <a href="/bench-plaque-wording-ideas/">Wording ideas</a>
     <a href="/plaque-fonts/">Font preview</a>
     <a href="/can-i-put-a-plaque-on-a-bench/">Can I put a plaque on a bench?</a>
+    <a href="/bench-dedication-cost-wales/">Cost to dedicate a bench</a>
+    <a href="/brass-vs-stainless-steel-bench-plaques/">Brass or stainless steel?</a>
   </div>
 </div>
 <div class="nav-item"><a href="/our-work/" class:list={["nav-link", { active: path === "/our-work/" }]}>Our work</a></div>

@@ -1,0 +1,54 @@
+---
+import Base from "../../layouts/Base.astro";
+import faqs from "../../data/faqs.json";
+import pages from "../../data/pages.json";
+const meta = pages["brass-vs-stainless-steel-bench-plaques"];
+// Guide targeting "brass vs stainless steel plaque" / "best material for a bench plaque" searches.
+const rows = [
+  ["Look", "Warm gold colour, traditional", "Cool silver colour, modern"],
+  ["Outdoors over time", "Darkens to a soft brown patina unless polished", "Keeps its colour; won’t rust or tarnish"],
+  ["Care", "Occasional polish if you want it bright", "Almost none; a wipe with soapy water"],
+  ["Best for", "Traditional benches, parks, gardens, matching older brass plaques", "Coastal and exposed spots, modern benches, low-maintenance"],
+  ["Readability", "Engraving stands out well, especially when new or polished", "Clean, sharp engraving that stays easy to read"],
+];
+const box = "background: #F5F6F7; border-radius: 8px; padding: 1.5rem";
+const h2 = "margin: 0 0 0.6rem; color: #3D5A5E; font-weight: 600; font-size: clamp(1.6rem, 3vw, 2.1rem)";
+---
+<Base image="/assets/img/work/brass-memorial-bench-plaque-after-years-outdoors-1200.webp" title={meta.title} description={meta.description} path={meta.url} faqs={faqs["brass-vs-stainless-steel-bench-plaques"]} scripts={[]}>
+<section style="background: #F5F6F7; padding: 3.5rem 1.5rem"><div style="max-width: 52rem; margin: 0 auto">
+<p style="margin: 0 0 0.75rem; color: #C8202A; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase">Guide</p>
+<h1 style="margin: 0 0 1rem; color: #3D5A5E; font-weight: 600; font-size: clamp(2rem, 4.5vw, 2.8rem); line-height: 1.15">Brass vs stainless steel bench plaques: which is best?</h1>
+<p style="margin: 0; font-size: 1.15rem; color: #4B5563">Both last for many years outdoors. Choose <strong>brass</strong> for a warm, traditional look that mellows with age, or <strong>stainless steel</strong> for a modern silver finish that never needs polishing. Here’s how they compare, from engravers who have made both in Cardiff since 1947.</p>
+</div></section>
+
+<section style="background: #FFFFFF; padding: 4rem 1.5rem"><div style="max-width: 52rem; margin: 0 auto">
+<h2 style={h2}>Side by side</h2>
+<div style="overflow-x: auto"><table style="width: 100%; min-width: 34rem; border-collapse: collapse; text-align: left">
+<thead><tr style="border-bottom: 2px solid #3D5A5E"><th style="padding: 0.7rem"></th><th style="padding: 0.7rem">Solid brass</th><th style="padding: 0.7rem">Stainless steel</th></tr></thead>
+<tbody>{rows.map(([k, b, s]) => <tr style="border-bottom: 1px solid #E5E7EB"><th scope="row" style="padding: 0.7rem; vertical-align: top">{k}</th><td style="padding: 0.7rem; color: #4B5563; vertical-align: top">{b}</td><td style="padding: 0.7rem; color: #4B5563; vertical-align: top">{s}</td></tr>)}</tbody>
+</table></div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: center; margin-top: 3rem">
+<img src="/assets/img/work/brass-memorial-bench-plaque-after-years-outdoors-640.webp" alt="Brass memorial bench plaque that has darkened naturally after years outdoors" width="480" height="640" loading="lazy" style="flex: 0 1 16rem; min-width: 0; max-width: 100%; height: auto; border-radius: 8px">
+<div style="flex: 1 1 18rem; min-width: 0"><h2 style="margin: 0 0 0.6rem; font-size: 1.4rem; color: #1F2933">How brass ages outdoors</h2><p style="margin: 0; color: #4B5563">Brass slowly darkens to a soft brown as it weathers, as on this plaque after years on a bench. Many families like that look; it blends with the wood. If you want it bright, an occasional polish brings back the shine. The engraving itself stays readable either way.</p></div>
+</div>
+
+<h2 style={`${h2}; margin-top: 3rem`}>Which should you choose?</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: 1.5rem">
+<div style={box}><h3 style="margin: 0 0 0.5rem; font-size: 1.2rem; color: #1F2933">Choose brass if…</h3><ul style="margin: 0 0 0.75rem; padding-left: 1.2rem; color: #4B5563; line-height: 1.8"><li>you want the classic park-bench look</li><li>the bench is wooden and traditional</li><li>you’re matching other brass plaques on the same bench</li><li>you don’t mind it mellowing with age</li></ul><a href="/brass-bench-plaques/" style="font-weight: 700">Brass bench plaques →</a></div>
+<div style={box}><h3 style="margin: 0 0 0.5rem; font-size: 1.2rem; color: #1F2933">Choose stainless steel if…</h3><ul style="margin: 0 0 0.75rem; padding-left: 1.2rem; color: #4B5563; line-height: 1.8"><li>the bench is by the sea or in an exposed spot</li><li>you want it to look the same in ten years</li><li>nobody will be around to polish it</li><li>the bench is modern, metal or recycled plastic</li></ul><a href="/stainless-steel-bench-plaques/" style="font-weight: 700">Stainless steel bench plaques →</a></div>
+</div>
+
+<h2 style={`${h2}; margin-top: 3rem`}>Whichever you choose</h2>
+<p style="margin: 0 0 1rem; color: #4B5563">Both come in the same sizes, from 8 x 3 inches to A4, engraved in English, Welsh or both. Every plaque is pre-drilled with stainless steel screws so it won’t stain the wood, and we email a free proof before anything is engraved. If the bench is in a park or cemetery, check the council’s rules first: some only accept their own plaques. See <a href="/bench-dedication-cost-wales/">what councils in South Wales charge</a>.</p>
+<p style="margin: 2rem 0 0; font-size: 1.1rem"><a href="/design-a-bench-plaque/" style="font-weight: 700">Design your plaque in brass or steel →</a> &nbsp; <a href="/plaque-fonts/" style="font-weight: 700">Preview the fonts →</a></p>
+</div></section>
+
+<section style="background: #F5F6F7; padding: 4rem 1.5rem"><div style="max-width: 72rem; margin: 0 auto"><div style="max-width: 48rem"><h2 style={h2}>Frequently asked questions</h2>
+{faqs["brass-vs-stainless-steel-bench-plaques"].map((f, i) => <details style="border-bottom: 1px solid #E5E7EB; padding: 1rem 0" open={i === 0}><summary style="font-weight: 700; cursor: pointer; color: #1F2933">{f.q}</summary><p style="margin: 0.6rem 0 0; color: #4B5563">{f.a}</p></details>)}
+</div></div></section>
+<section style="background: #3D5A5E; color: #FFFFFF; padding: 3.5rem 1.5rem"><div style="max-width: 72rem; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem">
+<div style="flex: 1 1 24rem"><h2 style="margin: 0 0 0.4rem; font-size: 1.8rem; font-weight: 600">Still deciding?</h2><p style="margin: 0; color: #E5ECEC">Try both in the plaque designer, or email us a photo of the bench and we’ll suggest the best fit.</p></div>
+<div style="display: flex; flex-wrap: wrap; gap: 0.75rem"><a href="/design-a-bench-plaque/" style="background: #FFFFFF; color: #3D5A5E; font-weight: 700; text-decoration: none; padding: 0.85rem 1.4rem; border-radius: 6px">Design your plaque</a>
+<a href="mailto:info@grimesengravers.com" style="border: 2px solid #FFFFFF; color: #FFFFFF; font-weight: 700; text-decoration: none; padding: 0.75rem 1.3rem; border-radius: 6px">Email us</a></div></div></section>
+</Base>

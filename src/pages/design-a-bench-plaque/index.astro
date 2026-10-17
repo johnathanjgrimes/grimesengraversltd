@@ -15,7 +15,7 @@ const { sizes, emblems } = plaque_data;
 <h1 style="margin: 0 0 0.75rem; color: #3D5A5E; font-weight: 600; font-size: clamp(2rem, 4.5vw, 2.8rem); line-height: 1.15">Design your bench plaque</h1>
 <p style="margin: 0 0 2rem; font-size: 1.15rem; color: #4B5563; max-width: 46rem">Choose the metal, size, font and wording and watch your plaque take shape. Send it to us and we’ll email a quote within 24 hours (working days), then a free proof before anything is engraved. No minimum order.</p>
 
-<form id="plaque-form" action="https://api.web3forms.com/submit" method="POST" data-ajax
+<form id="plaque-form" action="https://api.web3forms.com/submit" method="POST" data-ajax data-thanks="/thank-you/"
   data-success="Thank you, your plaque design is on its way. We’ll email a quote within 24 hours (working days). Photos of the bench or a logo file? Just reply to our email with them."
   style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: flex-start">
 
@@ -89,6 +89,7 @@ Who loved this view</textarea>
     <div class="field"><label for="pq-date">Needed by (optional)</label><input id="pq-date" name="needed_by" type="date" data-min-days="14" aria-describedby="pq-date-hint" class="inp" /><span id="pq-date-hint" class="muted" style="font-size: 0.85rem">At least 14 days from today.</span></div>
   </div>
   <div class="field"><label for="pq-notes">Anything else? (optional)</label><textarea id="pq-notes" name="notes" rows="3" class="inp" style="resize: vertical" placeholder="Matching existing plaques on the bench, a second font for the name, Welsh and English…"></textarea></div>
+  <div class="field" style="max-width: 22rem"><label for="pq-heard">How did you find us? (optional)</label><select id="pq-heard" name="heard_about" class="inp"><option value="">Choose one</option><option>Google search</option><option>Google Maps</option><option>Google ad</option><option>Recommended to us</option><option>We've ordered before</option><option>Directory (Yell, FreeIndex etc.)</option><option>Social media</option><option>AI assistant (ChatGPT etc.)</option><option>Other</option></select></div>
 
   <input type="hidden" name="access_key" value={web3formsKey} />
   <input type="hidden" name="subject" value="Bench plaque quote request" />

@@ -281,5 +281,17 @@
   {"q": "How many award categories should an awards night have?", "a": "Most company awards nights have between 8 and 15 categories, so the evening keeps moving and each award still feels special."},
   {"q": "We don’t know the winners yet. Can we still order?", "a": "Yes. Approve the award designs and categories now, then send the winners’ names when you have them."},
   {"q": "Should every award be the same design?", "a": "Many companies use one design for category winners and a larger or more premium award for the headline prize, such as Employee of the Year."}
+ ],
+ "bench-dedication-cost-wales": [
+  {"q": "How much does it cost to dedicate a bench in Cardiff?", "a": "Cardiff Bereavement Services charges £330 for a plaque on a shared bench and £1,000 for a personal seat with a plaque, each for a 10-year lease, in its cemeteries and crematoria. For benches in Cardiff parks, contact the council's parks team."},
+  {"q": "Is a council bench dedication permanent?", "a": "Usually not. Most schemes are a lease, often 10 years. At the end you can usually renew for a fee, or the plaque is removed and returned to you."},
+  {"q": "Can I put my own plaque on a council bench?", "a": "Usually not. Most councils supply and fit their own plaques, and plaques added without permission are removed. Check the council's scheme first."},
+  {"q": "What is the cheapest way to dedicate a bench?", "a": "A bench in your own garden, or at a club, church or school that agrees, with a plaque you order yourself. There is no lease to renew, and the plaque costs far less than a council scheme."}
+ ],
+ "brass-vs-stainless-steel-bench-plaques": [
+  {"q": "Does a brass bench plaque go green or dark?", "a": "Brass outdoors gradually darkens to a soft brown patina. It can be polished back to a bright finish. The engraving stays readable either way."},
+  {"q": "Will a stainless steel plaque rust?", "a": "No. Stainless steel is designed not to rust or tarnish, which makes it a good choice for coastal and exposed spots."},
+  {"q": "Which lasts longer outdoors, brass or stainless steel?", "a": "Both last many years outdoors. Stainless steel keeps its look with almost no care; brass mellows with age unless it is polished."},
+  {"q": "Are the screws included?", "a": "Yes. Every plaque is pre-drilled and comes with stainless steel screws so it won't stain the wood."}
  ]
 }
