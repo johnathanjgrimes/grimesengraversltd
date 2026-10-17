@@ -269,5 +269,17 @@
    "q": "Can the plaque be in Welsh?",
    "a": "Yes. We engrave Welsh wording and accents correctly, in Welsh, English or both."
   }
+ ],
+ "glass-vs-crystal-awards": [
+  {"q": "Is crystal better than glass for awards?", "a": "Optical crystal is clearer, heavier and costs more, so it suits headline awards, long service and retirements. Jade or clear glass looks smart for category and team awards at a lower price per award."},
+  {"q": "What is jade glass?", "a": "Jade glass is thick float glass with a natural green tint that shows on the polished edges. It engraves cleanly and costs less than optical crystal."},
+  {"q": "Can both glass and crystal be engraved with a logo?", "a": "Yes. Both are engraved with your logo and wording in a frosted white finish, and we send a proof before anything is engraved."},
+  {"q": "Can we mix glass and crystal awards in one order?", "a": "Yes. The minimum order is 2 awards in total, and you can mix different awards, materials and sizes."}
+ ],
+ "awards-night-planning": [
+  {"q": "How far ahead should we order awards for an awards night?", "a": "Allow at least 3–4 weeks before the event. We quote within 24 hours on working days, and awards are ready 10–14 working days after you approve the proof."},
+  {"q": "How many award categories should an awards night have?", "a": "Most company awards nights have between 8 and 15 categories, so the evening keeps moving and each award still feels special."},
+  {"q": "We don’t know the winners yet. Can we still order?", "a": "Yes. Approve the award designs and categories now, then send the winners’ names when you have them."},
+  {"q": "Should every award be the same design?", "a": "Many companies use one design for category winners and a larger or more premium award for the headline prize, such as Employee of the Year."}
  ]
 }

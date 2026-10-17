@@ -1,7 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
 import faqs from "../../data/faqs.json";
-const meta = {"url": "/bench-plaque-wording-ideas/", "title": "Bench Plaque Wording: Mum, Dad & Pets | Grimes Engravers", "description": "Memorial bench plaque wording examples for mum, dad, husband or wife, parents, friends and pets, plus Welsh phrases and tips for clear plaques."};
+const meta = {"url": "/bench-plaque-wording-ideas/", "title": "Memorial Bench Plaque Wording Ideas & Short Quotes | Grimes Engravers", "description": "Memorial bench plaque wording examples and short memorial quotes for mum, dad, husband or wife, friends and pets, plus Welsh phrases and tips for clear plaques."};
 // Each group is a heading people search for, with examples families have chosen. Names and dates are placeholders.
 const groups = [
   { id: "classic", title: "Classic memorial wording", examples: ["In loving memory of\nMargaret Jones\n1938 – 2024", "In memory of\nJohn Davies\nwho loved this place", "Forever loved\nand never forgotten"] },
@@ -14,7 +14,7 @@ const groups = [
   { id: "pets", title: "For a dog or pet", examples: ["In memory of Bella\nwho loved every\nwalk in this park", "For Max\nOur faithful friend\n2011 – 2025", "Paws for a moment\nand remember Charlie"] },
   { id: "spot", title: "For someone who loved the spot", examples: ["Who loved this view", "Sit, rest and remember\nDavid Evans", "She loved to sit here\nand watch the world go by"] },
   { id: "welsh", title: "Welsh & bilingual", examples: ["Er cof annwyl am\n(In loving memory of)", "Am byth yn ein calonnau\n(Forever in our hearts)", "Hedd perffaith hedd\n(Perfect peace)", "Cariad am byth\n(Love forever)"] },
-  { id: "short", title: "Short wording for small plaques", examples: ["Forever in our hearts", "Always loved, never forgotten", "Rest a while", "Gone but not forgotten"] },
+  { id: "short", title: "Short memorial plaque quotes", examples: ["Forever in our hearts", "Always loved, never forgotten", "Rest a while", "Gone but not forgotten", "Until we meet again", "A life well lived", "Loved and remembered always", "In our hearts forever"] },
   { id: "celebrations", title: "Celebrations & gifts", examples: ["Presented to mark\n50 years of marriage", "Donated by the members of\n[Club name], 2026", "Happy retirement\nEnjoy the view"] },
 ];
 const card = "background: #FFFFFF; border: 1px solid #D9DEE2; border-radius: 6px; padding: 0.9rem 1rem; text-align: center; font-family: Georgia, 'Times New Roman', serif; white-space: pre-line";
@@ -22,8 +22,8 @@ const card = "background: #FFFFFF; border: 1px solid #D9DEE2; border-radius: 6px
 <Base image="/assets/img/bench-plaque.jpg" title={meta.title} description={meta.description} path={meta.url} faqs={faqs["bench-plaque-wording-ideas"]} scripts={[]}>
 <section style="background: #F5F6F7; padding: 3.5rem 1.5rem"><div style="max-width: 52rem; margin: 0 auto">
 <p style="margin: 0 0 0.75rem; color: #C8202A; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase">Guide</p>
-<h1 style="margin: 0 0 1rem; color: #3D5A5E; font-weight: 600; font-size: clamp(2rem, 4.5vw, 2.8rem); line-height: 1.15">Memorial bench plaque wording ideas</h1>
-<p style="margin: 0 0 1.25rem; font-size: 1.15rem; color: #4B5563">Finding the right words is often the hardest part. Here are examples families have chosen for a mum, dad, partner, friend or much-loved pet, plus tips on keeping the wording clear and readable.</p>
+<h1 style="margin: 0 0 1rem; color: #3D5A5E; font-weight: 600; font-size: clamp(2rem, 4.5vw, 2.8rem); line-height: 1.15">Memorial bench plaque wording ideas &amp; short quotes</h1>
+<p style="margin: 0 0 1.25rem; font-size: 1.15rem; color: #4B5563">Finding the right words is often the hardest part. Here are examples families have chosen for a mum, dad, partner, friend or much-loved pet, short memorial quotes for smaller plaques, and tips on keeping the wording clear and readable.</p>
 <nav aria-label="Wording ideas by person"><ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem">
   {groups.map((g) => <li><a href={`#${g.id}`} style="display: inline-block; background: #FFFFFF; border: 1px solid #D9DEE2; border-radius: 999px; padding: 0.35rem 0.8rem; font-size: 0.95rem; text-decoration: none; color: #3D5A5E; font-weight: 600">{g.title.replace(/^(Wording for|For) /, "").replace(/^./, (c) => c.toUpperCase())}</a></li>)}
 </ul></nav>

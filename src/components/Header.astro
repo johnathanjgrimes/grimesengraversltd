@@ -4,7 +4,7 @@ const { path } = Astro.props;
 const ranges = collections.filter((c) => c.kind === "range");
 const occasions = collections.filter((c) => c.kind === "occasion");
 const slugs = collections.map((c) => `/${c.slug}/`);
-const inAwards = path.startsWith("/glass-awards/") || path === "/quote/" || path === "/corporate-glass-awards/" || path === "/award-wording-ideas/" || slugs.includes(path);
+const inAwards = path.startsWith("/glass-awards/") || path === "/quote/" || path === "/corporate-glass-awards/" || path === "/award-wording-ideas/" || path === "/glass-vs-crystal-awards/" || path === "/awards-night-planning/" || slugs.includes(path);
 const inPlaques = ["/memorial-bench-plaques/", "/design-a-bench-plaque/", "/brass-bench-plaques/", "/stainless-steel-bench-plaques/", "/pet-memorial-bench-plaques/", "/memorial-bench-plaque-for-mum-and-dad/", "/bench-plaque-wording-ideas/", "/plaque-fonts/", "/can-i-put-a-plaque-on-a-bench/"].includes(path);
 ---
 <div style="background: #23263A; color: #E5E7EB; font-size: 0.9rem">
@@ -33,6 +33,8 @@ const inPlaques = ["/memorial-bench-plaques/", "/design-a-bench-plaque/", "/bras
       {occasions.map((c) => <a href={`/${c.slug}/`} aria-current={path === `/${c.slug}/` ? "page" : undefined}>{c.name}</a>)}
       <a href="/corporate-glass-awards/">Glass awards for companies</a>
       <a href="/award-wording-ideas/" aria-current={path === "/award-wording-ideas/" ? "page" : undefined}>Wording &amp; category ideas</a>
+      <a href="/glass-vs-crystal-awards/" aria-current={path === "/glass-vs-crystal-awards/" ? "page" : undefined}>Glass vs crystal: which to choose</a>
+      <a href="/awards-night-planning/" aria-current={path === "/awards-night-planning/" ? "page" : undefined}>Planning an awards night</a>
     </div>
     <div class="nav-promo">
       <p class="nav-head">Not sure which one?</p>

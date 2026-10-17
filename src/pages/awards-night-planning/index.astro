@@ -1,0 +1,58 @@
+---
+import Base from "../../layouts/Base.astro";
+import faqs from "../../data/faqs.json";
+import pages from "../../data/pages.json";
+const meta = pages["awards-night-planning"];
+// Guide targeting "corporate awards night" searches (planning stage). Feeds the staff awards and glass award pages.
+const timeline = [
+  ["8 weeks before", "Fix the date and venue, and agree your award categories."],
+  ["6 weeks before", "Choose your award designs and budget, and send us your logo. We quote within 24 hours."],
+  ["4 weeks before", "Approve the proof of the layout. Close nominations or voting."],
+  ["3 weeks before", "Send the winners’ names. Awards are ready 10–14 working days after the final proof."],
+  ["The week before", "Awards delivered, checked and boxed. Lay them out in presentation order."],
+];
+const box = "background: #F5F6F7; border-radius: 8px; padding: 1.5rem";
+const h2 = "margin: 0 0 0.6rem; color: #3D5A5E; font-weight: 600; font-size: clamp(1.6rem, 3vw, 2.1rem)";
+---
+<Base image="/assets/img/work/engraved-crystal-awards-welsh-public-affairs-awards-1200.webp" title={meta.title} description={meta.description} path={meta.url} faqs={faqs["awards-night-planning"]} scripts={[]}>
+<section style="background: #F5F6F7; padding: 3.5rem 1.5rem"><div style="max-width: 52rem; margin: 0 auto">
+<p style="margin: 0 0 0.75rem; color: #C8202A; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase">Guide</p>
+<h1 style="margin: 0 0 1rem; color: #3D5A5E; font-weight: 600; font-size: clamp(2rem, 4.5vw, 2.8rem); line-height: 1.15">Planning a corporate awards night</h1>
+<p style="margin: 0; font-size: 1.15rem; color: #4B5563">A good awards night makes people feel recognised long after the evening ends, and the award they take home is a big part of that. Here’s a simple timeline, how many awards you need, and the mistakes to avoid, from engravers who make awards for company events every season.</p>
+</div></section>
+
+<section style="background: #FFFFFF; padding: 4rem 1.5rem"><div style="max-width: 52rem; margin: 0 auto">
+<h2 style={h2}>A simple awards night timeline</h2>
+<ol style="list-style: none; margin: 0 0 1rem; padding: 0; display: grid; gap: 0.75rem">
+{timeline.map(([when, what], i) => <li style="display: flex; gap: 1rem; align-items: flex-start"><span style="flex: none; width: 2.4rem; height: 2.4rem; border-radius: 50%; background: #23263A; color: #FFFFFF; font-weight: 700; display: flex; align-items: center; justify-content: center">{i + 1}</span><div><p style="margin: 0; font-weight: 700; color: #1F2933">{when}</p><p style="margin: 0; color: #4B5563">{what}</p></div></li>)}
+</ol>
+<p style="margin: 0 0 0; background: #FFF8E6; border-radius: 6px; padding: 1rem; color: #1F2933"><strong>The most common mistake</strong> is leaving the awards until the week before. Engraved awards are made to order, so allow at least 3–4 weeks. Awards nights are busiest from November to March.</p>
+
+<h2 style={`${h2}; margin-top: 3rem`}>How many categories and awards?</h2>
+<p style="margin: 0 0 1rem; color: #4B5563">Most company awards nights have between 8 and 15 categories: enough to recognise every team without the evening dragging. A popular set-up is one headline award, such as Employee of the Year, plus a matching smaller design for each category. Need ideas? See our <a href="/award-wording-ideas/#categories">list of staff award categories</a>.</p>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1.5rem; margin-top: 2rem">
+<div style={box}><h3 style="margin: 0 0 0.4rem; font-size: 1.15rem; color: #1F2933">Headline award</h3><p style="margin: 0 0 0.6rem; color: #4B5563">A taller star, column or award on a base gives the top prize real presence on stage.</p><a href="/crystal-awards-on-bases/" style="font-weight: 700">Crystal awards on bases →</a></div>
+<div style={box}><h3 style="margin: 0 0 0.4rem; font-size: 1.15rem; color: #1F2933">Category awards</h3><p style="margin: 0 0 0.6rem; color: #4B5563">One design in a smaller size keeps the whole set consistent and the budget predictable.</p><a href="/employee-of-the-year-awards/" style="font-weight: 700">Staff &amp; employee awards →</a></div>
+<div style={box}><h3 style="margin: 0 0 0.4rem; font-size: 1.15rem; color: #1F2933">Long service</h3><p style="margin: 0 0 0.6rem; color: #4B5563">Present milestone awards on the night too, so years of service get the applause they deserve.</p><a href="/long-service-awards/" style="font-weight: 700">Long service awards →</a></div>
+</div>
+
+<h2 style={`${h2}; margin-top: 3rem`}>Glass or crystal?</h2>
+<p style="margin: 0 0 1rem; color: #4B5563">Many companies use jade or clear glass for category winners and optical crystal for the headline award, with the same logo and layout on both. Read our guide to <a href="/glass-vs-crystal-awards/">glass vs crystal awards</a>.</p>
+
+<h2 style={`${h2}; margin-top: 3rem`}>What goes on each award</h2>
+<p style="margin: 0 0 1rem; color: #4B5563">Your logo, the event (for example “Staff Awards 2026”), the category, the winner’s name and, if you like, a short line. Keep the logo and event the same on every award and only change the category and name. We send a proof of the layout before anything is engraved.</p>
+
+<h2 style={`${h2}; margin-top: 3rem`}>Keeping winners secret</h2>
+<p style="margin: 0 0 1rem; color: #4B5563">If winners are announced on the night, you can approve the designs and categories early and send the names later. Names are only used to engrave your awards.</p>
+<p style="margin: 2rem 0 0; font-size: 1.1rem"><a href="/award-finder/" style="font-weight: 700">Find awards for your night →</a> &nbsp; <a href="/glass-awards/" style="font-weight: 700">Browse all glass &amp; crystal awards →</a></p>
+</div></section>
+
+<section style="background: #F5F6F7; padding: 4rem 1.5rem"><div style="max-width: 72rem; margin: 0 auto"><div style="max-width: 48rem"><h2 style={h2}>Frequently asked questions</h2>
+{faqs["awards-night-planning"].map((f, i) => <details style="border-bottom: 1px solid #E5E7EB; padding: 1rem 0" open={i === 0}><summary style="font-weight: 700; cursor: pointer; color: #1F2933">{f.q}</summary><p style="margin: 0.6rem 0 0; color: #4B5563">{f.a}</p></details>)}
+</div></div></section>
+<section style="background: #3D5A5E; color: #FFFFFF; padding: 3.5rem 1.5rem"><div style="max-width: 72rem; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem">
+<div style="flex: 1 1 24rem"><h2 style="margin: 0 0 0.4rem; font-size: 1.8rem; font-weight: 600">Planning this year’s awards?</h2><p style="margin: 0; color: #E5ECEC">Tell us the date, how many awards and your budget, and we’ll quote within 24 hours on working days.</p></div>
+<div style="display: flex; flex-wrap: wrap; gap: 0.75rem"><a href="/quote/" style="background: #FFFFFF; color: #3D5A5E; font-weight: 700; text-decoration: none; padding: 0.85rem 1.4rem; border-radius: 6px">Get a quote</a>
+<a href="mailto:info@grimesengravers.com" style="border: 2px solid #FFFFFF; color: #FFFFFF; font-weight: 700; text-decoration: none; padding: 0.75rem 1.3rem; border-radius: 6px">Email us</a></div></div></section>
+</Base>

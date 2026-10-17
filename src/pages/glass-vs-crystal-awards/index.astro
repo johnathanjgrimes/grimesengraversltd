@@ -1,0 +1,56 @@
+---
+import Base from "../../layouts/Base.astro";
+import faqs from "../../data/faqs.json";
+import pages from "../../data/pages.json";
+const meta = pages["glass-vs-crystal-awards"];
+// Guide targeting "crystal awards" / "glass awards" searches at the comparing stage. Links to the matching ranges.
+const rows = [
+  ["Look", "Smart, with a soft green tint on the polished edges (jade) or clear edges (clear glass)", "Perfectly clear, bright and catches the light from every angle"],
+  ["Weight", "Lighter", "Noticeably heavier in the hand"],
+  ["Engraving", "Clean frosted white engraving, set off well by the jade edge", "Crisp frosted engraving; fine lettering and logos stay very sharp"],
+  ["Price", "Usually the lower-cost option per award", "Costs more per award, especially larger and mounted pieces"],
+  ["Best for", "Category and team awards, larger sets, volunteers and clubs", "Headline awards, long service, retirements and partners"],
+];
+const box = "background: #F5F6F7; border-radius: 8px; padding: 1.5rem";
+const h2 = "margin: 0 0 0.6rem; color: #3D5A5E; font-weight: 600; font-size: clamp(1.6rem, 3vw, 2.1rem)";
+---
+<Base image="/assets/img/glass-award.jpg" title={meta.title} description={meta.description} path={meta.url} faqs={faqs["glass-vs-crystal-awards"]} scripts={[]}>
+<section style="background: #F5F6F7; padding: 3.5rem 1.5rem"><div style="max-width: 52rem; margin: 0 auto">
+<p style="margin: 0 0 0.75rem; color: #C8202A; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase">Guide</p>
+<h1 style="margin: 0 0 1rem; color: #3D5A5E; font-weight: 600; font-size: clamp(2rem, 4.5vw, 2.8rem); line-height: 1.15">Glass vs crystal awards: what’s the difference?</h1>
+<p style="margin: 0; font-size: 1.15rem; color: #4B5563">“Glass” and “crystal” are often used as if they mean the same thing, but they look, feel and cost different. Here’s a plain-English comparison from engravers who work with both every day, to help you choose the right awards for your event.</p>
+</div></section>
+
+<section style="background: #FFFFFF; padding: 4rem 1.5rem"><div style="max-width: 52rem; margin: 0 auto">
+<h2 style={h2}>The quick answer</h2>
+<div style="overflow-x: auto"><table style="width: 100%; min-width: 34rem; border-collapse: collapse; text-align: left">
+<thead><tr style="border-bottom: 2px solid #3D5A5E"><th style="padding: 0.7rem"></th><th style="padding: 0.7rem">Jade &amp; clear glass</th><th style="padding: 0.7rem">Optical crystal</th></tr></thead>
+<tbody>{rows.map(([k, g, c]) => <tr style="border-bottom: 1px solid #E5E7EB"><th scope="row" style="padding: 0.7rem; vertical-align: top">{k}</th><td style="padding: 0.7rem; color: #4B5563; vertical-align: top">{g}</td><td style="padding: 0.7rem; color: #4B5563; vertical-align: top">{c}</td></tr>)}</tbody>
+</table></div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: 1.5rem; margin-top: 2.5rem">
+<div style={box}><h2 style="margin: 0 0 0.5rem; font-size: 1.3rem; color: #1F2933">When to choose glass</h2><p style="margin: 0 0 0.75rem; color: #4B5563">Choose jade or clear glass when you need a matching set of awards that looks professional without stretching the budget, for example a dozen category winners at a staff awards night or end-of-season club awards. Thick glass with polished edges feels solid, and the jade tint gives a classic finish.</p><a href="/jade-glass-awards/" style="font-weight: 700">See jade &amp; clear glass awards →</a></div>
+<div style={box}><h2 style="margin: 0 0 0.5rem; font-size: 1.3rem; color: #1F2933">When to choose crystal</h2><p style="margin: 0 0 0.75rem; color: #4B5563">Choose optical crystal for the awards that matter most: Employee of the Year, 25 years’ service, a retirement or a key partner. The extra clarity and weight make it feel special in the hand, and it’s the award people keep on display for years.</p><a href="/optical-crystal-awards/" style="font-weight: 700">See optical crystal awards →</a></div>
+</div>
+
+<h2 style={`${h2}; margin-top: 3rem`}>A popular approach: mix both</h2>
+<p style="margin: 0 0 1rem; color: #4B5563">Many companies use glass for category winners and crystal for the headline award and long service, with the same logo and layout on both so the whole set matches on stage and in photos. You can mix different awards and sizes in one order; the minimum is 2 awards in total.</p>
+<ul style="margin: 0; padding-left: 1.25rem; color: #1F2933; line-height: 1.9">
+<li><a href="/employee-of-the-year-awards/">Employee of the year and staff awards</a></li>
+<li><a href="/long-service-awards/">Long service awards</a></li>
+<li><a href="/crystal-awards-on-bases/">Crystal awards on bases</a> for the top prize</li>
+</ul>
+
+<h2 style={`${h2}; margin-top: 3rem`}>What can be engraved?</h2>
+<p style="margin: 0 0 1rem; color: #4B5563">On both glass and crystal we engrave your logo, the award or category name, the winner’s name, and a date or short message, in a frosted white finish. Send your logo as a PDF, EPS or SVG if you can, and we send a proof before anything is engraved. Need ideas for the words? See our <a href="/award-wording-ideas/">award wording ideas</a>.</p>
+<p style="margin: 2rem 0 0; font-size: 1.1rem"><a href="/award-finder/" style="font-weight: 700">Not sure? Try the award finder →</a> &nbsp; <a href="/glass-awards/" style="font-weight: 700">Browse all glass &amp; crystal awards →</a></p>
+</div></section>
+
+<section style="background: #F5F6F7; padding: 4rem 1.5rem"><div style="max-width: 72rem; margin: 0 auto"><div style="max-width: 48rem"><h2 style={h2}>Frequently asked questions</h2>
+{faqs["glass-vs-crystal-awards"].map((f, i) => <details style="border-bottom: 1px solid #E5E7EB; padding: 1rem 0" open={i === 0}><summary style="font-weight: 700; cursor: pointer; color: #1F2933">{f.q}</summary><p style="margin: 0.6rem 0 0; color: #4B5563">{f.a}</p></details>)}
+</div></div></section>
+<section style="background: #3D5A5E; color: #FFFFFF; padding: 3.5rem 1.5rem"><div style="max-width: 72rem; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem">
+<div style="flex: 1 1 24rem"><h2 style="margin: 0 0 0.4rem; font-size: 1.8rem; font-weight: 600">Still deciding?</h2><p style="margin: 0; color: #E5ECEC">Tell us the occasion, how many awards and your budget, and we’ll recommend the best fit within 24 hours.</p></div>
+<div style="display: flex; flex-wrap: wrap; gap: 0.75rem"><a href="/quote/" style="background: #FFFFFF; color: #3D5A5E; font-weight: 700; text-decoration: none; padding: 0.85rem 1.4rem; border-radius: 6px">Ask us to recommend</a>
+<a href="mailto:info@grimesengravers.com" style="border: 2px solid #FFFFFF; color: #FFFFFF; font-weight: 700; text-decoration: none; padding: 0.75rem 1.3rem; border-radius: 6px">Email us</a></div></div></section>
+</Base>
