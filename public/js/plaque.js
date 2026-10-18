@@ -19,7 +19,7 @@
   // Example wording that suits each emblem. Only swapped in while the box still holds an example,
   // so anything the customer has typed is never replaced.
   var examples = {
-    none: 'In loving memory of\nMargaret Jones\n1938 – 2024\nWho loved this view',
+    none: 'In loving memory of\nMargaret Jones\n1938 – 2024',
     paw: 'In memory of Bella\nwho loved every\nwalk in this park',
     cross: 'In loving memory of\nMargaret Jones\n1938 – 2024\nRest in peace',
     heart: 'Forever in our hearts\nMargaret Jones\n1938 – 2024',
@@ -43,6 +43,22 @@
       if (!p.wording) matchEmblem();
     }
   } catch (e) {}
+
+  // Opened from a shop card on /memorial-bench-plaques/: ?mat=brass&size=6x4&font=script&emblem=heart&idea=mum
+  (function () {
+    var q = new URLSearchParams(location.search);
+    if (q.get('edit') || !(q.get('mat') || q.get('size') || q.get('idea'))) return;
+    var pick = function (name, attr, id) { var r = id && form.querySelector('input[name="' + name + '"][' + attr + '="' + id + '"]'); if (r) r.checked = true; };
+    pick('material', 'data-mat', q.get('mat'));
+    pick('font', 'data-font', q.get('font'));
+    pick('emblem', 'data-emblem', q.get('emblem'));
+    var sid = q.get('size');
+    if (sid) Array.prototype.forEach.call(size.options, function (o, i) { if (o.getAttribute('data-size') === sid) size.selectedIndex = i; });
+    var shop = data.shop || {}, idea = (shop.ideas || []).filter(function (x) { return x.id === q.get('idea'); })[0];
+    var w = idea ? idea.wording : (shop.sizeWording || {})[sid];
+    // Example wording only: the customer changes it, and it's never kept as their own.
+    if (w && isExample()) { wording.value = w; examples.shop = w; }
+  })();
 
   function render() {
     var f = byId(data.fonts, picked('font', 'data-font'));
@@ -94,6 +110,56 @@
     document.getElementById('pq-own').hidden = e.id !== 'own';
     document.getElementById('pq-council').hidden = o.bench_location.value.indexOf('Council') !== 0;
   }
+
+  // "Add to my order": put this design in the same basket as glass awards, so one order can hold both.
+  // Name, email and delivery details are asked once, at checkout (/quote/).
+  // /design-a-bench-plaque/?edit=PLAQUE-XXXX reopens a plaque from the order so it can be changed.
+  var addBtn = form.querySelector('[data-plaque-add]'), added = form.querySelector('[data-plaque-added]');
+  var DESIGN_FIELDS = ['material', 'size', 'font', 'emblem', 'corners', 'border', 'fixing', 'bench_location', 'notes'];
+  var editSku = new URLSearchParams(location.search).get('edit');
+  var editing = editSku && window.GrimesQuote ? window.GrimesQuote.line(editSku) : null;
+  function setField(name, v) {
+    var el = form.elements[name];
+    if (!el || v == null) return;
+    if (typeof RadioNodeList !== 'undefined' && el instanceof RadioNodeList) { Array.prototype.forEach.call(el, function (r) { r.checked = r.value === v; }); }
+    else el.value = v;
+  }
+  if (editing && editing.design) {
+    DESIGN_FIELDS.forEach(function (k) { setField(k, editing.design[k]); });
+    wording.value = editing.design.wording || '';
+    setField('quantity', String(editing.qty || 1));
+    if (addBtn) addBtn.textContent = 'Update this plaque in my order';
+  }
+  form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    if (!addBtn || !window.GrimesQuote) { location.href = '/quote/'; return; }
+    render();
+    var o = form.elements, text = wording.value.trim();
+    if (!text || isExample()) { wording.focus(); added.hidden = false; added.style.color = '#8A1C1C'; added.textContent = 'Add your own wording first, then add the plaque to your order.'; return; }
+    var brass = /brass/i.test(o.material.value);
+    var design = { wording: text };
+    DESIGN_FIELDS.forEach(function (k) { if (o[k]) design[k] = (o[k].value || '').trim(); });
+    // What the basket needs to redraw this plaque as a picture (basket.js renderPlaque).
+    var fnt = byId(data.fonts, picked('font', 'data-font')), mt = byId(data.mats, picked('material', 'data-mat')), em = byId(data.emblems, picked('emblem', 'data-emblem'));
+    var sz = byId(data.sizes, size.options[size.selectedIndex].getAttribute('data-size')) || byId(data.sizes, '6x4');
+    design.render = { mat: mt.id, ink: mt.ink, fam: fnt.fam, fstyle: fnt.fstyle, w: sz.w, h: sz.h, corners: picked('corners', 'data-corners'), border: picked('border', 'data-border') === '1', holes: picked('fixing', 'data-holes') === '1', emblemSvg: em && em.svg || '' };
+    var snapshot = window.GrimesQuote.renderPlaque(design.render, text);
+    // Options after material and size (those are in the name), plus where it's going and any notes.
+    var optionsText = summary.value.split(' · ').slice(2).join(' · ') +
+      (design.bench_location ? ' · For: ' + design.bench_location : '') + (design.notes ? ' · Notes: ' + design.notes.replace(/\n+/g, ' / ') : '');
+    var fields = {
+      name: o.material.value + ' bench plaque, ' + o.size.value,
+      image: snapshot || (brass ? '/assets/img/work/brass-memorial-bench-plaque-roath-park-conservatory-640.webp' : '/assets/img/work/stainless-steel-memorial-bench-plaque-roath-park-640.webp'),
+      qty: parseInt(o.quantity.value, 10) || 1,
+      design: design, optionsText: optionsText
+    };
+    if (editing) { window.GrimesQuote.patch(editing.sku, fields); location.href = '/quote/'; return; }
+    var sku = 'PLAQUE-' + Date.now().toString(36).toUpperCase();
+    window.GrimesQuote.add(Object.assign({ kind: 'plaque', sku: sku, url: '/design-a-bench-plaque/?edit=' + sku, details: window.GrimesQuote.plaqueDetails({ design: design, optionsText: optionsText }) }, fields));
+    added.hidden = false; added.style.color = '#166534';
+    added.innerHTML = '✓ Added to your order.<span class="mt-3 flex flex-wrap gap-3"><a href="/quote/" class="btn">Go to checkout →</a><a href="/glass-awards/" class="btn ghost">Add glass awards</a></span><span class="muted mt-2 block text-sm font-normal">Want another plaque? Change the wording above and add it again.</span>';
+    if (window.posthog) window.posthog.capture('plaque_added_to_order', { material: o.material.value, size: o.size.value });
+  });
 
   form.addEventListener('input', render);
   form.addEventListener('change', render);

@@ -22,25 +22,27 @@ const shown = list.slice(0, SHOW);
 const lowest = Math.min(...list.map((p) => p.main.price_from));
 const scene = `/assets/img/collections/${c.slug}.webp`;
 const hasScene = existsSync(join(process.cwd(), "public", scene));
+// Scene images made with AI get a visible "AI illustration" tag (set "sceneAi": true in collections.json).
+const sceneAi = Boolean((c as { sceneAi?: boolean }).sceneAi);
 const collage = list.filter((p) => p.main.thumb.startsWith("/")).slice(0, 4);
 const others = collections.filter((x) => x.slug !== c.slug && x.kind === c.kind);
 const ours = work.awards.filter((w) => w.pages.includes(c.slug));
 const crumb = c.kind === "range" ? "Award ranges" : "Awards by occasion";
 ---
 <Base title={c.title} description={c.description} path={path} faqs={c.faqs} image={hasScene ? scene : collage[0]?.main.image} scripts={[]}>
-<section class="bg-navy px-6 py-10 text-white">
+<section class={`bg-navy px-6 py-10 text-white${hasScene ? " coll-hero-scene" : ""}`} style={hasScene ? `--scene: url(${scene})` : undefined}>
   <div class="mx-auto grid max-w-6xl items-center gap-8 coll-hero">
     <div>
       <p class="m-0 mb-3 text-sm font-bold uppercase tracking-widest" style="color: #F3A3A6"><a href="/glass-awards/" style="color: inherit">Glass &amp; crystal awards</a> · {crumb}</p>
       <h1 class="m-0 mb-3 text-4xl font-semibold leading-tight">{c.h1}</h1>
       <p class="m-0 max-w-2xl text-lg" style="color: #D1D5DB">{c.intro}</p>
       <ul class="m-0 mt-5 flex list-none flex-wrap gap-x-6 gap-y-2 p-0 font-semibold" style="color: #E5E7EB">
-        <li>✓ {list.length} designs {fromPrice(lowest)}</li><li>✓ Minimum order {MIN_QTY}</li><li>✓ Quote within 24 hours</li><li>✓ Proof before we engrave</li>
+        <li>✓ {list.length} designs {fromPrice(lowest)}</li><li>✓ Minimum order {MIN_QTY}</li><li>✓ Proof before we engrave</li><li>✓ Nothing to pay today: pay after your proof</li>
       </ul>
       <p class="m-0 mt-6 flex flex-wrap gap-3"><a class="btn" href="#awards">See the awards</a><a class="btn" href={`/award-finder/${c.kind === "occasion" ? `?for=${c.slug}` : ""}`} style="background: transparent; color: #FFFFFF; border: 2px solid #FFFFFF">Use the award finder</a></p>
     </div>
     {hasScene
-      ? <img src={scene} alt={c.h1} width="800" height="600" fetchpriority="high" class="coll-scene" />
+      ? (sceneAi ? <span class="ai-tag">AI illustration</span> : null)
       : <div class="coll-collage" aria-hidden="true">{collage.map((p, i) => <img src={p.main.thumb} alt="" width="480" height="480" fetchpriority={i === 0 ? "high" : undefined} />)}</div>}
   </div>
 </section>
@@ -51,7 +53,7 @@ const crumb = c.kind === "range" ? "Award ranges" : "Awards by occasion";
       {shown.map((p, i) => <AwardCard product={p} index={i} attrs={false} />)}
     </ul>
     {list.length > SHOW && <p class="mt-8 text-center"><a class="btn ghost" href="/glass-awards/">See all {products.length} awards in the catalogue</a></p>}
-    <p class="muted mt-6 text-sm">Prices are “from” prices per award. Engraving is added on top and confirmed in your quote.</p>
+    <p class="muted mt-6 text-sm">Prices are “from” prices per award. Engraving and delivery are added on top and confirmed with your proof. Nothing to pay until your awards are engraved and checked: <a href="/why-we-proof-first/">why we proof first</a>.</p>
   </div>
 </section>
 {ours.length > 0 && <section class="bg-white px-6 pt-12">
@@ -73,10 +75,11 @@ const crumb = c.kind === "range" ? "Award ranges" : "Awards by occasion";
       {c.body.map((t) => <p class="m-0 mb-4">{t}</p>)}
       <h2 class="m-0 mb-3 mt-8 text-2xl font-semibold text-teal">How it works</h2>
       <ol class="m-0 mb-4 pl-5">
-        <li>Add the awards you like to your quote (at least {MIN_QTY} in total, any mix).</li>
+        <li>Add the awards you like to your order (at least {MIN_QTY} in total, any mix).</li>
         <li>Send us your wording and logo. We reply by email within 24 hours with the full price.</li>
         <li>We email a proof of the engraving for you to approve.</li>
         <li>Your awards are ready 10–14 working days after you approve the proof, and delivered to you.</li>
+        <li>You pay by card or bank transfer once your awards are engraved and checked. There’s nothing to pay when you order.</li>
       </ol>
     </div>
     <aside class="rounded-lg bg-mist p-6">

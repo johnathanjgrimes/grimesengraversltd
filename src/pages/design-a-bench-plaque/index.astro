@@ -1,9 +1,11 @@
 ---
 import Base from "../../layouts/Base.astro";
+import PayAfterProof from "../../components/PayAfterProof.astro";
 import pages from "../../data/pages.json";
 import faqs from "../../data/faqs.json";
 import font_data from "../../data/font.json";
 import plaque_data from "../../data/plaque.json";
+import shop_data from "../../data/plaque-shop.json";
 const meta = pages["design-a-bench-plaque"];
 // Trimmed: a pasted secret with a trailing newline makes Web3Forms reject the key.
 const web3formsKey = (import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "").trim();
@@ -13,10 +15,9 @@ const { sizes, emblems } = plaque_data;
 <section style="background: #F5F6F7; padding: 3rem 1.5rem 4rem"><div style="max-width: 72rem; margin: 0 auto">
 <p style="margin: 0 0 0.75rem; color: #C8202A; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase">Bench plaque designer</p>
 <h1 style="margin: 0 0 0.75rem; color: #3D5A5E; font-weight: 600; font-size: clamp(2rem, 4.5vw, 2.8rem); line-height: 1.15">Design your bench plaque</h1>
-<p style="margin: 0 0 2rem; font-size: 1.15rem; color: #4B5563; max-width: 46rem">Choose the metal, size, font and wording and watch your plaque take shape. Send it to us and we’ll email a quote within 24 hours (working days), then a free proof before anything is engraved. No minimum order.</p>
+<p style="margin: 0 0 2rem; font-size: 1.15rem; color: #4B5563; max-width: 46rem">Choose the metal, size, font and wording and watch your plaque take shape. Add it to your order, and check out once you’ve added everything. We’ll email the price within 24 hours (working days), then a free proof before anything is engraved. No minimum order, and nothing to pay until your plaque is engraved and checked.</p>
 
-<form id="plaque-form" action="https://api.web3forms.com/submit" method="POST" data-ajax data-thanks="/thank-you/"
-  data-success="Thank you, your plaque design is on its way. We’ll email a quote within 24 hours (working days). Photos of the bench or a logo file? Just reply to our email with them."
+<form id="plaque-form" action="/quote/" method="get"
   style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: flex-start">
 
 <div class="pq-preview" style="flex: 1 1 24rem; min-width: 0">
@@ -40,8 +41,7 @@ const { sizes, emblems } = plaque_data;
   <div class="field"><label for="pq-wording">1. Your wording</label>
     <textarea id="pq-wording" name="wording" rows="5" class="inp" style="resize: vertical" required>In loving memory of
 Margaret Jones
-1938 – 2024
-Who loved this view</textarea>
+1938 – 2024</textarea>
     <span class="muted" style="font-size: 0.95rem">Need ideas? <a href="/bench-plaque-wording-ideas/">See wording for mum, dad, pets and more</a>. Welsh accents such as ŵ and ŷ are fine.</span></div>
 
   <fieldset class="pq-set"><legend>2. Metal</legend><div class="pq-opts">
@@ -50,7 +50,7 @@ Who loved this view</textarea>
   </div><p class="muted" style="margin: 0.5rem 0 0; font-size: 0.9rem">Brass darkens naturally outdoors. Stainless steel stays silver and suits coastal spots.</p></fieldset>
 
   <div class="field"><label for="pq-size">3. Size</label>
-    <select id="pq-size" name="size" class="inp">{sizes.map((s) => <option value={`${s.name} (${s.mm})`} data-size={s.id} selected={s.id === "6x4"}>{s.name} · {s.mm}</option>)}<option value="Other size or match an existing plaque" data-size="other">Other size, or match an existing plaque</option></select></div>
+    <select id="pq-size" name="size" class="inp">{sizes.map((s) => <option value={`${s.name} (${s.mm})`} data-size={s.id} selected={s.id === "8x3"}>{s.name} · {s.mm}</option>)}<option value="Other size or match an existing plaque" data-size="other">Other size, or match an existing plaque</option></select></div>
 
   <fieldset class="pq-set"><legend>4. Font</legend><div class="pq-opts">
     {font_data.fonts.map((f) => <label class="pq-opt"><input type="radio" name="font" value={f.name} data-font={f.id} checked={f.id === "italic"} /> <span style={`font-family: ${f.fam}; font-style: ${f.fstyle}; font-size: 1.1rem`}>{f.name}</span></label>)}
@@ -62,8 +62,8 @@ Who loved this view</textarea>
 
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 1.25rem">
     <fieldset class="pq-set"><legend>6. Corners</legend><div class="pq-opts">
-      <label class="pq-opt"><input type="radio" name="corners" value="Square" data-corners="square" /> Square</label>
-      <label class="pq-opt"><input type="radio" name="corners" value="Rounded" data-corners="round" checked /> Rounded</label>
+      <label class="pq-opt"><input type="radio" name="corners" value="Square" data-corners="square" checked /> Square</label>
+      <label class="pq-opt"><input type="radio" name="corners" value="Rounded" data-corners="round" /> Rounded</label>
     </div></fieldset>
     <fieldset class="pq-set"><legend>7. Border</legend><div class="pq-opts">
       <label class="pq-opt"><input type="radio" name="border" value="None" data-border="0" checked /> None</label>
@@ -83,26 +83,18 @@ Who loved this view</textarea>
   </div>
   <p id="pq-council" style="margin: -0.6rem 0 0; font-size: 0.95rem; background: #FFF8E6; border-radius: 6px; padding: 0.6rem 0.8rem" hidden>Most councils only allow plaques through their own scheme. <a href="/can-i-put-a-plaque-on-a-bench/">Take the 1-minute check</a> before ordering.</p>
 
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 1.25rem">
-    <div class="field"><label for="pq-name">Your name *</label><input id="pq-name" name="name" required class="inp" autocomplete="name" /></div>
-    <div class="field"><label for="pq-email">Email *</label><input id="pq-email" name="email" type="email" required class="inp" autocomplete="email" /></div>
-    <div class="field"><label for="pq-date">Needed by (optional)</label><input id="pq-date" name="needed_by" type="date" data-min-days="14" aria-describedby="pq-date-hint" class="inp" /><span id="pq-date-hint" class="muted" style="font-size: 0.85rem">At least 14 days from today.</span></div>
-  </div>
-  <div class="field"><label for="pq-notes">Anything else? (optional)</label><textarea id="pq-notes" name="notes" rows="3" class="inp" style="resize: vertical" placeholder="Matching existing plaques on the bench, a second font for the name, Welsh and English…"></textarea></div>
-  <div class="field" style="max-width: 22rem"><label for="pq-heard">How did you find us? (optional)</label><select id="pq-heard" name="heard_about" class="inp"><option value="">Choose one</option><option>Google search</option><option>Google Maps</option><option>Google ad</option><option>Recommended to us</option><option>We've ordered before</option><option>Directory (Yell, FreeIndex etc.)</option><option>Social media</option><option>AI assistant (ChatGPT etc.)</option><option>Other</option></select></div>
+  <div class="field"><label for="pq-notes">Anything else about this plaque? (optional)</label><textarea id="pq-notes" name="notes" rows="3" class="inp" style="resize: vertical" placeholder="Matching existing plaques on the bench, a second font for the name, Welsh and English…"></textarea></div>
 
-  <input type="hidden" name="access_key" value={web3formsKey} />
-  <input type="hidden" name="subject" value="Bench plaque quote request" />
-  <input type="hidden" name="from_name" value="Grimes Engravers website" />
   <input type="hidden" name="order_summary" data-summary />
-  <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="display: none" />
   <div>
-    <button type="submit" class="btn" style="font-size: 1.1rem; padding: 0.95rem 1.8rem">Send my plaque for a quote</button>
+    <button type="submit" class="btn" data-plaque-add style="font-size: 1.1rem; padding: 0.95rem 1.8rem">Add to my order</button>
+    <p data-plaque-added role="status" class="m-0 mt-3 font-semibold" style="color: #166534" hidden></p>
+    <p class="muted" style="margin: 0.6rem 0 0; font-size: 0.9rem">Add more plaques or glass awards, then check out once with your delivery details.</p>
+    <PayAfterProof item="plaque" />
     <p class="muted" style="margin: 0.75rem 0 0; font-size: 0.9rem">Photos of the bench or existing plaques help. You can reply to our email with them.</p>
-    <p data-status hidden role="status"></p>
   </div>
 </div>
-<script type="application/json" id="plaque-data" set:html={JSON.stringify({ ...font_data, sizes, emblems })}></script>
+<script type="application/json" id="plaque-data" set:html={JSON.stringify({ ...font_data, sizes, emblems, shop: shop_data })}></script>
 </form>
 </div></section>
 

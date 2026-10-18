@@ -1,0 +1,87 @@
+---
+// Bench plaque "shop": every size in both metals, plus design ideas. Each card is a drawn preview
+// (PlaquePreview) and opens the designer pre-filled with that plaque (see the ?size=&mat= handling in public/js/plaque.js).
+// mat: show one metal only (brass or steel pages). ideas: also show the design ideas grid.
+// idea: draw every size card with one idea's font, emblem and wording (pet, mum-and-dad pages). ideaIds: only these ideas.
+import PlaquePreview from "./PlaquePreview.astro";
+import plaque_data from "../data/plaque.json";
+import font_data from "../data/font.json";
+import shop from "../data/plaque-shop.json";
+const { mat: only, ideas: showIdeas = true, heading = "Choose your bench plaque", idea: styleId, ideaIds } = Astro.props as { mat?: "brass" | "steel"; ideas?: boolean; heading?: string; idea?: string; ideaIds?: string[] };
+const mats = font_data.mats.filter((m) => !only || m.id === only);
+const style = shop.ideas.find((i) => i.id === styleId);
+const wordingFor = (id: string) => style ? style.wording : ((shop.sizeWording as Record<string, string>)[id] ?? shop.sizeWording["6x4"]);
+const href = (q: Record<string, string>) => `/design-a-bench-plaque/?${new URLSearchParams(q).toString()}`;
+const cardQuery = (m: string, s: string): Record<string, string> => style ? { mat: m, size: s, font: style.font, emblem: style.emblem, idea: style.id } : { mat: m, size: s };
+const ideaList = shop.ideas.filter((i) => (ideaIds ? ideaIds.includes(i.id) : (!only || i.mat === only)));
+const PRICE = "Price on request";
+const badges: Record<string, string> = shop.badges ?? {};
+---
+<div class="pq-shop">
+  <h2 style="margin: 0 0 0.4rem; color: #3D5A5E; font-weight: 600; font-size: clamp(1.6rem, 3vw, 2.1rem)">{heading}</h2>
+  <p style="margin: 0 0 1.25rem; color: #4B5563">Pick a size to start from, then change the wording, font and emblem in our designer. {PRICE}: we confirm the price with your free proof.</p>
+  <div class="pq-guide">
+    <p class="m-0 mb-2 font-bold">Which size fits a bench?</p>
+    <ul class="m-0 pl-5" style="line-height: 1.7">
+      <li><strong>Measure the back rail</strong> where the plaque will go. The plaque needs to be no deeper than the rail, so most benches suit a <strong>long, shallow plaque</strong> like 8 x 3".</li>
+      <li><strong>Council park or cemetery bench?</strong> Most councils fit their own plaques and remove any others, often 6 x 2" or 6 x 3" with a limit of around 100 characters. <a href="/can-i-put-a-plaque-on-a-bench/">Check first with our 1-minute check</a>.</li>
+      <li><strong>Your own bench</strong> in a garden, club or church? Any size works. Deeper plaques also suit walls, posts and memorial gardens.</li>
+      <li>Need a size that isn’t listed, or matching an existing plaque? Choose “Other size” in the designer and tell us.</li>
+    </ul>
+  </div>
+  {!only && <div class="pq-filter" role="group" aria-label="Show plaques in">
+    <button type="button" data-pq-mat="all" aria-pressed="true">All</button>
+    {mats.map((m) => <button type="button" data-pq-mat={m.id} aria-pressed="false">{m.name}</button>)}
+  </div>}
+  <ul class="pq-grid" data-pq-grid>
+    {mats.flatMap((m) => plaque_data.sizes.map((s) => (
+      <li data-mat={m.id}>
+        <a class="pq-card" href={href(cardQuery(m.id, s.id))}>
+          <PlaquePreview size={s.id} mat={m.id} font={style ? style.font : "roman"} emblem={style ? style.emblem : "none"} wording={wordingFor(s.id)} />
+          <span class="pq-card-body">
+            {badges[s.id] && <span class={s.id === "8x3" ? "pq-badge pq-badge-top" : "pq-badge"}>{badges[s.id]}</span>}
+            <span class="text-xs font-bold uppercase tracking-wide" style="color: #C8202A">{m.name}</span>
+            <span class="font-bold leading-snug">{m.name} bench plaque, {s.name}</span>
+            <span class="muted text-sm">{s.mm} · fits about {s.lines} lines</span>
+            <span class="text-sm font-semibold" style="color: #3D5A5E">{PRICE}</span>
+            <span class="pq-card-cta">Customise →</span>
+          </span>
+        </a>
+      </li>
+    )))}
+  </ul>
+
+  {showIdeas && ideaList.length > 0 && <>
+    <h2 style="margin: 3rem 0 0.4rem; color: #3D5A5E; font-weight: 600; font-size: clamp(1.6rem, 3vw, 2.1rem)">Plaque ideas to start from</h2>
+    <p style="margin: 0 0 1.25rem; color: #4B5563">Popular designs families and clubs choose. Every one can be changed in the designer.</p>
+    <ul class="pq-grid">
+      {ideaList.map((i) => (
+        <li>
+          <a class="pq-card" href={href({ mat: i.mat, size: i.size, font: i.font, emblem: i.emblem, idea: i.id })}>
+            <PlaquePreview size={i.size} mat={i.mat} font={i.font} emblem={i.emblem} wording={i.wording} />
+            <span class="pq-card-body">
+              <span class="font-bold leading-snug">{i.title}</span>
+              <span class="muted text-sm">{i.blurb}</span>
+              <span class="text-sm font-semibold" style="color: #3D5A5E">{PRICE}</span>
+              <span class="pq-card-cta">Use this design →</span>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </>}
+</div>
+{!only && <script is:inline>
+  // Brass / stainless steel filter for the plaque grid.
+  (function () {
+    var btns = document.querySelectorAll('[data-pq-mat]'), grid = document.querySelector('[data-pq-grid]');
+    if (!grid) return;
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var m = b.dataset.pqMat;
+        btns.forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+        grid.querySelectorAll('li[data-mat]').forEach(function (li) { li.hidden = m !== 'all' && li.dataset.mat !== m; });
+      });
+    });
+  })();
+</script>}

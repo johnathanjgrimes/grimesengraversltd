@@ -10,8 +10,8 @@ const inPlaques = ["/memorial-bench-plaques/", "/design-a-bench-plaque/", "/bras
 <div style="background: #23263A; color: #E5E7EB; font-size: 0.9rem">
 <div class="topbar" style="max-width: 72rem; margin: 0 auto; padding: 0.4rem 1.5rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.25rem 1.5rem">
 <span class="topbar-extra">Email only · Mon–Fri · Delivered UK-wide</span>
-<span class="topbar-right"><span><a href="mailto:info@grimesengravers.com" style="color: #FFFFFF; text-decoration: none; font-weight: 600">info@grimesengravers.com</a><span class="hide-sm"> · Quotes within 24 hours</span></span>
-<button type="button" id="quote-open" class="quote-open" hidden aria-haspopup="dialog" aria-controls="quote-panel">Your quote <span class="quote-count" data-quote-count>0</span></button></span>
+<span class="topbar-right"><span><a href="mailto:info@grimesengravers.com" style="color: #FFFFFF; text-decoration: none; font-weight: 600">info@grimesengravers.com</a><span class="hide-sm"> · Replies within 24 hours</span></span>
+<button type="button" id="quote-open" class="quote-open" hidden aria-haspopup="dialog" aria-controls="quote-panel">Your order <span class="quote-count" data-quote-count>0</span></button></span>
 </div></div>
 <header style="background: #FFFFFF; border-bottom: 6px solid #23263A">
 <div style="max-width: 72rem; margin: 0 auto; padding: 1rem 1.5rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem">
@@ -32,35 +32,50 @@ const inPlaques = ["/memorial-bench-plaques/", "/design-a-bench-plaque/", "/bras
       <p class="nav-head">By occasion</p>
       {occasions.map((c) => <a href={`/${c.slug}/`} aria-current={path === `/${c.slug}/` ? "page" : undefined}>{c.name}</a>)}
       <a href="/corporate-glass-awards/">Glass awards for companies</a>
-      <a href="/award-wording-ideas/" aria-current={path === "/award-wording-ideas/" ? "page" : undefined}>Wording &amp; category ideas</a>
-      <a href="/glass-vs-crystal-awards/" aria-current={path === "/glass-vs-crystal-awards/" ? "page" : undefined}>Glass vs crystal: which to choose</a>
-      <a href="/awards-night-planning/" aria-current={path === "/awards-night-planning/" ? "page" : undefined}>Planning an awards night</a>
     </div>
     <div class="nav-promo">
       <p class="nav-head">Not sure which one?</p>
       <p>Answer three quick questions and see awards that fit your occasion and budget.</p>
       <a href="/award-finder/" class="nav-btn">Try the award finder</a>
-      <a href="/quote/">Or ask us to recommend</a>
+      <a href="/contact/">Or ask us to recommend</a>
+      <p class="nav-head" style="margin-top: 1.25rem">Help &amp; guides</p>
+      <a href="/award-wording-ideas/" aria-current={path === "/award-wording-ideas/" ? "page" : undefined}>Wording &amp; category ideas</a>
+      <a href="/glass-vs-crystal-awards/" aria-current={path === "/glass-vs-crystal-awards/" ? "page" : undefined}>Glass or crystal?</a>
+      <a href="/awards-night-planning/" aria-current={path === "/awards-night-planning/" ? "page" : undefined}>Planning an awards night</a>
+      <a href="/why-we-proof-first/" aria-current={path === "/why-we-proof-first/" ? "page" : undefined}>Why we proof first</a>
     </div>
   </div>
 </div>
 <div class="nav-item">
   <a href="/memorial-bench-plaques/" class:list={["nav-link", { active: inPlaques }]} aria-current={path === "/memorial-bench-plaques/" ? "page" : undefined}>Bench plaques</a>
   <button type="button" class="nav-sub" aria-expanded="false" aria-controls="menu-plaques" aria-label="Show bench plaque pages and guides"><span aria-hidden="true">▾</span></button>
-  <div id="menu-plaques" class="nav-menu">
-    <a href="/memorial-bench-plaques/">Memorial bench plaques</a>
-    <a href="/brass-bench-plaques/">Brass plaques</a>
-    <a href="/stainless-steel-bench-plaques/">Stainless steel plaques</a>
-    <a href="/design-a-bench-plaque/">Design your plaque</a>
-    <a href="/bench-plaque-wording-ideas/">Wording ideas</a>
-    <a href="/plaque-fonts/">Font preview</a>
-    <a href="/can-i-put-a-plaque-on-a-bench/">Can I put a plaque on a bench?</a>
-    <a href="/bench-dedication-cost-wales/">Cost to dedicate a bench</a>
-    <a href="/brass-vs-stainless-steel-bench-plaques/">Brass or stainless steel?</a>
+  <div id="menu-plaques" class="nav-menu nav-mega">
+    <div>
+      <p class="nav-head">Shop bench plaques</p>
+      <a href="/memorial-bench-plaques/" aria-current={path === "/memorial-bench-plaques/" ? "page" : undefined}>All bench plaques</a>
+      <a href="/brass-bench-plaques/" aria-current={path === "/brass-bench-plaques/" ? "page" : undefined}>Brass plaques</a>
+      <a href="/stainless-steel-bench-plaques/" aria-current={path === "/stainless-steel-bench-plaques/" ? "page" : undefined}>Stainless steel plaques</a>
+      <a href="/memorial-bench-plaque-for-mum-and-dad/" aria-current={path === "/memorial-bench-plaque-for-mum-and-dad/" ? "page" : undefined}>For mum and dad</a>
+      <a href="/pet-memorial-bench-plaques/" aria-current={path === "/pet-memorial-bench-plaques/" ? "page" : undefined}>For a dog or pet</a>
+    </div>
+    <div>
+      <p class="nav-head">Help &amp; guides</p>
+      <a href="/bench-plaque-wording-ideas/" aria-current={path === "/bench-plaque-wording-ideas/" ? "page" : undefined}>Wording ideas</a>
+      <a href="/plaque-fonts/" aria-current={path === "/plaque-fonts/" ? "page" : undefined}>Font preview</a>
+      <a href="/can-i-put-a-plaque-on-a-bench/" aria-current={path === "/can-i-put-a-plaque-on-a-bench/" ? "page" : undefined}>Can I put a plaque on a bench?</a>
+      <a href="/bench-dedication-cost-wales/" aria-current={path === "/bench-dedication-cost-wales/" ? "page" : undefined}>Cost to dedicate a bench</a>
+      <a href="/brass-vs-stainless-steel-bench-plaques/" aria-current={path === "/brass-vs-stainless-steel-bench-plaques/" ? "page" : undefined}>Brass or stainless steel?</a>
+      <a href="/why-we-proof-first/" aria-current={path === "/why-we-proof-first/" ? "page" : undefined}>Why we proof first</a>
+    </div>
+    <div class="nav-promo">
+      <p class="nav-head">Design your own</p>
+      <p>Choose the metal, size, font and wording, and see your plaque before you order.</p>
+      <a href="/design-a-bench-plaque/" class="nav-btn">Open the plaque designer</a>
+    </div>
   </div>
 </div>
 <div class="nav-item"><a href="/our-work/" class:list={["nav-link", { active: path === "/our-work/" }]}>Our work</a></div>
 <div class="nav-item"><a href="/about/" class:list={["nav-link", { active: path === "/about/" }]}>About</a></div>
-<a href="/contact/" class="nav-cta">Get a quote</a>
+<a href="/contact/" class="nav-cta">Contact us</a>
 </nav>
 </div></header>

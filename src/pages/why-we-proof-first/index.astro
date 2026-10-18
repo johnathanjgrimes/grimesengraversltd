@@ -1,0 +1,86 @@
+---
+import Base from "../../layouts/Base.astro";
+import faqs from "../../data/faqs.json";
+import pages from "../../data/pages.json";
+const meta = pages["why-we-proof-first"];
+// Explains the "nothing to pay today" order flow. Linked from the basket, award and plaque pages, the order page and the footer.
+// Figures and sources checked October 2026; review once a year.
+const box = "background: #F5F6F7; border-radius: 8px; padding: 1.5rem";
+const h2 = "margin: 0 0 0.6rem; color: #3D5A5E; font-weight: 600; font-size: clamp(1.6rem, 3vw, 2.1rem)";
+const steps = [
+  ["Send your order", "Choose your awards or design your plaque. You see a price straight away, and there’s nothing to pay."],
+  ["We check and send a proof", "Our team checks every name, date and logo, then emails a free proof for you to approve."],
+  ["Engraved and checked by hand", "We only engrave once you’ve approved the proof, then inspect every piece before it’s packed."],
+  ["Pay when you’re happy", "We send your invoice once your order is engraved and checked. Pay by card or bank transfer."],
+];
+---
+<Base image="/assets/img/glass-award.jpg" title={meta.title} description={meta.description} path={meta.url} faqs={faqs["why-we-proof-first"]} scripts={[]}>
+<section style="background: #F5F6F7; padding: 3.5rem 1.5rem"><div style="max-width: 52rem; margin: 0 auto">
+<p style="margin: 0 0 0.75rem; color: #C8202A; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase">How we work</p>
+<h1 style="margin: 0 0 1rem; color: #3D5A5E; font-weight: 600; font-size: clamp(2rem, 4.5vw, 2.8rem); line-height: 1.15">Why we proof first, and why you pay later</h1>
+<p style="margin: 0; font-size: 1.15rem; color: #4B5563">A personalised award or plaque can’t simply be sent back. So we’d rather take a few days to get it right than rush it and get it wrong. That’s why there’s nothing to pay when you order: you pay once your order is engraved and checked.</p>
+</div></section>
+
+<section style="background: #FFFFFF; padding: 4rem 1.5rem"><div style="max-width: 52rem; margin: 0 auto">
+<h2 style={h2}>How it works</h2>
+<ol style="list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem">
+{steps.map(([t, d], i) => <li style="display: flex; gap: 1rem; align-items: flex-start"><span style="flex: none; width: 2.4rem; height: 2.4rem; border-radius: 50%; background: #23263A; color: #FFFFFF; font-weight: 700; display: flex; align-items: center; justify-content: center">{i + 1}</span><div><p style="margin: 0; font-weight: 700; color: #1F2933">{t}</p><p style="margin: 0; color: #4B5563">{d}</p></div></li>)}
+</ol>
+
+<h2 style={`${h2}; margin-top: 3rem`}>Fast, cheap or right first time?</h2>
+<p style="margin: 0 0 1.25rem; color: #4B5563">There’s an old rule in making things: fast, cheap, good. You can only pick two. We choose quality at a fair price, and take the time to check it.</p>
+<figure style="margin: 0">
+<svg viewBox="0 0 720 560" role="img" aria-labelledby="tri-t tri-d" style="display: block; width: 100%; max-width: 640px; height: auto; margin: 0 auto">
+  <title id="tri-t">Fast, cheap, quality: you can only pick two</title>
+  <desc id="tri-d">A triangle with Quality, Fast and Fair price at its corners. Grimes chooses quality at a fair price, proofing before engraving, rather than fast and cheap.</desc>
+  <polygon points="360,70 110,470 610,470" fill="#F5F6F7" stroke="#D1D5DB" stroke-width="3"/>
+  <line x1="360" y1="70" x2="610" y2="470" stroke="#3D5A5E" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="360" cy="70" r="16" fill="#3D5A5E"/><circle cx="110" cy="470" r="16" fill="#9CA3AF"/><circle cx="610" cy="470" r="16" fill="#3D5A5E"/>
+  <g font-family="inherit" fill="#1F2933">
+    <text x="360" y="36" text-anchor="middle" font-size="26" font-weight="700">Quality</text>
+    <text x="110" y="518" text-anchor="middle" font-size="26" font-weight="700">Fast</text>
+    <text x="110" y="542" text-anchor="middle" font-size="16" fill="#4B5563">next-day, no checks</text>
+    <text x="610" y="518" text-anchor="middle" font-size="26" font-weight="700">Fair price</text>
+    <text x="610" y="542" text-anchor="middle" font-size="16" fill="#4B5563">no hidden costs</text>
+    <text x="190" y="260" text-anchor="middle" font-size="15" font-weight="600" fill="#4B5563" transform="rotate(-58 190 260)">Fast + quality = expensive</text>
+    <text x="360" y="452" text-anchor="middle" font-size="15" font-weight="600" fill="#4B5563">Fast + cheap = mistakes, returns, landfill</text>
+    <text x="360" y="330" text-anchor="middle" font-size="16" fill="#4B5563">You can only pick two.</text>
+    <text x="360" y="354" text-anchor="middle" font-size="16" fill="#4B5563">We choose quality at a fair price,</text>
+    <text x="360" y="378" text-anchor="middle" font-size="16" fill="#4B5563">and take the time to check it.</text>
+  </g>
+  <g transform="translate(505,250)"><rect x="-92" y="-22" width="184" height="44" rx="22" fill="#3D5A5E"/><text x="0" y="6" text-anchor="middle" font-family="inherit" font-size="16" font-weight="700" fill="#FFFFFF">Grimes: proof first</text></g>
+</svg>
+</figure>
+
+<h2 style={`${h2}; margin-top: 3rem`}>The hidden cost of “buy now, send it back”</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1rem">
+<div style={box}><p style="margin: 0 0 0.3rem; font-size: 2rem; font-weight: 700; color: #3D5A5E">£27bn</p><p style="margin: 0; color: #4B5563">of UK online purchases were forecast to be returned in 2024.</p></div>
+<div style={box}><p style="margin: 0 0 0.3rem; font-size: 2rem; font-weight: 700; color: #3D5A5E">1 in 5</p><p style="margin: 0; color: #4B5563">UK online orders for non-food goods comes back.</p></div>
+<div style={box}><p style="margin: 0 0 0.3rem; font-size: 2rem; font-weight: 700; color: #3D5A5E">Higher prices</p><p style="margin: 0; color: #4B5563">Retailers say they raise prices to cover the cost of free returns.</p></div>
+</div>
+<p style="margin: 1rem 0 0; color: #4B5563">Returns cost everyone, and a lot of returned stock is never resold. With a personalised item there’s no second chance at all: once a name is engraved, it can’t go back on a shelf.</p>
+<p style="margin: 0.75rem 0 0; font-size: 0.9rem; color: #6B7280">Sources: <a href="https://retaileconomics.co.uk/retail-insights/thought-leadership-reports/the-cost-of-serial-returners-in-2024-zigzag-retail-economics" rel="noopener">Retail Economics and ZigZag, The Cost of Serial Returners 2024</a>; <a href="https://www.packagingeurope.com/the-cost-of-e-commerce-returns-for-retailers/" rel="noopener">Packaging Europe, The cost of e-commerce returns for retailers</a>.</p>
+
+<h2 style={`${h2}; margin-top: 3rem`}>Why personalised is different</h2>
+<p style="margin: 0 0 1rem; color: #4B5563">When you buy most things online, you can usually change your mind within 14 days. That right doesn’t cover goods made to your specification or clearly personalised, under the <a href="https://www.legislation.gov.uk/uksi/2013/3134/part/3" rel="noopener">Consumer Contracts Regulations 2013</a>. So the only way to protect you is to get it right before it’s engraved, which is exactly what the proof is for.</p>
+<p style="margin: 0; color: #4B5563">You’re still fully protected if something’s wrong. If your order arrives damaged, or the engraving doesn’t match the proof you approved, we’ll put it right.</p>
+
+<h2 style={`${h2}; margin-top: 3rem`}>Built to last</h2>
+<p style="margin: 0; color: #4B5563">A mass-produced award is judged the moment you click “buy”. Ours are judged years later, on a shelf in someone’s office or home, or on a bench in the park. Optical crystal doesn’t fade or tarnish, and our engraving is cut into the glass or metal, not printed on top. That’s what we’ve been making in Cardiff since 1947.</p>
+
+<div style="margin-top: 3rem; background: #23263A; color: #FFFFFF; border-radius: 8px; padding: 2rem">
+<h2 style="margin: 0 0 0.6rem; font-size: 1.6rem; font-weight: 600">If you’re not happy, we’re not happy</h2>
+<p style="margin: 0 0 0.75rem; color: #E5E7EB">We put checks in place at every step, but we’re all human and things still happen. A courier drops a parcel. A name gets spelled wrong on the order form. A date changes.</p>
+<p style="margin: 0 0 0.75rem; color: #E5E7EB">When that happens, you won’t be chasing a company that already has your money. You’ll be talking to us, the same family who engraved your order, and we’ll do everything we can to put it right in time for your event.</p>
+<p style="margin: 0; color: #E5E7EB">The awards night is still happening, and we’d rather keep you as a customer for the next 20 years than make a sale today.</p>
+</div>
+</div></section>
+
+<section style="background: #F5F6F7; padding: 4rem 1.5rem"><div style="max-width: 72rem; margin: 0 auto"><div style="max-width: 48rem"><h2 style={h2}>Frequently asked questions</h2>
+{faqs["why-we-proof-first"].map((f, i) => <details style="border-bottom: 1px solid #E5E7EB; padding: 1rem 0" open={i === 0}><summary style="font-weight: 700; cursor: pointer; color: #1F2933">{f.q}</summary><p style="margin: 0.6rem 0 0; color: #4B5563">{f.a}</p></details>)}
+</div></div></section>
+<section style="background: #3D5A5E; color: #FFFFFF; padding: 3.5rem 1.5rem"><div style="max-width: 72rem; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem">
+<div style="flex: 1 1 24rem"><h2 style="margin: 0 0 0.4rem; font-size: 1.8rem; font-weight: 600">Ready when you are</h2><p style="margin: 0; color: #E5ECEC">Send your order today. Nothing to pay until it’s engraved and checked.</p></div>
+<div style="display: flex; flex-wrap: wrap; gap: 0.75rem"><a href="/glass-awards/" style="background: #FFFFFF; color: #3D5A5E; font-weight: 700; text-decoration: none; padding: 0.85rem 1.4rem; border-radius: 6px">Glass awards</a>
+<a href="/design-a-bench-plaque/" style="border: 2px solid #FFFFFF; color: #FFFFFF; font-weight: 700; text-decoration: none; padding: 0.75rem 1.3rem; border-radius: 6px">Design a bench plaque</a></div></div></section>
+</Base>

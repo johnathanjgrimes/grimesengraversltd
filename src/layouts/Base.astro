@@ -84,9 +84,9 @@ posthog.init(phKey, { api_host: phHost, persistence: 'memory', person_profiles: 
 <Footer />
 <div id="quote-bar" class="quote-bar" hidden>
   <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3">
-    <p class="m-0 quote-bar-text"><strong class="qb-label">Your quote:</strong> <span data-quote-bar-text></span></p>
+    <p class="m-0 quote-bar-text"><strong class="qb-label">Your order:</strong> <span data-quote-bar-text></span></p>
     <div class="flex flex-wrap gap-2">
-      <button type="button" data-open-quote class="btn qb-view" style="background: transparent; border: 2px solid #FFFFFF">View quote</button>
+      <button type="button" data-open-quote class="btn qb-view" style="background: transparent; border: 2px solid #FFFFFF">View order</button>
       <a href="/quote/" class="btn" style="background: #FFFFFF; color: #23263A">Continue →</a>
     </div>
   </div>
@@ -94,15 +94,15 @@ posthog.init(phKey, { api_host: phHost, persistence: 'memory', person_profiles: 
 <div id="quote-panel" class="quote-panel" role="dialog" aria-modal="true" aria-labelledby="quote-panel-title" hidden>
   <div class="quote-panel-inner">
     <div class="flex items-center justify-between gap-4 border-0 border-b border-solid pb-3" style="border-color: #E5E7EB">
-      <h2 id="quote-panel-title" class="m-0 text-xl font-semibold text-teal">Your quote</h2>
+      <h2 id="quote-panel-title" class="m-0 text-xl font-semibold text-teal">Your order</h2>
       <button type="button" data-panel-close class="opt" style="min-height: 2.5rem; padding: 0.3rem 0.8rem">Close ✕</button>
     </div>
     <ul data-panel-list class="m-0 flex-1 list-none overflow-y-auto p-0"></ul>
     <div class="border-0 border-t border-solid pt-3" style="border-color: #E5E7EB">
       <p class="m-0 mb-3 text-sm font-semibold" data-panel-total></p>
-      <a href="/quote/" class="btn block text-center" data-panel-continue>Continue to quote details →</a>
+      <a href="/quote/" class="btn block text-center" data-panel-continue>Continue to your details →</a>
       <a href="/glass-awards/" class="mt-2 block text-center text-sm font-semibold">Keep browsing awards</a>
-      <p class="muted m-0 mt-3 text-center text-xs">Saved in this browser only. Prices are “from” prices; we confirm the full price, engraving included, by email.</p>
+      <p class="muted m-0 mt-3 text-center text-xs">Saved in this browser only. Prices are “from” prices; we confirm the full price, including engraving and delivery, with your proof.</p>
     </div>
   </div>
 </div>

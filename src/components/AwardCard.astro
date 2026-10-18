@@ -20,12 +20,13 @@ const data = attrs ? {
       <span class="font-bold leading-snug">{title}</span>
       <span class="aw-card-sizes muted text-sm">{multi ? `${sizes.length} sizes: ${sizes.map((s) => s.size).join(', ')}` : mm(a.dimensions_mm)}</span>
       <span class="pt-1 font-bold text-teal">{fromPrice(a.price_from)}{!anyStock && <span class="muted ml-2 text-sm font-normal">· out of stock</span>}</span>
+      <span class="aw-pay">✓ Pay after your proof</span>
     </span>
   </a>
   <div class="aw-card-foot px-4 pb-4 pt-3">
     {multi ? <a href={awardUrl(a)} class="aw-add aw-choose">Choose size</a> :
     <button type="button" class="aw-add" data-add-quote data-sku={a.sku} data-name={a.name} data-image={a.thumb} data-price={fromPrice(a.price_from)} data-unit={a.price_from}
       data-size={mm(a.dimensions_mm)} data-area={mm(a.engraving_area_mm)} data-fit-chars={f?.perLine} data-fit-lines={f?.lines}
-      data-url={awardUrl(a)} data-src={a.source_url} data-stock={String(a.in_stock)} aria-pressed="false">Add to quote</button>}
+      data-url={awardUrl(a)} data-src={a.source_url} data-stock={String(a.in_stock)} aria-pressed="false">Add to order</button>}
   </div>
 </li>

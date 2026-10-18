@@ -138,7 +138,9 @@
   var namesHint = document.getElementById('names-hint');
   var wordingLabel = form.querySelector('[data-wording-label]');
   var wordingFit = form.querySelector('[data-wording-fit]');
-  var FIELDS = ['engraving', 'wording_type', 'wording', 'needed_by', 'occasion', 'name', 'email', 'notes', 'approx_quantity', 'logo_file'];
+  var FIELDS = ['engraving', 'wording_type', 'wording', 'needed_by', 'occasion', 'name', 'email', 'notes', 'approx_quantity', 'logo_file',
+    'phone', 'company', 'delivery_address_line_1', 'delivery_address_line_2', 'delivery_town', 'delivery_postcode',
+    'billing_address_line_1', 'billing_address_line_2', 'billing_town', 'billing_postcode', 'invoice_email', 'po_number'];
   var ignoreFit = form.querySelector('[data-ignore-fit]');
   var fitOff = function () { return ignoreFit.checked; };
   var different = function () { var r = form.querySelector('[name="wording_type"]:checked'); return r && r.value !== 'Same on every award'; };
@@ -155,15 +157,23 @@
     approx.required = !d.lines.length;
     linesEl.innerHTML = d.lines.map(function (l) {
       return '<li class="q-line" data-sku="' + esc(l.sku) + '">' +
-        '<img src="' + esc(l.image) + '" alt="" width="80" height="80" class="q-line-img">' +
+        '<img src="' + esc(l.image) + '" alt="' + (l.kind === 'plaque' ? 'Preview of your plaque' : '') + '" width="80" height="80" class="q-line-img"' + (l.kind === 'plaque' ? ' style="object-fit: contain; background: #F3F4F6"' : '') + '>' +
         '<div class="min-w-0 flex-1"><a href="' + esc(l.url) + '" class="font-bold text-ink no-underline">' + esc(l.name) + '</a>' +
-        '<p class="muted m-0 text-sm">' + esc(l.sku) + (l.size ? ' · ' + esc(l.size) : '') + (l.area ? ' · engraving area ' + esc(l.area) : '') + (l.price ? ' · ' + esc(l.price) : '') + '</p><p class="m-0 text-sm" data-line-stock>' + stockText(l) + '</p></div>' +
+        (l.kind === 'plaque'
+          ? '<p class="muted m-0 text-sm">' + esc(l.optionsText || l.details || '') + '</p>' +
+            '<label class="mt-2 block text-sm font-semibold" for="pw-' + esc(l.sku) + '">Wording</label>' +
+            '<textarea id="pw-' + esc(l.sku) + '" rows="3" class="inp" style="resize: vertical" data-plaque-wording="' + esc(l.sku) + '">' + esc(l.design ? l.design.wording : '') + '</textarea>' +
+            '<p class="m-0 mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm"><a href="/design-a-bench-plaque/?edit=' + encodeURIComponent(l.sku) + '" class="font-semibold">Edit design</a>' +
+            (l.design ? '<button type="button" class="font-semibold" data-plaque-dup="' + esc(l.sku) + '" style="background: none; border: none; padding: 0; color: #0F5257; cursor: pointer; text-decoration: underline; min-height: 44px">+ Another with different wording</button>' : '') + '</p>' +
+            '<p class="m-0 text-sm" style="color: #166534">Price confirmed with your free proof. No minimum order.</p></div>'
+          : '<p class="muted m-0 text-sm">' + esc(l.sku) + (l.size ? ' · ' + esc(l.size) : '') + (l.area ? ' · engraving area ' + esc(l.area) : '') + (l.price ? ' · ' + esc(l.price) : '') + '</p><p class="m-0 text-sm" data-line-stock>' + stockText(l) + '</p></div>') +
         '<div class="flex items-center gap-3"><label class="flex items-center gap-2 font-semibold">How many? <input type="number" min="1" inputmode="numeric" class="inp" style="width: 5.5rem" data-line-qty value="' + esc(l.qty) + '"></label>' +
         '<button type="button" class="q-remove" data-line-remove aria-label="Remove ' + esc(l.name) + '">Remove</button></div></li>';
     }).join('');
     renderNames();
     update();
     d.lines.forEach(function (l) {
+      if (l.kind === 'plaque') return;
       Q.checkStock(l.src).then(function (j) {
         if (!j) return;
         if (j.in_stock !== l.stock) { Q.setStock(l.sku, j.in_stock); return; }
@@ -255,7 +265,7 @@
   var stockOk = '';
   function checkBeforeSend() {
     // Wait for a logo that's still uploading, so its link goes with the form.
-    if (uploading) { var btn0 = form.querySelector('[type="submit"]'); btn0.textContent = 'Uploading logo…'; return uploading.then(function () { btn0.textContent = 'Send my quote request'; return checkBeforeSend(); }); }
+    if (uploading) { var btn0 = form.querySelector('[type="submit"]'); btn0.textContent = 'Uploading logo…'; return uploading.then(function () { btn0.textContent = 'Send my order: nothing to pay now'; return checkBeforeSend(); }); }
     update();
     var d = Q.get(), btn = form.querySelector('[type="submit"]'), warn = document.getElementById('stock-warn');
     var withSrc = d.lines.filter(function (l) { return l.src; });
@@ -288,7 +298,7 @@
     var d = Q.get(), on = different();
     namesBox.hidden = !on;
     wordingLabel.textContent = on ? 'Wording that’s the same on every award (optional)' : 'Wording';
-    var lines = d.lines;
+    var lines = d.lines.filter(function (l) { return l.kind !== 'plaque'; });
     var same = lines.length === 1 ? suggestion(lines[0]) : '';
     wordingFit.textContent = !on && same ? same + ' on this award. A suggestion only: we’ll check it fits on your proof.' : '';
     if (!on) return;
@@ -335,7 +345,7 @@
     var names = d.names || {}, out = [];
     d.lines.forEach(function (l) {
       var qty = parseInt(l.qty, 10) || 0;
-      if (!qty) return;
+      if (!qty || l.kind === 'plaque') return;
       out.push(l.name + ' (' + l.sku + '):');
       for (var k = 1; k <= qty; k++) out.push('  ' + k + '. ' + ((names[l.sku + '-' + k] || '').replace(/\n+/g, ' / ').trim() || '(to follow)'));
     });
@@ -343,18 +353,19 @@
   }
 
   function update() {
-    var d = Q.get(), total = Q.total(d), n = d.lines.length;
+    var d = Q.get(), total = Q.total(d), n = d.lines.length, awardsN = Q.awardTotal(d);
     var firstQty = linesEl.querySelector('[data-line-qty]');
-    var short = n && total < MIN;
+    var short = Q.short(d);
     if (firstQty) firstQty.setCustomValidity(short ? 'Our minimum order is ' + MIN + ' awards in total.' : '');
-    totalEl.innerHTML = n ? total + ' awards' + (short ? ' (minimum ' + MIN + ')' : '') + ' · <strong>Total from ' + Q.gbp(Q.money(d)) + '</strong><span class="block text-xs">' + Q.TOTAL_NOTE + '</span>' : 'Minimum order ' + MIN + ' awards in total.';
+    totalEl.innerHTML = n ? total + (total === 1 ? ' item' : ' items') + (short ? ' (minimum ' + MIN + ' awards)' : '') + ' · <strong>Total from ' + Q.gbp(Q.money(d)) + '</strong><span class="block text-xs">' + Q.TOTAL_NOTE + (Q.hasPlaques(d) ? ' ' + Q.PLAQUE_NOTE : '') + '</span>' : 'Minimum order ' + MIN + ' awards in total. Bench plaques have no minimum.';
     totalEl.style.color = short ? '#8A1C1C' : '';
     paintStock(d);
     var parts = d.lines.map(function (l) {
+      if (l.kind === 'plaque') return (l.qty || '?') + ' × ' + l.name + ' (' + l.sku + '): ' + (l.details || '');
       return (l.qty || '?') + ' × ' + l.name + ' (' + l.sku + ')' + (Q.unit(l) ? ' @ ' + Q.gbp(Q.unit(l)) : '') + stockTag(l);
     });
-    form.querySelector('[data-summary]').value = (parts.length ? parts.join('\n') + '\nEstimated total from ' + Q.gbp(Q.money(d)) + ' (' + Q.TOTAL_NOTE.toLowerCase() + ')' : '') || (approx.value ? 'Recommendation wanted, about ' + approx.value + ' awards' : '');
-    form.querySelector('[data-subject]').value = 'Glass award quote: ' + (parts.map(function (p) { return p.replace(/ \[.*\]$/, ''); }).join(', ') || 'recommendation request');
+    form.querySelector('[data-summary]').value = (parts.length ? parts.join('\n') + '\nEstimated total from ' + Q.gbp(Q.money(d)) + ' (' + Q.TOTAL_NOTE.toLowerCase() + (Q.hasPlaques(d) ? ' Plaques to be priced.' : '') + ')' : '') || (approx.value ? 'Recommendation wanted, about ' + approx.value + ' awards' : '');
+    form.querySelector('[data-subject]').value = 'Website order: ' + (parts.map(function (p) { return p.replace(/ \[.*\]$/, '').replace(/\): .*/, ')'); }).join(', ') || 'recommendation request');
     form.querySelector('[data-names]').value = namesText(d);
   }
 
@@ -384,11 +395,36 @@
   }
 
   linesEl.addEventListener('input', function (e) {
+    var pw = e.target.closest('[data-plaque-wording]');
+    if (pw) {
+      // Quiet save: keep typing focus; the order summary refreshes below.
+      var line = Q.line(pw.dataset.plaqueWording);
+      if (line) {
+        var dsg = Object.assign({}, line.design || {}, { wording: pw.value }), fields = { design: dsg };
+        // Redraw the plaque picture with the new wording.
+        var pic = dsg.render ? Q.renderPlaque(dsg.render, pw.value) : null;
+        if (pic) { fields.image = pic; var im = pw.closest('.q-line').querySelector('.q-line-img'); if (im) im.src = pic; }
+        Q.patch(line.sku, fields, true); update();
+      }
+      return;
+    }
     if (!e.target.matches('[data-line-qty]')) return;
     var sku = e.target.closest('[data-sku]').dataset.sku, v = parseInt(e.target.value, 10);
     if (v > 0) { Q.setQty(sku, v); renderNames(); update(); }
   });
   linesEl.addEventListener('click', function (e) {
+    var dup = e.target.closest('[data-plaque-dup]');
+    if (dup) {
+      var src = Q.line(dup.dataset.plaqueDup);
+      if (!src) return;
+      var nsku = 'PLAQUE-' + Date.now().toString(36).toUpperCase();
+      Q.add({ kind: 'plaque', sku: nsku, name: src.name, image: (src.design && src.design.render && Q.renderPlaque(src.design.render, '')) || src.image, url: '/design-a-bench-plaque/?edit=' + nsku, qty: 1,
+        design: Object.assign({}, src.design, { wording: '' }), optionsText: src.optionsText, details: Q.plaqueDetails({ design: { wording: '' }, optionsText: src.optionsText }) });
+      var box = document.getElementById('pw-' + nsku);
+      if (box) box.focus();
+      ph('plaque_duplicated', {});
+      return;
+    }
     var r = e.target.closest('[data-line-remove]');
     if (r) { Q.remove(r.closest('[data-sku]').dataset.sku); renderLines(); }
   });
@@ -406,7 +442,7 @@
   });
   form.addEventListener('input', function (e) { if (FIELDS.indexOf(e.target.name) > -1) { persistFields(); update(); } });
   // The panel or another tab changed the basket.
-  Q.onChange(function () { if (!document.activeElement || !document.activeElement.matches('[data-line-qty], [data-name-key]')) renderLines(); });
+  Q.onChange(function () { if (!document.activeElement || !document.activeElement.matches('[data-line-qty], [data-name-key], [data-plaque-wording]')) renderLines(); });
 
   var started = false;
   form.addEventListener('input', function () { if (!started) { started = true; ph('quote_started', { awards: Q.get().lines.length }); } });

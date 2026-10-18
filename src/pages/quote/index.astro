@@ -1,25 +1,26 @@
 ---
 import Base from "../../layouts/Base.astro";
+import PayAfterProof from "../../components/PayAfterProof.astro";
 import pages from "../../data/pages.json";
 import { MIN_QTY } from "../../lib/awards";
 const meta = pages["quote"];
 // Trimmed: a pasted secret with a trailing newline makes Web3Forms reject the key.
 const web3formsKey = (import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "").trim();
 ---
-<Base title={meta.title} description={meta.description} path={meta.url} scripts={["awards.js"]}>
+<Base title={meta.title} description={meta.description} path={meta.url} scripts={["awards.js"]} fonts>
 <section class="bg-mist px-6 py-10">
   <div class="mx-auto max-w-3xl">
     <p class="m-0 mb-2 text-sm"><a href="/glass-awards/" data-browse-more>← Browse more awards</a></p>
-    <h1 class="m-0 mb-2 text-3xl font-semibold text-teal">Your glass award quote</h1>
-    <p class="muted m-0 mb-6">Check your awards, add the wording, and we’ll email the full price, including engraving and delivery, within 24 hours (working days).</p>
+    <h1 class="m-0 mb-2 text-3xl font-semibold text-teal">Your order</h1>
+    <p class="muted m-0 mb-6">Check your glass awards and bench plaques and add the wording. We’ll email the full price, including engraving and delivery, with a free proof within 24 hours (working days). Nothing to pay today.</p>
 
     <form id="quote-form" action="https://api.web3forms.com/submit" method="POST" data-ajax data-min={MIN_QTY} data-thanks="/thank-you/"
-      data-success="Thank you, your quote request is on its way. We’ll email the full price within 24 hours (working days). If you’re adding a logo, just reply to our email with the file (PDF, EPS, SVG or a clear image)."
+      data-success="Thank you, your order is on its way. We’ll email the full price and a free proof within 24 hours (working days). If you’re adding a logo, just reply to our email with the file (PDF, EPS, SVG or a clear image)."
       class="flex flex-col gap-6 rounded-lg bg-white p-6 shadow-sm" style="box-shadow: 0 1px 3px rgba(0,0,0,0.12)">
 
       <section aria-labelledby="q-awards-title">
         <div class="mb-3 flex flex-wrap items-baseline justify-between gap-2">
-          <h2 id="q-awards-title" class="m-0 text-xl font-semibold text-ink">Your awards</h2>
+          <h2 id="q-awards-title" class="m-0 text-xl font-semibold text-ink">In your order</h2>
           <p class="muted m-0 text-sm" id="qty-total" aria-live="polite">Minimum order {MIN_QTY} awards in total.</p>
         </div>
         <ul id="q-lines" class="m-0 flex list-none flex-col gap-3 p-0"></ul>
@@ -88,19 +89,89 @@ const web3formsKey = (import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "").trim();
           <label for="occasion">Occasion (optional)</label>
           <input id="occasion" name="occasion" class="inp" placeholder="e.g. staff awards night" />
         </div>
-        <div class="field">
-          <label for="q-name">Your name *</label>
-          <input id="q-name" name="name" required class="inp" autocomplete="name" />
-        </div>
-        <div class="field">
-          <label for="q-email">Email *</label>
-          <input id="q-email" name="email" type="email" required class="inp" autocomplete="email" />
-        </div>
       </div>
+
+      <section aria-labelledby="q-details-title" class="checkout-step">
+        <h2 id="q-details-title" class="checkout-h"><span class="checkout-n" aria-hidden="true">1</span> Your details</h2>
+        <div class="grid gap-4" style="grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr))">
+          <div class="field">
+            <label for="q-name">Full name *</label>
+            <input id="q-name" name="name" required class="inp" autocomplete="name" />
+          </div>
+          <div class="field">
+            <label for="q-email">Email *</label>
+            <input id="q-email" name="email" type="email" required class="inp" autocomplete="email" inputmode="email" aria-describedby="email-hint" />
+            <span id="email-hint" class="muted text-sm">We send your price and proof here.</span>
+          </div>
+          <div class="field">
+            <label for="q-phone">Phone (optional)</label>
+            <input id="q-phone" name="phone" type="tel" class="inp" autocomplete="tel" inputmode="tel" aria-describedby="phone-hint" />
+            <span id="phone-hint" class="muted text-sm">Only used if the courier needs it.</span>
+          </div>
+          <div class="field">
+            <label for="q-company">Company, club or organisation (optional)</label>
+            <input id="q-company" name="company" class="inp" autocomplete="organization" />
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="q-delivery-title" class="checkout-step">
+        <h2 id="q-delivery-title" class="checkout-h"><span class="checkout-n" aria-hidden="true">2</span> Delivery address</h2>
+        <p class="muted m-0 mb-3 text-sm">We deliver anywhere in the UK. Delivery is included in the price we confirm with your proof.</p>
+        <div class="grid gap-4" style="grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr))">
+          <div class="field" style="grid-column: 1 / -1">
+            <label for="d-line1">Address *</label>
+            <input id="d-line1" name="delivery_address_line_1" required class="inp" autocomplete="shipping address-line1" placeholder="House number and street" />
+          </div>
+          <div class="field" style="grid-column: 1 / -1">
+            <label for="d-line2">Address line 2 (optional)</label>
+            <input id="d-line2" name="delivery_address_line_2" class="inp" autocomplete="shipping address-line2" placeholder="Building, floor, department" />
+          </div>
+          <div class="field">
+            <label for="d-town">Town or city *</label>
+            <input id="d-town" name="delivery_town" required class="inp" autocomplete="shipping address-level2" />
+          </div>
+          <div class="field">
+            <label for="d-postcode">Postcode *</label>
+            <input id="d-postcode" name="delivery_postcode" required class="inp" autocomplete="shipping postal-code" style="text-transform: uppercase" />
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="q-billing-title" class="checkout-step">
+        <h2 id="q-billing-title" class="checkout-h"><span class="checkout-n" aria-hidden="true">3</span> Billing address</h2>
+        <label class="flex items-center gap-2 font-semibold" style="min-height: 44px"><input type="checkbox" id="billing-same" name="billing_same_as_delivery" value="Yes" checked style="width: 1.1rem; height: 1.1rem; accent-color: #3D5A5E" /> Same as delivery address</label>
+        <div id="billing-fields" class="mt-3 grid gap-4" style="grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr))" hidden>
+          <div class="field" style="grid-column: 1 / -1">
+            <label for="b-line1">Address *</label>
+            <input id="b-line1" name="billing_address_line_1" class="inp" autocomplete="billing address-line1" data-billing-required />
+          </div>
+          <div class="field" style="grid-column: 1 / -1">
+            <label for="b-line2">Address line 2 (optional)</label>
+            <input id="b-line2" name="billing_address_line_2" class="inp" autocomplete="billing address-line2" />
+          </div>
+          <div class="field">
+            <label for="b-town">Town or city *</label>
+            <input id="b-town" name="billing_town" class="inp" autocomplete="billing address-level2" data-billing-required />
+          </div>
+          <div class="field">
+            <label for="b-postcode">Postcode *</label>
+            <input id="b-postcode" name="billing_postcode" class="inp" autocomplete="billing postal-code" style="text-transform: uppercase" data-billing-required />
+          </div>
+          <div class="field">
+            <label for="b-email">Invoice email (optional)</label>
+            <input id="b-email" name="invoice_email" type="email" class="inp" autocomplete="email" placeholder="e.g. accounts@" />
+          </div>
+          <div class="field">
+            <label for="b-po">Purchase order number (optional)</label>
+            <input id="b-po" name="po_number" class="inp" />
+          </div>
+        </div>
+      </section>
 
       <div class="field">
         <label for="notes">Anything else? (optional)</label>
-        <textarea id="notes" name="notes" rows="3" class="inp" style="resize: vertical" placeholder="Budget, delivery area, an award you saw elsewhere…"></textarea>
+        <textarea id="notes" name="notes" rows="3" class="inp" style="resize: vertical" placeholder="Budget, an award you saw elsewhere, delivery instructions…"></textarea>
       </div>
 
       <div class="field" style="max-width: 22rem">
@@ -119,6 +190,19 @@ const web3formsKey = (import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "").trim();
         </select>
       </div>
 
+      <section aria-labelledby="q-pay-title" class="checkout-step">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <h2 id="q-pay-title" class="checkout-h m-0"><span class="checkout-n" aria-hidden="true">4</span> Payment</h2>
+          <span class="muted text-sm">Card or bank transfer, after your proof</span>
+        </div>
+        <div class="mt-3 rounded-lg p-4" style="border: 2px dashed #D1D5DB; background: #F9FAFB">
+          <p class="m-0 font-bold" style="font-size: 1.05rem">Nothing to pay today</p>
+          <p class="muted m-0">You pay once your awards are engraved and checked.</p>
+        </div>
+        <PayAfterProof label="Why can’t I pay now?" />
+        <label class="mt-3 flex items-start gap-2" style="min-height: 44px"><input type="checkbox" name="payment_link_with_proof" value="yes" style="margin-top: 0.3rem; width: 1.1rem; height: 1.1rem; accent-color: #3D5A5E"> <span>Prefer to pay sooner? Send me a payment link with my proof.</span></label>
+      </section>
+
       <input type="hidden" name="access_key" value={web3formsKey} />
       <input type="hidden" name="subject" value="Glass award quote request" data-subject />
       <input type="hidden" name="from_name" value="Grimes Engravers website" />
@@ -127,12 +211,25 @@ const web3formsKey = (import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "").trim();
       <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="display: none" />
       <div>
         <p id="stock-summary" class="m-0 mb-3 text-sm" aria-live="polite" hidden></p>
-        <button type="submit" class="btn" style="font-size: 1.1rem; padding: 0.95rem 1.8rem">Send my quote request</button>
-        <p class="muted mt-3 text-sm">Adding a logo? Reply to our email with the file. You don’t need it to get a quote.</p>
+        <button type="submit" class="btn" style="font-size: 1.1rem; padding: 0.95rem 1.8rem">Send my order: nothing to pay now</button>
+        <p class="muted mt-3 text-sm">Adding a logo? Reply to our email with the file. You don’t need it to send your order.</p>
         <div id="stock-warn" class="mt-4 rounded-lg p-4" style="background: #FDECEC; color: #8A1C1C" role="alert" hidden></div>
         <p data-status hidden role="status"></p>
       </div>
     </form>
   </div>
 </section>
+<script is:inline>
+  // Billing address: hidden and not required while "Same as delivery address" is ticked.
+  (function () {
+    var same = document.getElementById('billing-same'), box = document.getElementById('billing-fields');
+    if (!same || !box) return;
+    function sync() {
+      box.hidden = same.checked;
+      box.querySelectorAll('[data-billing-required]').forEach(function (el) { el.required = !same.checked; });
+    }
+    same.addEventListener('change', sync);
+    sync();
+  })();
+</script>
 </Base>

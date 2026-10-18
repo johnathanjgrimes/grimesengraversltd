@@ -1,0 +1,39 @@
+---
+// A static bench plaque preview: the same finishes, fonts and emblems as the designer (public/js/plaque.js),
+// drawn with CSS so shop cards need no photos and no JavaScript. Text size uses container units (cqw)
+// so it scales with the card. Fonts load via <Base fonts>.
+import font_data from "../data/font.json";
+import plaque_data from "../data/plaque.json";
+const { size = "8x3", mat = "brass", font = "roman", emblem = "none", wording = "", corners = "square", holes = true } = Astro.props;
+const s = plaque_data.sizes.find((x) => x.id === size) ?? plaque_data.sizes[0];
+const m = font_data.mats.find((x) => x.id === mat) ?? font_data.mats[0];
+const f = font_data.fonts.find((x) => x.id === font) ?? font_data.fonts[0];
+const e = plaque_data.emblems.find((x) => x.id === emblem);
+const svg = e?.svg || "";
+const lines = wording.split("\n").filter((l: string) => l.trim());
+const longest = Math.max(1, ...lines.map((l: string) => l.length));
+// Rough average character width per font, as a fraction of the font size.
+const charW: Record<string, number> = { roman: 0.56, italic: 0.46, script: 0.42, capitals: 0.74, modern: 0.6, gothic: 0.52 };
+const ratio = s.h / s.w;
+const innerH = 100 * ratio * 0.72, innerW = 82;
+const rows = lines.length + (svg ? 1.4 : 0);
+const fs = Math.min(innerH / Math.max(rows, 1) / 1.28, innerW / (longest * (charW[f.id] ?? 0.58))) * 0.94;
+const bg = mat === "brass" ? "linear-gradient(135deg, #D8B76A, #B8914A 55%, #D2AE62)" : "linear-gradient(135deg, #E4E7EA, #C3C8CD 55%, #DDE0E3)";
+const radius = corners === "round" ? `4% / ${4 * s.w / s.h}%` : "2px";
+const dot = "position:absolute;width:3.2%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 40% 40%,#F2F2F2,#6B7280);box-shadow:inset 0 0 0 1px rgba(0,0,0,.35)";
+const dy = `${3.5 * s.w / s.h}%`;
+---
+<div class="pqv" role="img" aria-label={`${m.name} plaque, ${s.name}, reading: ${lines.join(", ")}`}>
+  <div class="pqv-box" style={`width: ${ratio > 0.6 ? 72 : 100}%`}>
+  <div class="pqv-plate" style={`aspect-ratio: ${s.w} / ${s.h}; background: ${bg}; color: ${m.ink}; border-radius: ${radius}`}>
+    {holes && <>
+      <span style={`${dot};left:3.5%;top:${dy}`}></span><span style={`${dot};right:3.5%;top:${dy}`}></span>
+      <span style={`${dot};left:3.5%;bottom:${dy}`}></span><span style={`${dot};right:3.5%;bottom:${dy}`}></span>
+    </>}
+    <div class="pqv-inner">
+      {svg && <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style={`width: ${fs * 1.4}cqw; height: ${fs * 1.4}cqw; margin-bottom: ${fs * 0.25}cqw`} set:html={svg} />}
+      <p class="pqv-text" style={`font-family: ${f.fam}; font-style: ${f.fstyle}; font-size: ${fs.toFixed(2)}cqw`}>{lines.join("\n")}</p>
+    </div>
+  </div>
+  </div>
+</div>

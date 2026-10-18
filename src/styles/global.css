@@ -324,3 +324,71 @@ header .nav-toggle { order: 4; }
 .pq-opt:has(input:focus-visible) { outline: 3px solid #3D5A5E; outline-offset: 2px; }
 .pq-opt input { accent-color: #3D5A5E; margin: 0; }
 @media (min-width: 60rem) { .pq-preview { position: sticky; top: 6rem; } }
+
+/* "Nothing to pay today" message: award pages, plaque pages, basket and order page */
+.pay-proof { margin: 0.75rem 0 0; max-width: 34rem; }
+.pay-proof summary { display: inline-flex; align-items: center; gap: 0.45rem; min-height: 2.75rem; cursor: pointer; font-weight: 700; color: #166534; list-style: none; }
+.pay-proof summary::-webkit-details-marker { display: none; }
+.pay-proof summary::after { content: "ⓘ"; color: #4B5563; font-weight: 400; }
+.pay-proof summary:focus-visible { outline: 3px solid #3D5A5E; outline-offset: 2px; border-radius: 4px; }
+.pay-proof-body { margin-top: 0.25rem; background: #F0F7F2; border-left: 4px solid #2F7A4F; border-radius: 6px; padding: 0.75rem 1rem; color: #1F2933; }
+.pay-proof-body p { margin: 0 0 0.4rem; }
+.pay-proof-body a { font-weight: 700; }
+.pay-proof-dark summary { color: #BBF7D0; }
+.pay-proof-dark summary::after { color: #D1D5DB; }
+.pay-proof-dark .pay-proof-body { background: #FFFFFF; }
+.aw-pay { display: inline-block; font-size: 0.75rem; font-weight: 700; color: #166534; }
+.quote-bar-pay { font-weight: 600; color: #BBF7D0; }
+.quote-pay-note { display: block; margin-top: 0.5rem; padding: 0.5rem 0.65rem; border-radius: 6px; background: #F0F7F2; color: #166534; font-weight: 600; }
+@media (max-width: 40rem) { .quote-bar-pay { display: none; } }
+
+/* AI-made scene images: always labelled */
+.coll-scene-wrap { position: relative; }
+/* Range and occasion pages with a scene image: full-width scene behind a navy wash, like the homepage */
+.coll-hero-scene { position: relative; background: linear-gradient(90deg, rgba(35,38,58,0.95) 0%, rgba(35,38,58,0.82) 45%, rgba(35,38,58,0.4) 100%), var(--scene) 80% center / cover no-repeat, #23263A !important; padding-top: 5.5rem !important; padding-bottom: 5.5rem !important; }
+.coll-hero-scene .coll-hero { grid-template-columns: minmax(0, 40rem) !important; }
+@media (max-width: 760px) { .coll-hero-scene { background: linear-gradient(180deg, rgba(35,38,58,0.1) 0%, rgba(35,38,58,0.65) 24%, #23263A 36%), var(--scene) center top / 100% auto no-repeat, #23263A !important; padding-top: 14rem !important; padding-bottom: 2.5rem !important; } .coll-hero-scene .ai-tag { top: 0.75rem; bottom: auto; } }
+/* Homepage hero: the awards-night scene fills the whole hero behind a navy wash, with a "Start here"
+   card on the right (src/pages/index.astro). */
+.home-hero { position: relative; }
+.home-hero.has-scene { background: linear-gradient(90deg, rgba(35,38,58,0.94) 0%, rgba(35,38,58,0.8) 45%, rgba(35,38,58,0.55) 100%), url(/assets/img/hero/awards-night-1200.webp) 70% center / cover no-repeat, #23263A !important; padding-top: 6rem !important; padding-bottom: 6rem !important; }
+@media (min-width: 1200px) { .home-hero.has-scene { background-image: linear-gradient(90deg, rgba(35,38,58,0.94) 0%, rgba(35,38,58,0.8) 45%, rgba(35,38,58,0.55) 100%), url(/assets/img/hero/awards-night-1920.webp) !important; } }
+.home-hero.has-scene > div { position: relative; z-index: 1; justify-content: space-between; }
+.home-hero.has-scene .ai-tag { z-index: 2; }
+.home-hero.has-scene .home-hero-text { flex: 1 1 30rem !important; max-width: 38rem; }
+.hero-start { flex: 0 1 26rem; display: flex; flex-direction: column; gap: 0.75rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; background: rgba(20,22,36,0.72); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+.hero-start-head { margin: 0 0 0.25rem; color: #F3A3A6; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.hero-start a { display: flex; align-items: center; gap: 0.9rem; min-height: 4.25rem; padding: 0.8rem 1rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.05); color: #FFFFFF; text-decoration: none; transition: background .15s, border-color .15s; }
+.hero-start a:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
+.hero-start a:focus-visible { outline: 3px solid #F3A3A6; outline-offset: 2px; }
+.hero-start a > span:nth-child(2) { flex: 1; min-width: 0; }
+.hero-start strong { display: block; font-size: 1.05rem; }
+.hero-start small { display: block; color: #D1D5DB; font-size: 0.9rem; }
+.hero-start-icon { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 2.75rem; height: 2.75rem; border-radius: 10px; background: #F3A3A6; color: #23263A; }
+.hero-start-arrow { flex: none; color: #F3A3A6; font-size: 1.2rem; }
+@media (max-width: 760px) { .home-hero.has-scene { background: linear-gradient(180deg, rgba(35,38,58,0.1) 0%, rgba(35,38,58,0.6) 22%, #23263A 34%), url(/assets/img/hero/awards-night-mobile-1000.webp) center top / 100% auto no-repeat, #23263A !important; padding-top: 13rem !important; padding-bottom: 3rem !important; } .home-hero.has-scene .ai-tag { top: 0.75rem; bottom: auto; } .hero-start { flex-basis: 100%; } }
+.ai-tag { position: absolute; right: 0.75rem; bottom: 0.75rem; background: rgba(255,255,255,0.92); color: #1F2933; font-size: 0.75rem; font-weight: 700; padding: 0.3rem 0.6rem; border-radius: 999px; }
+
+/* Order page laid out like a checkout: numbered steps */
+.checkout-step { border-top: 1px solid #E5E7EB; padding-top: 1.5rem; }
+.checkout-h { display: flex; align-items: center; gap: 0.6rem; margin: 0 0 1rem; font-size: 1.25rem; font-weight: 600; color: #1F2933; }
+.checkout-n { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 1.9rem; height: 1.9rem; border-radius: 50%; background: #23263A; color: #FFFFFF; font-size: 0.95rem; font-weight: 700; }
+
+/* Bench plaque shop: cards drawn with the designer's preview styles */
+.pq-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1.25rem; margin: 0; padding: 0; list-style: none; }
+.pq-card { display: flex; flex-direction: column; height: 100%; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 10px; overflow: hidden; text-decoration: none; color: #1F2933; transition: box-shadow .15s, transform .15s; }
+.pq-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.08); transform: translateY(-2px); }
+.pq-card:focus-visible { outline: 3px solid #3D5A5E; outline-offset: 2px; }
+.pq-card-body { display: flex; flex: 1; flex-direction: column; gap: 0.2rem; padding: 0.9rem 1rem 1rem; }
+.pq-card-cta { margin-top: auto; padding-top: 0.6rem; font-weight: 700; color: #3D5A5E; }
+.pqv { display: flex; align-items: center; justify-content: center; aspect-ratio: 4 / 3; padding: 1.25rem; background: radial-gradient(ellipse at 50% 40%, #FFFFFF, #EEF0F2); }
+.pqv-box { container-type: inline-size; }
+.pqv-plate { position: relative; width: 100%; box-shadow: 0 2px 6px rgba(0,0,0,0.25), inset 0 0 0 1px rgba(0,0,0,0.15); }
+.pqv-inner { position: absolute; inset: 14% 9%; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
+.pqv-text { margin: 0; white-space: pre-line; text-align: center; line-height: 1.28; }
+.pq-filter { display: inline-flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+.pq-filter button { min-height: 2.75rem; padding: 0.4rem 1rem; border: 2px solid #9CA3AF; border-radius: 999px; background: #FFFFFF; font: inherit; font-weight: 600; cursor: pointer; }
+.pq-filter button[aria-pressed="true"] { border-color: #3D5A5E; background: #3D5A5E; color: #FFFFFF; }
+.pq-guide { margin: 0 0 1.5rem; padding: 1rem 1.25rem; border-left: 4px solid #3D5A5E; border-radius: 6px; background: #F5F6F7; color: #1F2933; max-width: 52rem; }
+.pq-badge { align-self: flex-start; margin-bottom: 0.3rem; padding: 0.15rem 0.55rem; border-radius: 999px; background: #EEF3F3; color: #3D5A5E; font-size: 0.75rem; font-weight: 700; }
+.pq-badge-top { background: #2F7A4F; color: #FFFFFF; }

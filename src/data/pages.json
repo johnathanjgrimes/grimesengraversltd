@@ -2,7 +2,7 @@
  "index": {
   "url": "/",
   "title": "Grimes Engravers Cardiff | Glass & Crystal Awards and Bench Plaques",
-  "description": "Family engravers in Cardiff since 1947. Engraved glass and crystal awards for staff awards, long service and events (minimum order 2), and memorial bench plaques. Quotes in 24 hours."
+  "description": "Family engravers in Cardiff since 1947. Engraved glass and crystal awards for staff awards, long service and events (minimum order 2), and memorial bench plaques. Free proof, and nothing to pay until it’s engraved."
  },
  "memorial-bench-plaques": {
   "url": "/memorial-bench-plaques/",
@@ -31,23 +31,23 @@
  },
  "contact": {
   "url": "/contact/",
-  "title": "Request a Quote | Grimes Engravers Cardiff",
-  "description": "Request a quote from Grimes Engravers in Cardiff by email. We reply with a quote within 24 hours (working days)."
+  "title": "Contact Us | Grimes Engravers Cardiff",
+  "description": "Contact Grimes Engravers in Cardiff by email: questions, custom engraving or help choosing. We reply within 24 hours (working days)."
  },
  "about": {
   "url": "/about/",
   "title": "About Grimes Engravers | Cardiff Engravers Since 1947",
-  "description": "Key facts about Grimes Engravers: family-run engravers in Cardiff since 1947, what we make, who we work with, minimum orders and how to get a quote."
+  "description": "Key facts about Grimes Engravers: family-run engravers in Cardiff since 1947, what we make, who we work with, minimum orders and how to order."
  },
  "glass-awards": {
   "url": "/glass-awards/",
   "title": "Engraved Glass Awards & Crystal Trophies | From 2 | Grimes Engravers",
-  "description": "Bespoke engraved glass and crystal awards with your logo: stars, columns, globes and more, with sizes and from prices. Order from 2, free proof, quote in 24 hours, UK delivery."
+  "description": "Bespoke engraved glass and crystal awards with your logo: stars, columns, globes and more, with sizes and from prices. Order from 2, free proof, price in 24 hours, UK delivery."
  },
  "quote": {
   "url": "/quote/",
-  "title": "Request a Glass Award Quote | Grimes Engravers",
-  "description": "Request a quote for engraved glass and crystal awards. Choose your award, quantity and wording, and we email the full price within 24 hours."
+  "title": "Your Order | Grimes Engravers",
+  "description": "Your glass awards and bench plaques order. Add your wording and delivery details: we email the full price and a free proof within 24 hours, with nothing to pay today."
  },
  "award-wording-ideas": {
   "url": "/award-wording-ideas/",
@@ -56,8 +56,8 @@
  },
  "design-a-bench-plaque": {
   "url": "/design-a-bench-plaque/",
-  "title": "Design Your Bench Plaque & Get a Quote | Grimes Engravers",
-  "description": "Design a brass or stainless steel memorial bench plaque online: choose the size, font, emblem and wording, see a live preview and get a quote in 24 hours."
+  "title": "Design Your Bench Plaque Online | Grimes Engravers",
+  "description": "Design a brass or stainless steel memorial bench plaque online: choose the size, font, emblem and wording, see a live preview and add it to your order. Free proof, nothing to pay until it’s engraved."
  },
  "glass-vs-crystal-awards": {
   "url": "/glass-vs-crystal-awards/",
@@ -78,5 +78,10 @@
   "url": "/brass-vs-stainless-steel-bench-plaques/",
   "title": "Brass vs Stainless Steel Bench Plaques: Which Is Best? | Grimes Engravers",
   "description": "Brass or stainless steel for a memorial bench plaque? How they look, age and weather outdoors, the care each needs, and which to choose for your bench."
+ },
+ "why-we-proof-first": {
+  "url": "/why-we-proof-first/",
+  "title": "Why We Proof First and You Pay Later | Grimes Engravers",
+  "description": "Nothing to pay when you order: we check every name, send a free proof, engrave and inspect by hand, then invoice. Why personalised awards and plaques need getting right first time."
  }
 }

@@ -4,13 +4,13 @@ import config from '../../data/config.json';
 import faqs from '../../data/faqs.json';
 import services from '../../data/services.json';
 import { anniversary, anniversaryLabel } from '../../lib/anniversary';
-const meta = { url: '/about/', title: 'About Grimes Engravers | Cardiff Engravers Since 1947', description: 'Key facts about Grimes Engravers: family-run engravers in Cardiff since 1947, what we make, who we work with, minimum orders and how to get a quote.' };
+const meta = { url: '/about/', title: 'About Grimes Engravers | Cardiff Engravers Since 1947', description: 'Key facts about Grimes Engravers: family-run engravers in Cardiff since 1947, what we make, who we work with, minimum orders and how to order.' };
 const facts = [
   ['Established', `${config.founded} in Cardiff, Wales. Family-run, now in its third generation.${anniversary ? ' Celebrating 80 years.' : ''}`],
   ['What we supply & produce', 'Engraved glass and crystal awards, with a minimum order of 2 awards. Also memorial bench plaques in brass and stainless steel.'],
   ['Who we work with', 'Companies and organisations ordering glass awards, and families ordering a bench plaque.'],
   ['Minimum order', config.minimumOrder],
-  ['Quotes & lead times', `Quotes ${config.quoteTime}. Orders take ${config.leadTime}. We work ${config.workingDays}.`],
+  ['Prices & lead times', `Prices and a free proof ${config.quoteTime}, with nothing to pay until it’s engraved. Orders take ${config.leadTime}. We work ${config.workingDays}.`],
   ['Visiting', 'No visits, appointments or collections. We work from a private workshop and deliver every order.'],
   ['Languages', 'We engrave in English, Welsh or both, including Welsh characters such as ŵ and ŷ.'],
   ['Areas', `${config.areas.join(', ')}, and anywhere in the UK by post.`],
@@ -59,7 +59,7 @@ const facts = [
     </div>
     <p class="text-muted">Grimes Engravers was founded in Cardiff in 1947{anniversary && ", and 2027 marks our 80th anniversary"}. Three generations later we’re still a small family workshop, combining traditional hand skills with modern CAD/CAM engraving.</p>
     <p class="text-muted">Over the decades we’ve engraved for county councils, universities, hospitals, schools, hotels, national organisations and some of Cardiff’s largest employers, as well as for local families marking something that matters.</p>
-    <p class="mt-6"><a class="btn" href="/contact/">Request a quote</a></p>
+    <p class="mt-6"><a class="btn" href="/glass-awards/">Order now</a></p>
   </div>
 </section>
 </Base>

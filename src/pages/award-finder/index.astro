@@ -30,7 +30,7 @@ const description = "Answer three quick questions (what the awards are for, how 
   <div class="mx-auto max-w-6xl">
     <p class="m-0 mb-3 text-sm font-bold uppercase tracking-widest" style="color: #F3A3A6"><a href="/glass-awards/" style="color: inherit">Glass &amp; crystal awards</a> · Award finder</p>
     <h1 class="m-0 mb-3 text-4xl font-semibold leading-tight">Find the right award</h1>
-    <p class="m-0 max-w-2xl text-lg" style="color: #D1D5DB">Three quick questions and we’ll show you awards that fit. Add the ones you like to your quote, and we reply within 24 hours with the full price, engraving included.</p>
+    <p class="m-0 max-w-2xl text-lg" style="color: #D1D5DB">Three quick questions and we’ll show you awards that fit. Add the ones you like to your order, and we reply within 24 hours with the full price, engraving included, and a free proof. Nothing to pay today.</p>
   </div>
 </section>
 <section class="bg-mist px-6 py-8">
@@ -49,7 +49,7 @@ const description = "Answer three quick questions (what the awards are for, how 
     <fieldset class="fd-q">
       <legend><span class="fd-n">3</span> Budget per award?</legend>
       <div class="fd-opts">{BUDGETS.map(([v, l]) => <label class="fd-opt"><input type="radio" name="budget" value={v} checked={v === ""} /><span>{l}</span></label>)}</div>
-      <p class="muted m-0 mt-2 text-sm">Prices are “from” prices per award. Engraving is added on top and confirmed in your quote.</p>
+      <p class="muted m-0 mt-2 text-sm">Prices are “from” prices per award. Engraving is added on top and confirmed with your proof.</p>
     </fieldset>
     <a href="#fd-results" id="fd-jump" class="btn self-start">See the awards ↓</a>
   </form>

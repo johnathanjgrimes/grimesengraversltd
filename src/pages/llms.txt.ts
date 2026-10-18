@@ -19,7 +19,7 @@ export const GET: APIRoute = () => {
 
 - Established: ${config.founded}, Cardiff, Wales. Family-run, third generation.${anniversary ? ' Celebrating 80 years (1947–2027).' : ''}
 - Contact: by email only, ${config.email} · ${config.site}. No telephone enquiries.
-- Working days: ${config.workingDays}. Quotes ${config.quoteTime}.
+- Working days: ${config.workingDays}. Prices and free proof ${config.quoteTime}. Nothing to pay until the order is engraved and checked.
 - Lead time: ${config.leadTime}.
 - Visiting: no visits, appointments or collections. All orders are delivered.
 - Areas: ${config.areas.join(', ')}, and UK-wide by post.
@@ -28,8 +28,8 @@ export const GET: APIRoute = () => {
 - Does not offer: trophies or medals; memorial, wall or opening plaques other than bench plaques; nameplates, signs or labels; engraving of personal items (watches, jewellery, gifts); wooden items; while-you-wait engraving. Glass awards need a minimum of 2 in total.
 - Glass award pricing: "from" prices per award are listed at ${config.site}/glass-awards/; engraving is quoted separately.
 - Award finder: ${config.site}/award-finder/ (choose occasion, quantity and budget per award to see matching awards).
-- To get a quote: ${config.site}/quote/ (choose award, quantity of 2 or more, wording, date).
-- How to order: email ${config.email} or use the quote form (${config.site}/contact/). Every order gets a proof before engraving.
+- To order: add glass awards from ${config.site}/glass-awards/ (2 or more) and bench plaques from ${config.site}/design-a-bench-plaque/ (no minimum) to one order, then check out at ${config.site}/quote/ with wording and delivery details. Nothing to pay today.
+- Questions or custom engraving: email ${config.email} or use the contact form (${config.site}/contact/). Every order gets a proof before engraving.
 
 ## Services
 
@@ -56,7 +56,7 @@ ${['award-wording-ideas', 'glass-vs-crystal-awards', 'awards-night-planning', 'd
 - [About Grimes Engravers and key facts](${config.site}/about/)
 - [Our work: photos of awards and bench plaques we have engraved](${config.site}/our-work/)
 - [Full text for AI assistants](${config.site}/llms-full.txt)
-- [Contact and quote form](${config.site}/contact/)
+- [Contact form](${config.site}/contact/)
 `;
   return new Response(body, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 };

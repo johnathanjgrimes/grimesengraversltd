@@ -65,21 +65,86 @@
     has: function (sku) { return load().lines.some(function (l) { return l.sku === sku; }); },
     add: function (item) {
       var d = load();
+      // Plaques get a unique code per design, so several different plaques can sit in one order.
       if (!d.lines.some(function (l) { return l.sku === item.sku; })) {
-        // Start each award at the minimum order; people change it in the panel or on the form.
-        d.lines.push({ sku: item.sku, name: item.name, image: item.image, price: item.price, unit: item.unit != null ? +item.unit : undefined, size: item.size, area: item.area, fitChars: item.fitChars, fitLines: item.fitLines, url: item.url, src: item.src, stock: item.stock !== false, qty: item.qty || MIN });
-        ph('quote_award_added', { sku: item.sku });
+        // Start each award at the minimum order (plaques at the quantity chosen in the designer); people change it in the panel or on the form.
+        d.lines.push({ sku: item.sku, kind: item.kind || 'award', name: item.name, image: item.image, price: item.price, unit: item.unit != null ? +item.unit : undefined, size: item.size, area: item.area, fitChars: item.fitChars, fitLines: item.fitLines, url: item.url, src: item.src, details: item.details, design: item.design, optionsText: item.optionsText, stock: item.stock !== false, qty: item.qty || (item.kind === 'plaque' ? 1 : MIN) });
+        ph(item.kind === 'plaque' ? 'quote_plaque_added' : 'quote_award_added', { sku: item.sku });
       }
       Q.save(d);
     },
     setQty: function (sku, qty) { var d = load(); d.lines.forEach(function (l) { if (l.sku === sku) l.qty = qty; }); Q.save(d); },
+    // Change fields on one line (used to edit a plaque's wording or design). quiet: don't redraw the order page.
+    patch: function (sku, fields, quiet) {
+      var d = load();
+      d.lines.forEach(function (l) { if (l.sku === sku) { Object.keys(fields).forEach(function (k) { l[k] = fields[k]; }); if (l.kind === 'plaque') l.details = Q.plaqueDetails(l); } });
+      Q.save(d, quiet);
+    },
+    line: function (sku) { return load().lines.filter(function (l) { return l.sku === sku; })[0]; },
+    // A plaque's one-line description: wording, then its options and notes.
+    plaqueDetails: function (l) {
+      var w = (l.design && l.design.wording || '').split('\n').map(function (s) { return s.trim(); }).filter(Boolean).join(' / ');
+      return 'Wording: ' + (w || '(to follow)') + (l.optionsText ? ' · ' + l.optionsText : '');
+    },
+    // Draw a plaque design as a small PNG for the basket and checkout, matching the designer's preview:
+    // metal, size, corners, border, screw holes, emblem and wording. r comes from public/js/plaque.js.
+    renderPlaque: function (r, wording) {
+      try {
+        if (!r) return null;
+        var ratio = r.h / r.w, cw = ratio > 0.75 ? Math.round(360 / ratio) : 480, ch = Math.round(cw * ratio), pad = 14;
+        var c = document.createElement('canvas'); c.width = cw + pad * 2; c.height = ch + pad * 2;
+        var x = c.getContext('2d');
+        x.fillStyle = '#F3F4F6'; x.fillRect(0, 0, c.width, c.height);
+        var rr = function (px, py, w, h, rad) { x.beginPath(); x.moveTo(px + rad, py); x.arcTo(px + w, py, px + w, py + h, rad); x.arcTo(px + w, py + h, px, py + h, rad); x.arcTo(px, py + h, px, py, rad); x.arcTo(px, py, px + w, py, rad); x.closePath(); };
+        var g = x.createLinearGradient(pad, pad, pad + cw, pad + ch);
+        if (r.mat === 'brass') { g.addColorStop(0, '#D8B76A'); g.addColorStop(0.55, '#B8914A'); g.addColorStop(1, '#D2AE62'); }
+        else { g.addColorStop(0, '#E4E7EA'); g.addColorStop(0.55, '#C3C8CD'); g.addColorStop(1, '#DDE0E3'); }
+        x.save(); x.shadowColor = 'rgba(0,0,0,0.3)'; x.shadowBlur = 8; x.shadowOffsetY = 2; x.fillStyle = g;
+        rr(pad, pad, cw, ch, r.corners === 'round' ? cw * 0.04 : 2); x.fill(); x.restore();
+        if (r.border) { x.save(); x.globalAlpha = 0.8; x.strokeStyle = r.ink; x.lineWidth = 2; rr(pad + cw * 0.09, pad + ch * 0.09, cw * 0.82, ch * 0.82, 3); x.stroke(); x.restore(); }
+        if (r.holes) {
+          var hr = cw * 0.016, off = cw * 0.035 + hr;
+          [[pad + off, pad + off], [pad + cw - off, pad + off], [pad + off, pad + ch - off], [pad + cw - off, pad + ch - off]].forEach(function (p) {
+            var hg = x.createRadialGradient(p[0] - hr * 0.2, p[1] - hr * 0.2, 0, p[0], p[1], hr); hg.addColorStop(0, '#F2F2F2'); hg.addColorStop(1, '#6B7280');
+            x.beginPath(); x.arc(p[0], p[1], hr, 0, Math.PI * 2); x.fillStyle = hg; x.fill();
+          });
+        }
+        var lines = String(wording || '').split('\n').map(function (s) { return s.trim(); }).filter(Boolean);
+        var paths = []; String(r.emblemSvg || '').replace(/\sd="([^"]+)"/g, function (m, d) { paths.push(d); });
+        var iw = cw * 0.74, ih = ch * 0.76, rows = lines.length + (paths.length ? 1.4 : 0);
+        if (!rows) return c.toDataURL('image/png');
+        var px = Math.min(ih / rows / 1.3, iw / 4), font = function () { return (r.fstyle === 'italic' ? 'italic ' : '') + px + 'px ' + r.fam; };
+        for (var i = 0; i < 40; i++) {
+          x.font = font();
+          var widest = lines.reduce(function (m, l) { return Math.max(m, x.measureText(l).width); }, 0);
+          if (widest <= iw && rows * px * 1.3 <= ih) break;
+          px *= 0.93;
+        }
+        var total = lines.length * px * 1.3 + (paths.length ? px * 1.65 : 0), y = pad + ch / 2 - total / 2;
+        x.fillStyle = r.ink;
+        if (paths.length) {
+          var s = px * 1.4 / 24; x.save(); x.translate(pad + cw / 2 - px * 0.7, y); x.scale(s, s);
+          paths.forEach(function (d) { x.fill(new Path2D(d)); }); x.restore(); y += px * 1.65;
+        }
+        x.font = font(); x.textAlign = 'center'; x.textBaseline = 'middle';
+        lines.forEach(function (l) { x.fillText(l, pad + cw / 2, y + px * 0.65); y += px * 1.3; });
+        return c.toDataURL('image/png');
+      } catch (e) { return null; }
+    },
     remove: function (sku) { var d = load(); d.lines = d.lines.filter(function (l) { return l.sku !== sku; }); ph('quote_award_removed', { sku: sku }); Q.save(d); },
     total: function (d) { return (d || load()).lines.reduce(function (s, l) { return s + (parseInt(l.qty, 10) || 0); }, 0); },
+    // The minimum order applies to awards only; plaques have no minimum.
+    isPlaque: function (l) { return l.kind === 'plaque'; },
+    awardTotal: function (d) { return (d || load()).lines.reduce(function (s, l) { return s + (l.kind === 'plaque' ? 0 : (parseInt(l.qty, 10) || 0)); }, 0); },
+    hasPlaques: function (d) { return (d || load()).lines.some(function (l) { return l.kind === 'plaque'; }); },
+    short: function (d) { d = d || load(); var a = Q.awardTotal(d); return a > 0 && a < MIN; },
+    PLAQUE_NOTE: 'Plaque prices are confirmed with your proof.',
     // Running total at "from" prices: quantity × per-award price. Engraving and delivery are quoted separately.
     unit: function (l) { return l.unit != null ? +l.unit : parseFloat(String(l.price || '').replace(/[^0-9.]/g, '')) || 0; },
     money: function (d) { return (d || load()).lines.reduce(function (s, l) { return s + Q.unit(l) * (parseInt(l.qty, 10) || 0); }, 0); },
     gbp: function (n) { return '£' + n.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); },
     TOTAL_NOTE: 'Excludes engraving and delivery.',
+    PAY_NOTE: 'Nothing to pay today: you pay after your proof, once your awards are engraved and checked.',
     open: function () { openPanel(); },
   };
 
@@ -97,33 +162,35 @@
     if (btn) {
       btn.hidden = !n;
       btn.querySelector('[data-quote-count]').textContent = n;
-      btn.setAttribute('aria-label', 'Your quote, ' + n + (n === 1 ? ' award' : ' awards'));
+      btn.setAttribute('aria-label', 'Your order, ' + n + (n === 1 ? ' award' : ' awards'));
     }
     if (bar) {
       bar.hidden = !n || location.pathname === '/quote/';
-      bar.querySelector('[data-quote-bar-text]').innerHTML = thumbs(d.lines, 4) + '<span>' + n + (n === 1 ? ' award' : ' awards') + ' · ' + total + ' items · <strong>from ' + money + '</strong>' +
-        (total < MIN ? ' <span class="quote-bar-warn">(minimum ' + MIN + ')</span>' : '') + '</span>';
+      bar.querySelector('[data-quote-bar-text]').innerHTML = thumbs(d.lines, 4) + '<span>' + total + (total === 1 ? ' item' : ' items') + (money !== '£0.00' ? ' · <strong>from ' + money + '</strong>' : '') +
+        (Q.short(d) ? ' <span class="quote-bar-warn">(minimum ' + MIN + ' awards)</span>' : '') + ' <span class="quote-bar-pay">· nothing to pay today</span></span>';
     }
     renderPeek(d, n, total, money);
     document.querySelectorAll('[data-add-quote]').forEach(function (b) {
       var inQ = d.lines.some(function (l) { return l.sku === b.dataset.sku; });
-      b.textContent = inQ ? '✓ In your quote' : (b.dataset.label || 'Add to quote');
+      b.textContent = inQ ? '✓ In your order' : (b.dataset.label || 'Add to order');
       // aria-pressed is only valid on buttons; the award page's link says "✓ In your quote" instead.
       if (b.tagName === 'BUTTON') b.setAttribute('aria-pressed', String(inQ));
     });
     if (!list) return;
     list.innerHTML = n ? d.lines.map(function (l) {
       return '<li class="flex gap-3 border-0 border-b border-solid py-3" style="border-color: #E5E7EB">' +
-        '<img src="' + esc(l.image) + '" alt="" width="64" height="64" class="block flex-none rounded object-cover" style="width: 4rem; height: 4rem; background: #F5F6F7">' +
+        '<img src="' + esc(l.image) + '" alt="" width="64" height="64" class="block flex-none rounded" style="width: 4rem; height: 4rem; background: #F5F6F7; object-fit: ' + (l.kind === 'plaque' ? 'contain' : 'cover') + '">' +
         '<div class="min-w-0 flex-1"><a href="' + esc(l.url) + '" class="font-bold text-ink no-underline">' + esc(l.name) + '</a>' +
-        '<p class="muted m-0 text-sm">' + esc(l.sku) + (l.price ? ' · ' + esc(l.price) : '') + (l.stock === false ? ' · out of stock' : '') + '</p>' +
+        '<p class="muted m-0 text-sm">' + (l.kind === 'plaque' ? esc(l.details || '') : esc(l.sku) + (l.price ? ' · ' + esc(l.price) : '') + (l.stock === false ? ' · out of stock' : '')) + '</p>' +
         '<div class="mt-2 flex items-center gap-3"><label class="flex items-center gap-2 text-sm font-semibold">Qty <input type="number" min="1" inputmode="numeric" class="inp" style="width: 5.5rem; padding: 0.4rem 0.5rem" data-panel-qty="' + esc(l.sku) + '" value="' + esc(l.qty) + '"></label>' +
         '<button type="button" class="text-sm font-semibold" style="background: none; border: none; color: #8A1C1C; cursor: pointer; text-decoration: underline; min-height: 44px" data-panel-remove="' + esc(l.sku) + '">Remove</button></div></div></li>';
-    }).join('') : '<li class="muted py-6 text-center">Your quote is empty. Add awards from the catalogue.</li>';
+    }).join('') : '<li class="muted py-6 text-center">Your order is empty. Add awards from the catalogue, or design a bench plaque.</li>';
     var note = panel.querySelector('[data-panel-total]');
-    note.innerHTML = n ? '<span class="quote-total"><span>Total</span><strong>from ' + money + '</strong></span><span class="muted block text-xs font-normal">' + Q.TOTAL_NOTE + '</span>' +
-      '<span class="block mt-1">' + total + ' awards' + (total < MIN ? ' (minimum order ' + MIN + ')' : '') + '</span>' : '';
-    note.style.color = n && total < MIN ? '#8A1C1C' : '';
+    var sh = Q.short(d);
+    note.innerHTML = n ? '<span class="quote-total"><span>Total</span><strong>from ' + money + '</strong></span><span class="muted block text-xs font-normal">' + Q.TOTAL_NOTE + (Q.hasPlaques(d) ? ' ' + Q.PLAQUE_NOTE : '') + '</span>' +
+      '<span class="block mt-1">' + total + (total === 1 ? ' item' : ' items') + (sh ? ' (minimum order ' + MIN + ' awards)' : '') + '</span>' +
+      '<span class="quote-pay-note">✓ ' + Q.PAY_NOTE + ' <a href="/why-we-proof-first/">Why?</a></span>' : '';
+    note.style.color = n && sh ? '#8A1C1C' : '';
     panel.querySelector('[data-panel-continue]').hidden = !n;
   }
 
@@ -154,10 +221,10 @@
       return '<li><img src="' + esc(l.image) + '" alt="" width="48" height="48"><span class="min-w-0 flex-1"><span class="block font-semibold leading-snug">' + esc(l.name) + '</span>' +
         '<span class="muted block text-sm">' + esc(l.qty) + ' × ' + (l.price ? esc(l.price) : '') + '</span></span></li>';
     }).join('');
-    peek.innerHTML = '<div class="mb-3 flex items-baseline justify-between gap-3 border-0 border-b border-solid pb-2" style="border-color: #E5E7EB"><p class="m-0 font-bold">Your quote</p><p class="m-0 text-sm">Total: <strong>from ' + money + '</strong></p></div><ul class="quote-peek-list">' + rows + '</ul>' +
+    peek.innerHTML = '<div class="mb-3 flex items-baseline justify-between gap-3 border-0 border-b border-solid pb-2" style="border-color: #E5E7EB"><p class="m-0 font-bold">Your order</p><p class="m-0 text-sm">Total: <strong>from ' + money + '</strong></p></div><ul class="quote-peek-list">' + rows + '</ul>' +
       (n > 4 ? '<p class="muted m-0 mt-1 text-sm">and ' + (n - 4) + ' more</p>' : '') +
-      '<p class="m-0 mt-3 text-sm font-semibold"' + (total < MIN ? ' style="color: #8A1C1C"' : '') + '>' + total + ' awards' + (total < MIN ? ' (minimum ' + MIN + ')' : '') + '</p>' +
-      '<p class="muted m-0 text-xs">' + Q.TOTAL_NOTE + '</p>' +
+      '<p class="m-0 mt-3 text-sm font-semibold"' + (Q.short(d) ? ' style="color: #8A1C1C"' : '') + '>' + total + (total === 1 ? ' item' : ' items') + (Q.short(d) ? ' (minimum ' + MIN + ' awards)' : '') + '</p>' +
+      '<p class="muted m-0 text-xs">' + Q.TOTAL_NOTE + ' Nothing to pay today.</p>' +
       '<div class="mt-3 flex gap-2"><button type="button" class="btn ghost flex-1" data-open-quote style="padding: 0.55rem 0.8rem">View &amp; edit</button><a href="/quote/" class="btn flex-1 text-center" style="padding: 0.55rem 0.8rem">Continue →</a></div>';
     if (!n) peek.hidden = true;
   }
@@ -234,7 +301,7 @@
       toastEl.style.cssText = 'left: 50%; bottom: 5.5rem; transform: translateX(-50%); background: #2F7A4F; box-shadow: 0 4px 16px rgba(0,0,0,0.25); max-width: calc(100% - 2rem)';
       document.body.appendChild(toastEl);
     }
-    toastEl.innerHTML = '<span>Added to your quote: <strong>' + esc(name) + '</strong></span><button type="button" data-open-quote class="font-bold" style="background: #fff; color: #2F7A4F; border: none; border-radius: 6px; padding: 0.45rem 0.8rem; cursor: pointer">View quote</button>';
+    toastEl.innerHTML = '<span>Added to your order: <strong>' + esc(name) + '</strong></span><button type="button" data-open-quote class="font-bold" style="background: #fff; color: #2F7A4F; border: none; border-radius: 6px; padding: 0.45rem 0.8rem; cursor: pointer">View order</button>';
     toastEl.hidden = false;
     clearTimeout(toastEl._t);
     toastEl._t = setTimeout(function () { toastEl.hidden = true; }, 4000);

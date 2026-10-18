@@ -6,6 +6,15 @@ import faqs from "../data/faqs.json";
 import work from "../data/work.json";
 import plaque from "../data/plaque.json";
 import Reviews from "./Reviews.astro";
+import PayAfterProof from "./PayAfterProof.astro";
+import PlaqueShop from "./PlaqueShop.astro";
+// Which plaques each page leads with: its own metal, or every size drawn in the page's style.
+const SHOP: Record<string, { mat?: "brass" | "steel"; idea?: string; ideaIds?: string[]; heading: string }> = {
+  "brass-bench-plaques": { mat: "brass", heading: "Brass bench plaques" },
+  "stainless-steel-bench-plaques": { mat: "steel", heading: "Stainless steel bench plaques" },
+  "pet-memorial-bench-plaques": { idea: "pet", ideaIds: ["pet", "short"], heading: "Pet memorial bench plaques" },
+  "memorial-bench-plaque-for-mum-and-dad": { idea: "couple", ideaIds: ["mum", "couple", "welsh"], heading: "Bench plaques for mum and dad" },
+};
 const { slug } = Astro.props;
 const p = (pages as any)[slug];
 const url = `/${slug}/`;
@@ -15,7 +24,7 @@ const preset = { "data-use-material": p.preset.material, "data-use-emblem": p.pr
 const h2 = "margin: 0 0 0.6rem; color: #3D5A5E; font-weight: 600; font-size: clamp(1.6rem, 3vw, 2.1rem)";
 const card = "background: #FFFFFF; border: 1px solid #D9DEE2; border-radius: 6px; padding: 0.9rem 1rem; text-align: center; font-family: Georgia, 'Times New Roman', serif; white-space: pre-line";
 ---
-<Base image={`/assets/img/work/${p.image}-1200.webp`} title={p.title} description={p.description} path={url} faqs={faqs[slug as keyof typeof faqs]} scripts={[]}>
+<Base image={`/assets/img/work/${p.image}-1200.webp`} title={p.title} description={p.description} path={url} faqs={faqs[slug as keyof typeof faqs]} scripts={[]} fonts>
 <section style="background: #F5F6F7; padding: 3.5rem 1.5rem"><div style="max-width: 72rem; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 2.5rem">
 <div style="flex: 1 1 26rem; min-width: 0">
 <p style="margin: 0 0 0.75rem; color: #C8202A; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase">{p.eyebrow}</p>
@@ -24,9 +33,14 @@ const card = "background: #FFFFFF; border: 1px solid #D9DEE2; border-radius: 6px
 <div style="display: flex; flex-wrap: wrap; gap: 0.75rem">
 <a href="/design-a-bench-plaque/" {...preset} style="background: #3D5A5E; color: #FFFFFF; font-weight: 700; text-decoration: none; padding: 0.85rem 1.4rem; border-radius: 6px">{p.cta}</a>
 <a href="mailto:info@grimesengravers.com" style="border: 2px solid #3D5A5E; color: #3D5A5E; font-weight: 700; text-decoration: none; padding: 0.75rem 1.3rem; border-radius: 6px">Email us</a>
-</div></div>
+</div>
+<PayAfterProof item="plaque" /></div>
 <div style="flex: 1 1 22rem; min-width: 0"><img decoding="async" fetchpriority="high" src={`/assets/img/work/${p.image}-1200.webp`} alt={p.imageAlt} width={hero.w} height={hero.h} style={`width: 100%; height: 20rem; object-fit: cover; object-position: ${hero.pos ?? "50% 50%"}; border-radius: 8px; display: block`}></div>
 </div></section>
+
+{SHOP[slug] && <section style="background: #FFFFFF; padding: 4rem 1.5rem" id="shop"><div style="max-width: 72rem; margin: 0 auto">
+<PlaqueShop mat={SHOP[slug].mat} idea={SHOP[slug].idea} ideaIds={SHOP[slug].ideaIds} heading={SHOP[slug].heading} />
+</div></section>}
 
 <section style="background: #FFFFFF; padding: 4rem 1.5rem"><div style="max-width: 72rem; margin: 0 auto">
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1.5rem">{p.points.map((x: any) => <div style="background: #F5F6F7; border-radius: 8px; padding: 1.5rem"><h2 style="margin: 0 0 0.4rem; font-size: 1.15rem; color: #1F2933">{x.h}</h2><p style="margin: 0; color: #4B5563" set:html={x.p} /></div>)}</div>
@@ -64,7 +78,7 @@ const card = "background: #FFFFFF; border: 1px solid #D9DEE2; border-radius: 6px
 </div></section>
 
 <section style="background: #3D5A5E; color: #FFFFFF; padding: 3.5rem 1.5rem"><div style="max-width: 72rem; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem">
-<div style="flex: 1 1 24rem"><h2 style="margin: 0 0 0.4rem; font-size: 1.8rem; font-weight: 600">See your plaque before you order</h2><p style="margin: 0; color: #E5ECEC">Try your wording, size and font in the designer, then send it for a quote within 24 hours.</p></div>
+<div style="flex: 1 1 24rem"><h2 style="margin: 0 0 0.4rem; font-size: 1.8rem; font-weight: 600">See your plaque before you order</h2><p style="margin: 0; color: #E5ECEC">Try your wording, size and font in the designer, then send it to us. We reply within 24 hours with the price and a free proof, and there’s nothing to pay until your plaque is engraved and checked.</p></div>
 <div style="display: flex; flex-wrap: wrap; gap: 0.75rem"><a href="/design-a-bench-plaque/" {...preset} style="background: #FFFFFF; color: #3D5A5E; font-weight: 700; text-decoration: none; padding: 0.85rem 1.4rem; border-radius: 6px">{p.cta}</a>
 <a href="mailto:info@grimesengravers.com" style="border: 2px solid #FFFFFF; color: #FFFFFF; font-weight: 700; text-decoration: none; padding: 0.75rem 1.3rem; border-radius: 6px">Email us</a></div></div></section>
 </Base>

@@ -11,13 +11,13 @@ const hasSamples = awards.some((a) => a.sample);
 const PAGE = 48;
 ---
 <Base title={meta.title} description={meta.description} path={meta.url} faqs={faqs["glass-awards"] ?? []} scripts={["awards.js"]}>
-<section class="bg-navy px-6 py-10 text-white">
+<section class="bg-navy px-6 py-10 text-white coll-hero-scene" style="--scene: url(/assets/img/hero/awards-night-1920.webp)">
   <div class="mx-auto max-w-6xl">
     <p class="m-0 mb-3 text-sm font-bold uppercase tracking-widest" style="color: #F3A3A6">Glass &amp; crystal awards</p>
     <h1 class="m-0 mb-3 text-4xl font-semibold leading-tight">Engraved glass &amp; crystal awards</h1>
-    <p class="m-0 max-w-2xl text-lg" style="color: #D1D5DB">Bespoke glass and crystal awards, engraved with your logo and wording. Choose your awards and add them to your quote, then send us the details, and we reply within 24 hours with the full price, including engraving and delivery.</p>
+    <p class="m-0 max-w-2xl text-lg" style="color: #D1D5DB">Bespoke glass and crystal awards, engraved with your logo and wording. Choose your awards and add them to your order, then check out with your wording. We reply within 24 hours with the full price, including engraving and delivery, and a free proof. Nothing to pay today.</p>
     <ul class="m-0 mt-5 flex list-none flex-wrap gap-x-6 gap-y-2 p-0 font-semibold" style="color: #E5E7EB">
-      <li>✓ Minimum order {MIN_QTY}</li><li>✓ Quote within 24 hours</li><li>✓ Proof before we engrave</li><li>✓ Ready 10–14 working days after proof</li>
+      <li>✓ Minimum order {MIN_QTY}</li><li>✓ Nothing to pay today</li><li>✓ Proof before we engrave</li><li>✓ Ready 10–14 working days after proof</li>
     </ul>
     <div class="aw-search mt-6" role="search">
       <label for="aw-q" class="sr-only">Search awards</label>
@@ -27,6 +27,7 @@ const PAGE = 48;
     </div>
     <p class="m-0 mt-3" style="color: #D1D5DB">Not sure where to start? <a href="/award-finder/" style="color: #FFFFFF; font-weight: 700">Try the award finder →</a></p>
   </div>
+  <span class="ai-tag">AI illustration</span>
 </section>
 {hasSamples && <p class="m-0 px-6 py-2 text-center text-sm font-bold" style="background: #FDECEC; color: #8A1C1C">Test products shown. Real catalogue coming soon.</p>}
 <section class="bg-mist px-6 py-8">
@@ -70,9 +71,9 @@ const PAGE = 48;
     <p class="mt-8 text-center"><button type="button" id="aw-more" class="btn ghost" hidden>Show more awards</button></p>
     <div class="mt-10 flex flex-wrap items-center justify-between gap-4 rounded-lg bg-white p-6">
       <div><p class="m-0 text-xl font-semibold text-teal">Not sure which one?</p><p class="muted m-0">Answer three quick questions in the award finder, or tell us what you need and we’ll recommend something.</p></div>
-      <div class="flex flex-wrap gap-2"><a class="btn" href="/award-finder/">Try the award finder</a><a class="btn ghost" href={quoteUrl()}>Ask us to recommend</a></div>
+      <div class="flex flex-wrap gap-2"><a class="btn" href="/award-finder/">Try the award finder</a><a class="btn ghost" href="/contact/">Ask us to recommend</a></div>
     </div>
-    <p class="muted mt-6 text-sm">Prices are “from” prices per award. Engraving is added on top and confirmed in your quote.</p>
+    <p class="muted mt-6 text-sm">Prices are “from” prices per award. Engraving is added on top and confirmed with your proof.</p>
   </div>
 </section>
 <section class="bg-white px-6 py-12">
@@ -83,7 +84,7 @@ const PAGE = 48;
       <div><h3 class="m-0 mb-1 text-lg font-semibold">Glass or crystal?</h3><p class="m-0">Jade and clear glass awards are the lower-cost choice for category and team awards. Optical crystal is clearer and heavier, ideal for the headline award. <a href="/glass-vs-crystal-awards/">Compare glass and crystal</a>.</p></div>
       <div><h3 class="m-0 mb-1 text-lg font-semibold">For companies, clubs and events</h3><p class="m-0">Staff awards nights, <a href="/long-service-awards/">long service</a>, <a href="/retirement-awards/">retirements</a>, <a href="/golf-awards/">golf days</a> and <a href="/corporate-awards/">corporate awards</a>. Minimum order {MIN_QTY} awards in total, in any mix.</p></div>
       <div><h3 class="m-0 mb-1 text-lg font-semibold">Your logo and wording</h3><p class="m-0">Send your logo as a PDF, EPS or SVG and we set it up for engraving. Need help with the words? See our <a href="/award-wording-ideas/">award wording ideas</a>.</p></div>
-      <div><h3 class="m-0 mb-1 text-lg font-semibold">Lead times and delivery</h3><p class="m-0">Quotes within 24 hours on working days. Awards are ready 10–14 working days after you approve the proof and delivered anywhere in the UK. Planning an event? See our <a href="/awards-night-planning/">awards night timeline</a>.</p></div>
+      <div><h3 class="m-0 mb-1 text-lg font-semibold">Lead times and delivery</h3><p class="m-0">Prices within 24 hours on working days. Awards are ready 10–14 working days after you approve the proof and delivered anywhere in the UK. Planning an event? See our <a href="/awards-night-planning/">awards night timeline</a>.</p></div>
     </div>
     <h2 class="m-0 mb-3 mt-10 text-2xl font-semibold text-teal">Frequently asked questions</h2>
     {(faqs["glass-awards"] ?? []).map((f, i) => <details class="py-4" style="border-bottom: 1px solid #E5E7EB" open={i === 0}><summary class="cursor-pointer font-bold">{f.q}</summary><p class="muted m-0 mt-2">{f.a}</p></details>)}

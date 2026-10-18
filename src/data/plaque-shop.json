@@ -1,0 +1,27 @@
+{
+ "_note": "Bench plaque shop listings on /memorial-bench-plaques/. Each card is drawn with the designer's own preview styles and opens /design-a-bench-plaque/ with these settings (font/emblem/size are ids from font.json and plaque.json). Example wording only: customers change it in the designer.",
+ "sizeWording": {
+  "8x3": "In loving memory of\nMargaret Jones\n1938 – 2024",
+  "6x4": "In loving memory of\nMargaret Jones\n1938 – 2024\nWho loved this view",
+  "7x5": "In loving memory of\nMargaret Jones\n1938 – 2024\nWho loved this view",
+  "10x5": "In loving memory of\nMargaret and Frank Jones\nTogether always\nWho loved this view",
+  "8x6": "In loving memory of\nMargaret Jones\n1938 – 2024\nA much-loved mum and nan\nWho loved this view",
+  "a4": "In loving memory of\nMargaret Jones\n1938 – 2024\nA much-loved mum and nan\nWho walked here every day\nand loved this view"
+ },
+ "badges": {
+  "8x3": "Most popular for benches",
+  "6x4": "Needs a deeper back rail",
+  "7x5": "Needs a deep rail or post",
+  "10x5": "Room for two names",
+  "8x6": "Best for walls and posts",
+  "a4": "Best for walls and memorial gardens"
+ },
+ "ideas": [
+  { "id": "mum", "title": "For mum", "blurb": "A script font and a heart.", "mat": "brass", "size": "8x3", "font": "script", "emblem": "heart", "wording": "Forever in our hearts\nMum\n1946 – 2024" },
+  { "id": "couple", "title": "For mum and dad", "blurb": "Two names, together.", "mat": "brass", "size": "6x4", "font": "roman", "emblem": "none", "wording": "In loving memory of\nJoan and David Evans\nTogether always\nWho loved this park" },
+  { "id": "pet", "title": "For a dog or pet", "blurb": "A paw print and a few words.", "mat": "steel", "size": "8x3", "font": "modern", "emblem": "paw", "wording": "In memory of Bella\nwho loved every\nwalk in this park" },
+  { "id": "welsh", "title": "In Welsh", "blurb": "Welsh, English or both.", "mat": "brass", "size": "6x4", "font": "italic", "emblem": "none", "wording": "Er cof annwyl am\nMargaret Jones\n1938 – 2024\nHedd perffaith hedd" },
+  { "id": "donation", "title": "Club or donation", "blurb": "For clubs, schools and churches.", "mat": "steel", "size": "8x3", "font": "capitals", "emblem": "none", "wording": "Donated by\nCardiff Ramblers\n2026" },
+  { "id": "short", "title": "Short and simple", "blurb": "Just a name and a line.", "mat": "brass", "size": "8x3", "font": "italic", "emblem": "star", "wording": "Sit a while\nwith Margaret" }
+ ]
+}

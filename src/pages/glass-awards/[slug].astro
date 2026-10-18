@@ -1,5 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
+import PayAfterProof from "../../components/PayAfterProof.astro";
 import config from "../../data/config.json";
 import { absUrl } from "../../lib/schema";
 import { awards, awardUrl, quoteUrl, fromPrice, mm, fit, describe, sizesOf, awardTitle, awardDescription, MIN_QTY, type AwardWithSlug } from "../../lib/awards";
@@ -59,15 +60,16 @@ const productSchema = {
         <p class="m-0 mb-5"><strong>Availability:</strong> <span id="stock-status">{a.in_stock ? 'In stock' : 'Currently out of stock: ask us for the restock date'}</span>
             {a.source_url && <button type="button" class="ml-2 text-sm font-semibold" style="background: none; border: none; padding: 0; color: #0F5257; cursor: pointer; text-decoration: underline; min-height: 44px" data-check-stock="#stock-status" data-src={a.source_url} data-sku={a.sku} hidden>Check stock now</button>}</p>
         <div class="flex flex-wrap items-center gap-3">
-          <a class="btn" href={quoteUrl(a)} data-add-quote data-label="Add to quote" data-sku={a.sku} data-name={a.name} data-image={a.thumb} data-price={fromPrice(a.price_from)} data-unit={a.price_from}
+          <a class="btn" href={quoteUrl(a)} data-add-quote data-label="Add to order" data-sku={a.sku} data-name={a.name} data-image={a.thumb} data-price={fromPrice(a.price_from)} data-unit={a.price_from}
             data-size={mm(a.dimensions_mm)} data-area={mm(a.engraving_area_mm)} data-fit-chars={f?.perLine} data-fit-lines={f?.lines} data-url={path} data-src={a.source_url} data-stock={String(a.in_stock)}
-            style="font-size: 1.1rem; padding: 0.95rem 1.6rem">Add to quote</a>
-          <button type="button" class="btn ghost" data-open-quote>View quote</button>
+            style="font-size: 1.1rem; padding: 0.95rem 1.6rem">Add to order</a>
+          <button type="button" class="btn ghost" data-open-quote>View order</button>
         </div>
-        <ul class="award-points muted m-0 mt-6 list-none space-y-1 p-0">
+        <PayAfterProof />
+        <ul class="award-points muted m-0 mt-4 list-none space-y-1 p-0">
           <li>✓ Minimum order {MIN_QTY} awards</li>
-          <li>✓ Your logo and wording engraved: we quote engraving with your order</li>
-          <li>✓ Quote within 24 hours, then a proof to approve</li>
+          <li>✓ Your logo and wording engraved, with a free proof to approve</li>
+          <li>✓ Full price, including engraving and delivery, confirmed with your proof</li>
           <li>✓ Ready 10–14 working days after you approve the proof</li>
         </ul>
       </div>
@@ -93,6 +95,7 @@ const productSchema = {
       <div class="panel">
         <p>We engrave your logo and wording on the front of the award. Send your logo as a PDF, EPS or SVG if you have one, or a large clear image, and we’ll set it up for engraving.</p>
         <p>Before anything is engraved, we email you a proof to check and approve. Awards are ready 10–14 working days after you approve it.</p>
+        <p>There’s nothing to pay when you order. You pay by card or bank transfer once your awards are engraved and checked. <a href="/why-we-proof-first/">Why we proof first</a>.</p>
       </div>
     </details>
     <details open>

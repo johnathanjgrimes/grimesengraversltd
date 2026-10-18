@@ -4,7 +4,7 @@
     "kind": "range",
     "name": "Optical crystal awards",
     "title": "Engraved Optical Crystal Awards | Grimes Engravers",
-    "description": "Engraved optical crystal awards: cubes, diamonds, towers, wedges and more, engraved with your logo and wording. Minimum order 2. Quotes within 24 hours.",
+    "description": "Engraved optical crystal awards: cubes, diamonds, towers, wedges and more, engraved with your logo and wording. Minimum order 2. Free proof, nothing to pay today.",
     "h1": "Engraved optical crystal awards",
     "intro": "Optical crystal is perfectly clear, heavy in the hand and catches the light from every angle, which is why it suits awards that need to feel special. Choose from cubes, diamonds, towers, wedges and facetted shapes, then we engrave your logo and wording and send a proof before we start.",
     "match": { "ranges": ["Optical crystal awards"] },
@@ -30,12 +30,12 @@
     "match": { "ranges": ["Star awards"] },
     "body": [
       "Star awards are the favourite for employee of the year, star performer and top sales awards. Many come in several heights, which makes it easy to present a set: a larger star for the overall winner and smaller ones for category winners.",
-      "Tell us the occasion and how many you need, and we will quote within 24 hours on working days."
+      "Add the awards you like to your order, and we will confirm the price within 24 hours on working days."
     ],
     "wording": ["Star Performer 2026", "Rising Star Award", "Employee of the Year", "Outstanding Contribution", "Customer Service Star"],
     "faqs": [
       { "q": "Which star award is best for employee of the year?", "a": "Star columns and stars on bases are the most popular for the top award, as they stand tall and have a good engraving area for a name, title and logo." },
-      { "q": "Can each star have a different name?", "a": "Yes. On the quote form choose different wording on each award, and you get a box for each one." },
+      { "q": "Can each star have a different name?", "a": "Yes. At checkout choose different wording on each award, and you get a box for each one." },
       { "q": "Is there a minimum order?", "a": "The minimum order is 2 awards in total, and you can mix different stars and sizes." }
     ]
   },
@@ -74,7 +74,7 @@
     "wording": ["Player of the Season 2026", "Golf Day Winner", "Nearest the Pin", "Captain's Day Champion", "Top Goal Scorer"],
     "faqs": [
       { "q": "Can you engrave our club badge?", "a": "Yes. Send your badge as a PDF, EPS or SVG if you have one, or a large clear image, and we will show it on your proof." },
-      { "q": "How far ahead should we order for a presentation night?", "a": "We quote within 24 hours on working days, and awards are ready 10–14 working days after you approve the proof. Allow at least 3–4 weeks before your event." }
+      { "q": "How far ahead should we order for a presentation night?", "a": "We confirm your price within 24 hours on working days, and awards are ready 10–14 working days after you approve the proof. Allow at least 3–4 weeks before your event." }
     ]
   },
   {
@@ -118,7 +118,7 @@
     "kind": "range",
     "name": "Jade & clear glass awards",
     "title": "Engraved Jade & Clear Glass Awards | Grimes Engravers",
-    "description": "Engraved jade glass and clear glass awards with polished edges: a classic look at a sensible price. Minimum order 2. Quotes within 24 hours.",
+    "description": "Engraved jade glass and clear glass awards with polished edges: a classic look at a sensible price. Minimum order 2. Free proof, nothing to pay today.",
     "h1": "Engraved jade and clear glass awards",
     "intro": "Thick jade and clear glass awards with polished edges give a classic look at a sensible price, ideal when you need a set of matching awards. Rectangles, circles, peaks and facetted shapes, engraved with your logo and wording.",
     "match": { "ranges": ["Jade & clear glass awards"] },
@@ -136,17 +136,17 @@
     "kind": "occasion",
     "name": "Long service awards",
     "title": "Engraved Glass Long Service Awards | Grimes Engravers",
-    "description": "Engraved glass and crystal long service awards for 5, 10, 25 years and more. Each name engraved, minimum order 2. Quotes within 24 hours.",
+    "description": "Engraved glass and crystal long service awards for 5, 10, 25 years and more. Each name engraved, minimum order 2. Free proof, nothing to pay today.",
     "h1": "Engraved glass long service awards",
     "intro": "Mark 5, 10, 25 years and beyond with an engraved glass or crystal award your colleagues will keep for life. Each award carries the person's name, years of service and your company logo.",
     "match": { "ranges": ["Optical crystal awards", "Crystal awards on bases", "Jade & clear glass awards"], "include": "rectangle|block|diamond|plaque|tower|obelisk|column|wedge|peak|arch|book|octagon|circle" },
     "body": [
       "Many companies use one design in different sizes for each milestone, for example a smaller award for 5 years and the largest for 25. Most of the awards here come in two or three sizes to make that easy.",
-      "Choose different wording on each award on the quote form and you get a box for every name."
+      "Choose different wording on each award at checkout and you get a box for every name."
     ],
     "wording": ["In recognition of 10 years' loyal service", "Jane Smith, 25 Years, 2001–2026", "Thank you for 15 years of dedication", "Celebrating 20 years with Acme Ltd", "With grateful thanks for 30 years"],
     "faqs": [
-      { "q": "Can each award have a different name and number of years?", "a": "Yes. Choose different wording on each award on the quote form, and you get a box for each one." },
+      { "q": "Can each award have a different name and number of years?", "a": "Yes. Choose different wording on each award at checkout, and you get a box for each one." },
       { "q": "Can we reorder the same award next year?", "a": "Yes. We keep your artwork and wording layout on file, so next year's awards match." },
       { "q": "Is there a minimum order?", "a": "The minimum order is 2 awards in total, and you can mix different awards and sizes." }
     ]
@@ -162,7 +162,7 @@
     "match": { "ranges": ["Optical crystal awards", "Crystal awards on bases", "Globe awards", "Jade & clear glass awards"], "include": "globe|diamond|heart|book|peak|arch|rectangle|obelisk|flame|iceberg" },
     "body": [
       "A retirement award is usually presented once, so it is worth choosing something with presence. Globes and awards on bases are popular, and diamonds and peaks catch the light beautifully on a shelf at home.",
-      "Retiring several people this year? Add them all to one quote and give each award its own wording."
+      "Retiring several people this year? Add them all to one order and give each award its own wording."
     ],
     "wording": ["Happy Retirement, John. With thanks from all at Acme", "1989–2026. Thank you for everything", "Enjoy every moment of your retirement", "In appreciation of 37 years' service", "From your friends and colleagues"],
     "faqs": [
@@ -181,16 +181,17 @@
     "match": { "ranges": ["Star awards", "Optical crystal awards", "Crystal awards on bases"], "include": "star|column|flame|peak|tower|wedge|rising|diamond" },
     "body": [
       "Most awards nights need a headline award and a set of category awards. A popular approach is one taller design for the overall winner and a matching smaller design for each category.",
-      "Add the awards to your quote, choose different wording on each, and enter each category and winner. If you don't know the winners yet, tell us the categories and send the names later."
+      "Add the awards to your order, choose different wording on each, and enter each category and winner. If you don't know the winners yet, tell us the categories and send the names later."
     ],
     "wording": ["Employee of the Year 2026", "Star Performer, Sales Team", "Outstanding Customer Service", "Manager of the Year", "Rising Star 2026"],
     "faqs": [
-      { "q": "We don't know the winners yet. Can we still order?", "a": "Yes. Get your quote and approve the designs now, then send the names when you have them. Allow 10–14 working days after you approve the final proof." },
+      { "q": "We don't know the winners yet. Can we still order?", "a": "Yes. Place your order and approve the designs now, then send the names when you have them. Allow 10–14 working days after you approve the final proof." },
       { "q": "How far ahead should we order for an awards night?", "a": "Allow at least 3–4 weeks before the event. Awards nights are busiest from November to March, so earlier is better then." }
     ]
   },
   {
     "slug": "golf-awards",
+    "sceneAi": true,
     "kind": "occasion",
     "name": "Golf awards",
     "title": "Engraved Golf Awards for Golf Days | Grimes Engravers",
@@ -209,6 +210,7 @@
   },
   {
     "slug": "football-awards",
+    "sceneAi": true,
     "kind": "occasion",
     "name": "Football awards",
     "title": "Engraved Crystal Football Awards | Grimes Engravers",
@@ -221,7 +223,7 @@
     ],
     "wording": ["Player of the Season 2025/26", "Top Goal Scorer", "Managers' Player", "Players' Player", "Clubman of the Year"],
     "faqs": [
-      { "q": "Can each award have a different winner?", "a": "Yes. Choose different wording on each award on the quote form." }
+      { "q": "Can each award have a different winner?", "a": "Yes. Choose different wording on each award at checkout." }
     ]
   },
   {
@@ -229,7 +231,7 @@
     "kind": "occasion",
     "name": "Corporate awards",
     "title": "Corporate Crystal Awards with Your Logo | Grimes Engravers",
-    "description": "Corporate glass and crystal awards engraved with your logo for partners, clients, milestones and company events. Minimum order 2. Quotes within 24 hours.",
+    "description": "Corporate glass and crystal awards engraved with your logo for partners, clients, milestones and company events. Minimum order 2. Free proof, nothing to pay today.",
     "h1": "Corporate crystal awards with your logo",
     "intro": "Awards for partners, clients, company milestones and events, engraved with your logo. Trusted by organisations across Wales and the UK, from banks and broadcasters to councils.",
     "match": { "ranges": ["Optical crystal awards", "Crystal awards on bases", "3D laser crystal awards", "Globe awards"], "exclude": "keyring|golf|football|tumbler|tankard" },
@@ -240,7 +242,7 @@
     "wording": ["Partner of the Year 2026", "In recognition of an outstanding partnership", "Celebrating 50 years, 1976–2026", "Best Supplier Award", "With thanks from the Board"],
     "faqs": [
       { "q": "Can you match our brand colours?", "a": "Engraving on glass and crystal is frosted white rather than coloured. Your logo is reproduced in that finish, which gives a clean, premium look." },
-      { "q": "Can you deliver to more than one address?", "a": "Every order is delivered. Tell us in the notes if awards need to go to different places and we will include that in your quote." }
+      { "q": "Can you deliver to more than one address?", "a": "Every order is delivered. Tell us in the notes if awards need to go to different places and we will include that in your price." }
     ]
   }
 ]

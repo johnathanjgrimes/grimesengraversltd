@@ -6,11 +6,11 @@
   },
   {
    "q": "Do catalogue prices include engraving?",
-   "a": "No. Catalogue prices are per award, and engraving is added on top. We confirm the full price in your quote."
+   "a": "No. Catalogue prices are per award, and engraving is added on top. We confirm the full price with your proof."
   },
   {
    "q": "How long does an order take?",
-   "a": "We quote within 24 hours on working days (Monday to Friday). Orders are ready 10–14 working days after you approve our proof."
+   "a": "We confirm your price within 24 hours on working days (Monday to Friday). Orders are ready 10–14 working days after you approve our proof."
   },
   {
    "q": "Do you supply trophies or medals?",
@@ -120,7 +120,7 @@
   },
   {
    "q": "Are the catalogue prices final?",
-   "a": "Catalogue prices are per item, and engraving is added on top. We confirm the full price in your quote."
+   "a": "Catalogue prices are per item, and engraving is added on top. We confirm the full price with your proof."
   },
   {
    "q": "Can you use our company logo?",
@@ -128,7 +128,7 @@
   },
   {
    "q": "How far ahead should we order?",
-   "a": "We quote within 24 hours (working days), and awards are ready 10–14 working days after you approve our proof. Allow at least 3–4 weeks before your event."
+   "a": "We confirm your price within 24 hours (working days), and awards are ready 10–14 working days after you approve our proof. Allow at least 3–4 weeks before your event."
   },
   {
    "q": "Can we reorder the same item next year?",
@@ -179,7 +179,7 @@
  "design-a-bench-plaque": [
   {
    "q": "How does the plaque designer work?",
-   "a": "Choose your wording, metal, size, font and options and you’ll see a preview as you go. Send it to us and we’ll email a quote within 24 hours (working days), then a free proof showing the exact layout before we engrave."
+   "a": "Choose your wording, metal, size, font and options and you’ll see a preview as you go. Add it to your order and check out, and we’ll email the price within 24 hours (working days), then a free proof showing the exact layout before we engrave."
   },
   {
    "q": "Is there a minimum order for bench plaques?",
@@ -277,7 +277,7 @@
   {"q": "Can we mix glass and crystal awards in one order?", "a": "Yes. The minimum order is 2 awards in total, and you can mix different awards, materials and sizes."}
  ],
  "awards-night-planning": [
-  {"q": "How far ahead should we order awards for an awards night?", "a": "Allow at least 3–4 weeks before the event. We quote within 24 hours on working days, and awards are ready 10–14 working days after you approve the proof."},
+  {"q": "How far ahead should we order awards for an awards night?", "a": "Allow at least 3–4 weeks before the event. We confirm your price within 24 hours on working days, and awards are ready 10–14 working days after you approve the proof."},
   {"q": "How many award categories should an awards night have?", "a": "Most company awards nights have between 8 and 15 categories, so the evening keeps moving and each award still feels special."},
   {"q": "We don’t know the winners yet. Can we still order?", "a": "Yes. Approve the award designs and categories now, then send the winners’ names when you have them."},
   {"q": "Should every award be the same design?", "a": "Many companies use one design for category winners and a larger or more premium award for the headline prize, such as Employee of the Year."}
@@ -301,5 +301,12 @@
   {"q": "How long do engraved glass awards take?", "a": "Awards are ready 10 to 14 working days after you approve the proof. For an awards night, allow at least 3 to 4 weeks."},
   {"q": "What is the difference between glass awards and glass trophies?", "a": "Nothing: people use both names for the same thing. We engrave glass and optical crystal awards (or trophies) in many shapes, including stars, columns, diamonds and awards on bases."},
   {"q": "Do you deliver outside Cardiff?", "a": "Yes. We engrave in Cardiff and deliver anywhere in the UK."}
+ ],
+ "why-we-proof-first": [
+  {"q": "Why can't I pay when I order?", "a": "Because personalised items can't be sent back, we check every name and logo and send you a free proof first. You pay by card or bank transfer once your order is engraved and checked. If you'd like to pay sooner, tick the box on the order page and we'll send a payment link with your proof."},
+  {"q": "Do you price match?", "a": "We don't price match, because two awards that look alike online can be very different in quality. But we're always happy to talk through your budget and suggest options that work for you."},
+  {"q": "What if my order arrives damaged?", "a": "Send us a photo as soon as you can. We'll arrange a replacement and do everything we can to get it to you before your event."},
+  {"q": "What if there's a mistake in the engraving?", "a": "If it doesn't match the proof you approved, we'll re-engrave it at no cost. If the mistake was in the wording sent to us, talk to us anyway: we'll help, and do our best to meet your date."},
+  {"q": "What if my event date changes?", "a": "Just let us know. We'll work around your new date wherever we can."}
  ]
 }
