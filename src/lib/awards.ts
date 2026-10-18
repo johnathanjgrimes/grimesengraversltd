@@ -31,11 +31,15 @@ export function splitSize(name: string): { size: string; product: string } {
 // Sizes of the same product share a family. The supplier sometimes uses one name for two designs
 // (e.g. two different "20cm Arch Award"s); when a size repeats, the code series (FC2…, SY2…) splits them.
 // Photos: our own WebP copies (scripts/fetch-award-images.py) when they exist, otherwise the supplier's.
+// Studio versions on Grimes navy (scripts/studio-images.py, in public/assets/awards/studio/) lead when they exist;
+// the supplier's original photo is then kept as a second image on the award page (`photo`).
 // `image` is the large one for the award page, `thumb` the small one for cards and the basket.
 const PHOTOS = join(process.cwd(), 'public', 'assets', 'awards');
 const photos = (a: Award) => {
   const local = (size: number) => (existsSync(join(PHOTOS, `${a.sku}-${size}.webp`)) ? `/assets/awards/${a.sku}-${size}.webp` : a.image);
-  return { image: local(1000), thumb: local(480), supplierImage: a.image };
+  const studio = (size: number) => (existsSync(join(PHOTOS, 'studio', `${a.sku}-${size}.webp`)) ? `/assets/awards/studio/${a.sku}-${size}.webp` : null);
+  const s1000 = studio(1000), s480 = studio(480);
+  return { image: s1000 ?? local(1000), thumb: s480 ?? local(480), photo: s1000 ? local(1000) : null, supplierImage: a.image };
 };
 const base = (raw as Award[]).map((a) => ({ ...a, ...photos(a), slug: slugify(`${a.name}-${a.sku}`), ...splitSize(a.name) }));
 const byName = new Map<string, typeof base>();

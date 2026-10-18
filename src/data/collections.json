@@ -133,6 +133,7 @@
   },
   {
     "slug": "long-service-awards",
+    "sceneAi": true,
     "kind": "occasion",
     "name": "Long service awards",
     "title": "Engraved Glass Long Service Awards | Grimes Engravers",
@@ -153,6 +154,7 @@
   },
   {
     "slug": "retirement-awards",
+    "sceneAi": true,
     "kind": "occasion",
     "name": "Retirement awards",
     "title": "Engraved Glass Retirement Awards & Gifts | Grimes Engravers",
@@ -172,6 +174,7 @@
   },
   {
     "slug": "employee-of-the-year-awards",
+    "sceneAi": true,
     "kind": "occasion",
     "name": "Employee of the year awards",
     "title": "Employee of the Year Crystal Awards | Grimes Engravers",
@@ -228,6 +231,7 @@
   },
   {
     "slug": "corporate-awards",
+    "sceneAi": true,
     "kind": "occasion",
     "name": "Corporate awards",
     "title": "Corporate Crystal Awards with Your Logo | Grimes Engravers",
