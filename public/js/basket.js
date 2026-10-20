@@ -68,7 +68,7 @@
       // Plaques get a unique code per design, so several different plaques can sit in one order.
       if (!d.lines.some(function (l) { return l.sku === item.sku; })) {
         // Start each award at the minimum order (plaques at the quantity chosen in the designer); people change it in the panel or on the form.
-        d.lines.push({ sku: item.sku, kind: item.kind || 'award', name: item.name, image: item.image, price: item.price, unit: item.unit != null ? +item.unit : undefined, size: item.size, area: item.area, fitChars: item.fitChars, fitLines: item.fitLines, url: item.url, src: item.src, details: item.details, design: item.design, optionsText: item.optionsText, stock: item.stock !== false, qty: item.qty || (item.kind === 'plaque' ? 1 : MIN) });
+        d.lines.push({ sku: item.sku, kind: item.kind || 'award', name: item.name, image: item.image, price: item.price, unit: item.unit != null ? +item.unit : undefined, size: item.size, area: item.area, fitChars: item.fitChars, fitLines: item.fitLines, url: item.url, src: item.src, details: item.details, design: item.design, optionsText: item.optionsText, group: item.group || undefined, stock: item.stock !== false, qty: item.qty || (item.kind === 'plaque' ? 1 : MIN) });
         ph(item.kind === 'plaque' ? 'quote_plaque_added' : 'quote_award_added', { sku: item.sku });
       }
       Q.save(d);
@@ -144,7 +144,22 @@
     money: function (d) { return (d || load()).lines.reduce(function (s, l) { return s + Q.unit(l) * (parseInt(l.qty, 10) || 0); }, 0); },
     // Guide price shown in the basket: awards + engraving per award + one setup per order (plaques priced with the proof).
     ENGRAVING: 10.50, SETUP: 40.00,
-    estimate: function (d) { d = d || load(); var a = Q.awardTotal(d); return Q.money(d) + (a > 0 ? a * Q.ENGRAVING + Q.SETUP : 0); },
+    estimate: function (d) {
+      d = d || load(); var gs = Q.groups(d);
+      // Several options side by side: show the cheapest option (the customer will order only one).
+      if (gs.length > 1) return Math.min.apply(null, gs.map(function (g) { return g.total; }));
+      var a = Q.awardTotal(d); return Q.money(d) + (a > 0 ? a * Q.ENGRAVING + Q.SETUP : 0);
+    },
+    // Options quoted side by side (from a suggested-options link): lines carry a group, e.g. "Option 1: Hexagon".
+    // Each option is priced on its own (its awards + engraving + one setup), because the customer orders only one.
+    groups: function (d) {
+      d = d || load(); var order = [], by = {};
+      d.lines.forEach(function (l) { if (!l.group || l.kind === 'plaque') return; if (!by[l.group]) { by[l.group] = []; order.push(l.group); } by[l.group].push(l); });
+      return order.map(function (g) {
+        var n = 0, awards = 0; by[g].forEach(function (l) { var q = parseInt(l.qty, 10) || 0; n += q; awards += Q.unit(l) * q; });
+        return { name: g, lines: by[g], n: n, awards: awards, engraving: n * Q.ENGRAVING, total: n ? awards + n * Q.ENGRAVING + Q.SETUP : 0 };
+      });
+    },
     gbp: function (n) { return '£' + n.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); },
     TOTAL_NOTE: 'Includes engraving and setup. Plus delivery. 20+ awards? Bulk discount in your quote.',
     PAY_NOTE: 'Nothing to pay today. We’ll send a free proof first; once you approve it, we ask for a deposit or full payment before we engrave.',
@@ -161,7 +176,7 @@
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
   function render() {
-    var d = load(), n = d.lines.length, total = Q.total(d), money = Q.gbp(Q.estimate(d));
+    var d = load(), n = d.lines.length, total = Q.total(d), money = (Q.groups(d).length > 1 ? Q.groups(d).length + ' options, from ' : '') + Q.gbp(Q.estimate(d));
     if (btn) {
       btn.hidden = !n;
       btn.querySelector('[data-quote-count]').textContent = n;

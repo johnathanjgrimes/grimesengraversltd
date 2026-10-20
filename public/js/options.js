@@ -59,14 +59,15 @@
     return { n: n, awards: awards, eng: ENG * n, total: total, rows: rows };
   }
 
-  function loadIntoOrder(opts, idx, note) {
+  function loadIntoOrder(opts, idx, note, labels) {
     var Q = window.GrimesQuote; if (!Q) return;
     var d = Q.get(); d.lines = d.lines.filter(function (l) { return l.kind === 'plaque'; }); Q.save(d, true);
-    opts.forEach(function (opt) {
+    opts.forEach(function (opt, oi) {
       (opt.l || []).forEach(function (pair) {
         var it = idx[pair[0]]; if (!it) return;
         var item = {}; Object.keys(it).forEach(function (k) { item[k] = it[k]; });
         item.qty = Math.max(1, parseInt(pair[1], 10) || 1);
+        if (labels && labels[oi]) item.group = labels[oi];
         if (Q.has(item.sku)) { var cur = Q.get(); cur.lines.forEach(function (l) { if (l.sku === item.sku) l.qty = (parseInt(l.qty, 10) || 0) + item.qty; }); Q.save(cur, true); }
         else Q.add(item);
       });
@@ -133,11 +134,12 @@
     });
     var all = box.querySelector('.so-all');
     if (all) all.addEventListener('click', function () {
-      var okOpts = opts.filter(function (o, i) { return available[i] !== false; });
+      var okIdx = opts.map(function (o, i) { return i; }).filter(function (i) { return available[i] !== false; });
+      var okOpts = okIdx.map(function (i) { return opts[i]; });
+      var labels = okIdx.map(function (i) { return 'Option ' + (i + 1) + ': ' + (opts[i].n || ''); });
       setMeta({ ref: data.r || 'untitled', options: opts.length, choice: 'Quote all ' + okOpts.length, est: null, t: Date.now() });
       ph('suggested_options_all', { options: okOpts.length });
-      var names = opts.map(function (o, i) { return available[i] !== false ? 'Option ' + (i + 1) + ': ' + (o.n || '') : null; }).filter(Boolean).join('; ');
-      loadIntoOrder(okOpts, idx, 'Please quote all ' + okOpts.length + ' suggested options separately so we can compare them (' + names + ').');
+      loadIntoOrder(okOpts, idx, 'Please quote each option separately so we can compare them: ' + labels.join('; ') + '.', labels);
     });
   }
 
@@ -209,6 +211,25 @@
   // Tag the order form and analytics with the link and choice, then record when the order is actually sent.
   tagOrder();
   var form = document.getElementById('quote-form');
+  // A link back to this exact order (options and the customer's details), added to the order email so we can
+  // reopen it in one click. It's only ever in the email: never in analytics or on the site.
+  function orderLink() {
+    var Q = window.GrimesQuote; if (!Q || !form) return '';
+    var d = Q.get(), gs = Q.groups ? Q.groups(d) : [];
+    var awards = d.lines.filter(function (l) { return l.kind !== 'plaque'; });
+    if (!awards.length) return '';
+    var o = gs.length > 1
+      ? gs.map(function (g) { return { n: g.name.split(': ').slice(1).join(': ') || g.name, l: g.lines.map(function (l) { return [l.sku, parseInt(l.qty, 10) || 1]; }) }; })
+      : [{ n: 'Your order', l: awards.map(function (l) { return [l.sku, parseInt(l.qty, 10) || 1]; }) }];
+    var c = {};
+    ['name', 'email', 'company', 'phone', 'needed_by', 'po_number', 'invoice_email'].forEach(function (k) { var el = form.elements[k]; if (el && el.value) c[k] = String(el.value).slice(0, 200); });
+    var first = (c.name || '').split(' ')[0];
+    var payload = { r: (meta && meta.ref) || 'order', for: first ? first + (c.company ? ' at ' + c.company : '') : (c.company || ''), note: 'This is the order you sent us. You can change anything and send it again.', c: c, o: o };
+    return location.origin + '/quote/?options=' + encode(payload);
+  }
+  if (form) form.addEventListener('submit', function () {
+    var f = document.getElementById('order_link_field'); if (f) f.value = orderLink();
+  }, true);
   if (form && meta) form.addEventListener('submit', function () {
     tagOrder();
     ph('suggested_options_order_sent', { option_choice: meta.choice || 'none', est_total: meta.est ? Math.round(meta.est) : null });

@@ -20,6 +20,7 @@ const web3formsKey = (import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "").trim();
       data-success="Thank you, your order is on its way. We’ll email the full price and a free proof within 24 hours (working days). If you’re adding a logo, just reply to our email with the file (PDF, EPS, SVG or a clear image)."
       class="flex flex-col gap-6 rounded-lg bg-white p-6 shadow-sm" style="box-shadow: 0 1px 3px rgba(0,0,0,0.12)">
       <input type="hidden" name="suggested_options" id="suggested_options_field" value="" />
+      <input type="hidden" name="reopen_this_order" id="order_link_field" value="" />
 
       <section aria-labelledby="q-awards-title">
         <div class="mb-3 flex flex-wrap items-baseline justify-between gap-2">
@@ -53,6 +54,7 @@ const web3formsKey = (import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "").trim();
               <tr class="os-total"><th scope="row">Estimated total</th><td><span id="os-total"></span></td></tr>
             </tbody>
           </table>
+          <p id="os-multi-note" class="os-note" hidden>You’re comparing options, so each is priced on its own. You’ll only order one: we’ll quote them side by side.</p>
           <p id="os-bulk" class="os-bulk" hidden>✓ <strong>Bulk discount:</strong> your order of <span id="os-bulk-n"></span> awards qualifies. We’ll take it off in your quote.</p>
           <p id="os-plaques" class="os-note" hidden>Bench plaques are priced with your free proof, so they’re not included in this estimate.</p>
           <p class="os-note">Setup is a flat £40 per order, even when each award has a different name.</p>
@@ -78,10 +80,28 @@ const web3formsKey = (import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "").trim();
                 rows += '<tr><th scope="row">' + esc(l.name) + ' <span class="os-q">× ' + (parseInt(l.qty, 10) || 1) + '</span></th><td class="os-muted">With your proof</td></tr>';
               });
               document.getElementById('os-lines').innerHTML = rows;
+              // Several options quoted side by side: price each one on its own, and hide the combined total.
+              var gs = Q.groups ? Q.groups(d) : [];
+              var multi = gs.length > 1;
+              box.classList.toggle('os-multi', multi);
+              if (multi) {
+                var grows = '';
+                gs.forEach(function (g) {
+                  grows += '<tr class="os-group"><th scope="rowgroup" colspan="2">' + esc(g.name) + '</th></tr>';
+                  g.lines.forEach(function (l) { var q = parseInt(l.qty, 10) || 0, u = Q.unit(l); grows += '<tr><th scope="row">' + esc(l.name) + ' <span class="os-q">' + q + ' \u00d7 ' + Q.gbp(u) + '</span></th><td>' + Q.gbp(q * u) + '</td></tr>'; });
+                  grows += '<tr><th scope="row">Engraving <span class="os-q">' + g.n + ' \u00d7 \u00a310.50</span></th><td>' + Q.gbp(g.engraving) + '</td></tr>';
+                  grows += '<tr><th scope="row">Setup <span class="os-q">flat fee</span></th><td>' + Q.gbp(SETUP) + '</td></tr>';
+                  grows += '<tr class="os-gtotal"><th scope="row">' + esc(g.name.split(':')[0]) + ' total</th><td>' + Q.gbp(g.total) + '</td></tr>';
+                });
+                plaques.forEach(function (l) { grows += '<tr><th scope="row">' + esc(l.name) + ' <span class="os-q">\u00d7 ' + (parseInt(l.qty, 10) || 1) + '</span></th><td class="os-muted">With your proof</td></tr>'; });
+                document.getElementById('os-lines').innerHTML = grows;
+              }
               var posEl = document.getElementById('engraving_positions');
               var pos = Math.max(1, parseInt(posEl && posEl.value, 10) || 1);
               var has = n > 0, eng = ENG * n * pos, total = has ? sub + eng + SETUP : 0;
-              document.querySelectorAll('[data-os-row="awards"]').forEach(function (r) { r.hidden = !has; });
+              document.querySelectorAll('[data-os-row="awards"]').forEach(function (r) { r.hidden = !has || multi; });
+              var tr = box.querySelector('.os-total'); if (tr) tr.hidden = multi;
+              var mn = document.getElementById('os-multi-note'); if (mn) mn.hidden = !multi;
               document.getElementById('os-awards').textContent = Q.gbp(sub);
               document.getElementById('os-eng-n').textContent = n + ' × £10.50';
               document.getElementById('os-eng').textContent = Q.gbp(eng);
@@ -93,7 +113,7 @@ const web3formsKey = (import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "").trim();
               document.getElementById('os-setup').textContent = Q.gbp(setupTotal);
               document.getElementById('os-total').textContent = has ? Q.gbp(total) : 'With your proof';
               document.getElementById('os-plaques').hidden = plaques.length === 0;
-              var bulk = document.getElementById('os-bulk'); if (bulk) { bulk.hidden = n < 20; document.getElementById('os-bulk-n').textContent = n; }
+              var bulk = document.getElementById('os-bulk'); if (bulk) { var bn = multi ? Math.max.apply(null, gs.map(function (g) { return g.n; })) : n; bulk.hidden = bn < 20; document.getElementById('os-bulk-n').textContent = bn; }
             }
             function start() { if (!window.GrimesQuote) return setTimeout(start, 50); draw(); window.GrimesQuote.onChange(draw); var pe = document.getElementById('engraving_positions'); if (pe) { try { var sv = localStorage.getItem('grimes_engraving_positions'); if (sv) pe.value = sv; } catch (e) {} pe.addEventListener('change', function () { try { localStorage.setItem('grimes_engraving_positions', pe.value); } catch (e) {} draw(); }); draw(); } document.addEventListener('change', function (e) { if (e.target && e.target.name === 'wording_type') draw(); }); document.addEventListener('input', function (e) { if (e.target.closest && e.target.closest('#q-lines')) setTimeout(draw, 0); }); document.addEventListener('change', function (e) { if (e.target.closest && e.target.closest('#q-lines')) setTimeout(draw, 0); }); document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('#q-lines')) setTimeout(draw, 50); }); }
             start();

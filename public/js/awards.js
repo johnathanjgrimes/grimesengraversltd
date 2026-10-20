@@ -357,14 +357,30 @@
     var firstQty = linesEl.querySelector('[data-line-qty]');
     var short = Q.short(d);
     if (firstQty) firstQty.setCustomValidity(short ? 'Our minimum order is ' + MIN + ' awards in total.' : '');
-    totalEl.innerHTML = n ? total + (total === 1 ? ' item' : ' items') + (short ? ' (minimum ' + MIN + ' awards)' : '') + ' · <strong>Total from ' + Q.gbp(Q.money(d)) + '</strong><span class="block text-xs">' + Q.TOTAL_NOTE + (Q.hasPlaques(d) ? ' ' + Q.PLAQUE_NOTE : '') + '</span>' : 'Minimum order ' + MIN + ' awards in total. Bench plaques have no minimum.';
+    totalEl.innerHTML = n ? total + (total === 1 ? ' item' : ' items') + (short ? ' (minimum ' + MIN + ' awards)' : '') + ' · <strong>' + (Q.groups && Q.groups(d).length > 1 ? Q.groups(d).length + ' options, from ' : 'Estimated ') + Q.gbp(Q.estimate(d)) + '</strong><span class="block text-xs">' + Q.TOTAL_NOTE + (Q.hasPlaques(d) ? ' ' + Q.PLAQUE_NOTE : '') + '</span>' : 'Minimum order ' + MIN + ' awards in total. Bench plaques have no minimum.';
     totalEl.style.color = short ? '#8A1C1C' : '';
     paintStock(d);
     var parts = d.lines.map(function (l) {
       if (l.kind === 'plaque') return (l.qty || '?') + ' × ' + l.name + ' (' + l.sku + '): ' + (l.details || '');
       return (l.qty || '?') + ' × ' + l.name + ' (' + l.sku + ')' + (Q.unit(l) ? ' @ ' + Q.gbp(Q.unit(l)) : '') + stockTag(l);
     });
-    form.querySelector('[data-summary]').value = (parts.length ? parts.join('\n') + '\nEstimated total from ' + Q.gbp(Q.money(d)) + ' (' + Q.TOTAL_NOTE.toLowerCase() + (Q.hasPlaques(d) ? ' Plaques to be priced.' : '') + ')' : '') || (approx.value ? 'Recommendation wanted, about ' + approx.value + ' awards' : '');
+    // Options quoted side by side: list each option with its own total, so they're easy to quote as Option 1, 2, 3.
+    var gs = Q.groups ? Q.groups(d) : [];
+    if (gs.length > 1) {
+      var out = ['QUOTE EACH OPTION SEPARATELY (the customer will choose one):'];
+      gs.forEach(function (g) {
+        out.push('', g.name.toUpperCase());
+        g.lines.forEach(function (l) { out.push('  ' + (l.qty || '?') + ' × ' + l.name + ' (' + l.sku + ')' + (Q.unit(l) ? ' @ ' + Q.gbp(Q.unit(l)) : '') + stockTag(l)); });
+        out.push('  Engraving ' + g.n + ' × ' + Q.gbp(Q.ENGRAVING) + ' = ' + Q.gbp(g.engraving) + ', setup ' + Q.gbp(Q.SETUP));
+        out.push('  Estimated total: ' + Q.gbp(g.total) + (g.n >= 20 ? ' (qualifies for bulk discount)' : ''));
+      });
+      d.lines.filter(function (l) { return l.kind === 'plaque'; }).forEach(function (l) { out.push('', (l.qty || '?') + ' × ' + l.name + ' (' + l.sku + '): ' + (l.details || '')); });
+      form.querySelector('[data-summary]').value = out.join('\n');
+      form.querySelector('[data-subject]').value = 'Website order: ' + gs.length + ' options to quote (' + gs.map(function (g) { return g.name.split(': ')[1] || g.name; }).join(', ') + ')';
+      form.querySelector('[data-names]').value = namesText(d);
+      return;
+    }
+    form.querySelector('[data-summary]').value = (parts.length ? parts.join('\n') + '\nEstimated total ' + Q.gbp(Q.estimate(d)) + ' (' + Q.TOTAL_NOTE.toLowerCase() + (Q.hasPlaques(d) ? ' Plaques to be priced.' : '') + ')' : '') || (approx.value ? 'Recommendation wanted, about ' + approx.value + ' awards' : '');
     form.querySelector('[data-subject]').value = 'Website order: ' + (parts.map(function (p) { return p.replace(/ \[.*\]$/, '').replace(/\): .*/, ')'); }).join(', ') || 'recommendation request');
     form.querySelector('[data-names]').value = namesText(d);
   }
