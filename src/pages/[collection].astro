@@ -46,6 +46,7 @@ const crumb = c.kind === "range" ? "Award ranges" : "Awards by occasion";
       : <div class="coll-collage" aria-hidden="true">{collage.map((p, i) => <img src={p.main.thumb} alt="" width="480" height="480" fetchpriority={i === 0 ? "high" : undefined} />)}</div>}
   </div>
 </section>
+<div data-christmas-panel={c.slug} style="padding: 0 1.5rem"></div>
 <section class="bg-mist px-6 py-8" id="awards">
   <div class="mx-auto max-w-6xl">
     <h2 class="m-0 mb-5 text-2xl font-semibold text-teal">{c.name}</h2>

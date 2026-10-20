@@ -1,0 +1,51 @@
+---
+// Pre-built award sets (src/data/sets.json). "Add set to order" puts every line in the basket;
+// customers can swap an award or change quantities first, then change anything later in their order.
+import sets from '../data/sets.json';
+import { awards } from '../lib/awards';
+
+interface Props { page: string; title?: string }
+const { page, title = 'Ready-made award sets' } = Astro.props as Props;
+const bySku = new Map(awards.map((a) => [a.sku, a]));
+const ENG = 10.5, SETUP = 40;
+const gbp = (n: number) => `£${n.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+const list = sets.sets
+  .filter((s) => s.show.includes(page))
+  .map((s) => ({ ...s, lines: s.lines.filter((l) => bySku.has(l.sku)).map((l) => ({ ...l, a: bySku.get(l.sku)!, alts: [l.sku, ...(l.swaps || [])].filter((k) => bySku.has(k)).map((k) => bySku.get(k)!) })) }))
+  .filter((s) => s.lines.length);
+const total = (s: (typeof list)[number]) => { const n = s.lines.reduce((t, l) => t + l.qty, 0); return s.lines.reduce((t, l) => t + l.a.price_from * l.qty, 0) + n * ENG + SETUP; };
+---
+{list.length > 0 && (
+<section class="sets" aria-labelledby={`sets-${page}`}>
+  <div class="sets-in">
+    <h2 id={`sets-${page}`}>{title}</h2>
+    <p class="sets-sub">Less choosing, fewer clicks: add a whole set in one go, then swap anything you like. Nothing to pay today.</p>
+    <div class="sets-grid">
+      {list.map((s) => (
+        <article class="set" data-set={s.id}>
+          <h3>{s.name}</h3>
+          <p class="set-blurb">{s.blurb}</p>
+          <ul class="set-lines">
+            {s.lines.map((l) => (
+              <li class="set-line" data-line>
+                <img src={l.a.thumb} alt="" width="64" height="64" loading="lazy" data-img />
+                <div class="set-line-main">
+                  <span class="set-role">{l.role}</span>
+                  {l.alts.length > 1
+                    ? <label class="set-swap"><span class="sr-only">Swap {l.role}</span><select data-sku>{l.alts.map((a) => <option value={a.sku} data-price={a.price_from} data-img={a.thumb} selected={a.sku === l.sku}>{a.name} ({gbp(a.price_from)})</option>)}</select></label>
+                    : <span class="set-name" data-sku-fixed={l.a.sku} data-price={l.a.price_from}>{l.a.name} ({gbp(l.a.price_from)})</span>}
+                </div>
+                <span class="set-qty"><button type="button" data-qty="-1" aria-label={`Fewer: ${l.role}`}>−</button><output data-q>{l.qty}</output><button type="button" data-qty="1" aria-label={`More: ${l.role}`}>+</button></span>
+              </li>
+            ))}
+          </ul>
+          <p class="set-total">Estimated total <strong data-total>{gbp(total(s))}</strong><span>incl. engraving and setup, plus delivery</span></p>
+          <ul class="set-perks"><li>✓ Free proof first</li><li>✓ Send names later</li><li>✓ Change anything until you approve the proof</li></ul>
+          <button type="button" class="btn set-add" data-add-set>Add set to order</button>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+)}
+<script is:inline src="/js/sets.js" defer></script>

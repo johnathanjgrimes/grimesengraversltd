@@ -1,0 +1,55 @@
+{
+  "_note": "Pre-built award sets. Each line: sku, qty, role (shown on the card) and optional swaps (other skus the customer can switch to). 'show' = page slugs where the set appears ('home' and 'glass-awards' included). Swap in Mum and Dad's favourites any time.",
+  "sets": [
+    {
+      "id": "christmas",
+      "name": "Christmas awards night",
+      "blurb": "One headline award and five team awards: everything for a staff awards night.",
+      "lines": [
+        { "sku": "FC188", "qty": 1, "role": "Headline award", "swaps": ["SY1013", "DY16"] },
+        { "sku": "TL15", "qty": 5, "role": "Team awards", "swaps": ["SY5066", "DY15"] }
+      ],
+      "show": ["home", "glass-awards", "employee-of-the-year-awards", "corporate-awards", "corporate-glass-awards", "staff-awards"]
+    },
+    {
+      "id": "long-service",
+      "name": "Long service trio",
+      "blurb": "Three milestones, one matching family: 10, 20 and 25 years.",
+      "lines": [
+        { "sku": "DY15", "qty": 1, "role": "10 years", "swaps": ["SY5066"] },
+        { "sku": "DY16", "qty": 1, "role": "20 years", "swaps": ["SY5067"] },
+        { "sku": "FC204", "qty": 1, "role": "25 years", "swaps": ["SY1013"] }
+      ],
+      "show": ["home", "glass-awards", "long-service-awards", "corporate-glass-awards", "retirement-awards"]
+    },
+    {
+      "id": "football",
+      "name": "Football presentation",
+      "blurb": "A player of the season award and engraved tumblers for the squad.",
+      "lines": [
+        { "sku": "SY1036", "qty": 1, "role": "Player of the season", "swaps": [] },
+        { "sku": "L314", "qty": 12, "role": "Squad awards", "swaps": [] }
+      ],
+      "show": ["football-awards"]
+    },
+    {
+      "id": "golf",
+      "name": "Golf day prize set",
+      "blurb": "A winner's award and four engraved tumblers for the runners-up.",
+      "lines": [
+        { "sku": "SY1044", "qty": 1, "role": "Winner", "swaps": [] },
+        { "sku": "L106", "qty": 4, "role": "Prizes", "swaps": [] }
+      ],
+      "show": ["golf-awards"]
+    },
+    {
+      "id": "starter",
+      "name": "Starter pair",
+      "blurb": "Two matching awards: our minimum order, and a simple way to start.",
+      "lines": [
+        { "sku": "SY5066", "qty": 2, "role": "Two awards", "swaps": ["DY15", "SY5067"] }
+      ],
+      "show": ["home", "glass-awards", "retirement-awards"]
+    }
+  ]
+}

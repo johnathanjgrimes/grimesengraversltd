@@ -407,6 +407,31 @@ header .nav-toggle { order: 4; }
 .suggested-options .btn-secondary, .order-summary [data-share-link] { border: 2px solid #23263A; background: #FFFFFF; color: #23263A; }
 .os-bulk { margin: 0.9rem 0 0; padding: 0.7rem 0.9rem; border-radius: 8px; background: #F0F7F2; color: #166534; font-size: 0.95rem; }
 
+/* Pre-built award sets (src/components/SetCards.astro) */
+.sets { background: #F5F6F7; padding: 3rem 1.5rem; }
+.sets-in { max-width: 72rem; margin: 0 auto; }
+.sets h2 { margin: 0 0 0.4rem; color: #3D5A5E; font-weight: 600; font-size: clamp(1.6rem, 3vw, 2.1rem); }
+.sets-sub { margin: 0 0 1.5rem; color: #4B5563; }
+.sets-grid { display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); }
+.set { background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem; }
+.set h3 { margin: 0; font-size: 1.2rem; color: #1F2933; }
+.set-blurb { margin: 0; color: #4B5563; font-size: 0.95rem; }
+.set-lines { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; }
+.set-line { display: grid; grid-template-columns: 56px 1fr auto; gap: 0.6rem; align-items: center; }
+.set-line img { width: 56px; height: 56px; object-fit: contain; border-radius: 6px; background: #F5F6F7; }
+.set-role { display: block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #6B7280; }
+.set-name { font-size: 0.9rem; color: #1F2933; }
+.set-swap select { width: 100%; font: inherit; font-size: 0.88rem; padding: 0.35rem 0.4rem; border: 1px solid #9CA3AF; border-radius: 6px; background: #FFFFFF; min-height: 40px; }
+.set-qty { display: inline-flex; align-items: center; border: 1px solid #9CA3AF; border-radius: 6px; }
+.set-qty button { width: 36px; min-height: 40px; border: 0; background: transparent; font-size: 1.1rem; cursor: pointer; color: #1F2933; }
+.set-qty output { min-width: 1.8rem; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
+.set-total { margin: 0.25rem 0 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 0.5rem; color: #1F2933; }
+.set-total strong { font-size: 1.25rem; } .set-total span { flex-basis: 100%; font-size: 0.82rem; color: #6B7280; }
+.set-perks { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.25rem 0.9rem; color: #166534; font-size: 0.85rem; font-weight: 700; }
+.set-add { margin-top: auto; align-self: flex-start; }
+.set-add[disabled] { opacity: 0.6; cursor: not-allowed; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
 /* AI-made scene images: always labelled */
 .coll-scene-wrap { position: relative; }
 /* Range and occasion pages with a scene image: full-width scene behind a navy wash, like the homepage */

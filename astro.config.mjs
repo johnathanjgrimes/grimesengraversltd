@@ -36,6 +36,8 @@ export default defineConfig({
   })],
   // The stylesheet is small, so put it in each page rather than making the browser wait for a separate file.
   build: { inlineStylesheets: 'always' },
+  // Local nicknames (see internal/README.md): http://grimes.test via Caddy -> the dev/preview server.
+  vite: { server: { allowedHosts: ['grimes.test'] }, preview: { allowedHosts: ['grimes.test'] } },
   // Old Laravel URLs -> new pages. Check against the old routes/web.php before going live.
   redirects: {
     '/contact-us': '/contact/',

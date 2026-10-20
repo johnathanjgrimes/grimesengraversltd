@@ -1,0 +1,16 @@
+{
+  "_note": "Seasonal order-by deadlines. The browser checks today's date, so banners switch on and off by themselves (no rebuild). Order-by times are 5pm UK time; each allows 14 working days after proof approval plus delivery, with ~3 days spare. Confirm the dates with Mum and Dad each year. The countdown only shows on pages that match the promotion (showOnPaths, plus award pages whose range isn't in noAwardRanges).",
+  "christmas": {
+    "showFrom": "2026-10-19",
+    "deadlines": [
+      { "party": "2026-12-04", "orderBy": "2026-11-06T17:00:00Z" },
+      { "party": "2026-12-11", "orderBy": "2026-11-13T17:00:00Z" },
+      { "party": "2026-12-18", "orderBy": "2026-11-20T17:00:00Z", "final": true }
+    ],
+    "showOnPaths": ["/", "/glass-awards/", "/corporate-glass-awards/", "/corporate-awards/", "/employee-of-the-year-awards/", "/long-service-awards/", "/retirement-awards/", "/optical-crystal-awards/", "/star-awards/", "/jade-glass-awards/", "/crystal-awards-on-bases/", "/3d-laser-crystal-awards/", "/globe-awards/", "/award-set-builder/", "/award-finder/", "/awards-night-planning/", "/quote/"],
+    "awardPagesPrefix": "/glass-awards/",
+    "noAwardRanges": ["Sports awards"],
+    "panelOn": ["employee-of-the-year-awards", "corporate-awards", "corporate-glass-awards", "long-service-awards", "retirement-awards"]
+  },
+  "leadDays": 28
+}

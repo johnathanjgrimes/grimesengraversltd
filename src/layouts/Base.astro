@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Header from '../components/Header.astro';
+import seasons from '../data/seasons.json';
 import Footer from '../components/Footer.astro';
 import config from '../data/config.json';
 import { pageSchema, absUrl } from '../lib/schema';
@@ -122,5 +123,7 @@ posthog.init(phKey, { api_host: phHost, persistence: 'sessionStorage', person_pr
 <script is:inline src="/js/search.js" defer></script>
 {scripts.map((s) => <script is:inline src={`/js/${s}`} defer></script>)}
 <script is:inline src="/js/site.js" defer></script>
+<script type="application/json" id="seasons-data" set:html={JSON.stringify(seasons)}></script>
+<script is:inline src="/js/seasons.js" defer></script>
 </body>
 </html>

@@ -74,6 +74,7 @@ const productSchema = {
         </div>
       );
     })()}
+    <div data-christmas-award data-range={a.range}></div>
         <p class="m-0 mb-5"><strong>Availability:</strong> <span id="stock-status">{a.in_stock ? 'In stock' : 'Currently out of stock: ask us for the restock date'}</span>
             {a.source_url && <button type="button" class="ml-2 text-sm font-semibold" style="background: none; border: none; padding: 0; color: #0F5257; cursor: pointer; text-decoration: underline; min-height: 44px" data-check-stock="#stock-status" data-src={a.source_url} data-sku={a.sku} hidden>Check stock now</button>}</p>
         <div class="flex flex-wrap items-center gap-3">

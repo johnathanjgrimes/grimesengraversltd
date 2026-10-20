@@ -229,7 +229,29 @@
   }
   if (form) form.addEventListener('submit', function () {
     var f = document.getElementById('order_link_field'); if (f) f.value = orderLink();
+    var h = document.getElementById('hub_link_field'); if (h) h.value = hubLink();
   }, true);
+  // A link that opens this order in our internal hub (on our own Mac) to make the proofs automatically.
+  // Only ever in the order email to us; the hub runs locally, so nothing here is published or tracked.
+  function hubLink() {
+    var Q = window.GrimesQuote; if (!Q || !form) return '';
+    var d = Q.get(), names = d.names || {};
+    if (!d.lines.length) return '';
+    var el = function (k) { var x = form.elements[k]; if (!x) return ''; if (x.length && !x.tagName) { for (var i = 0; i < x.length; i++) if (x[i].checked) return x[i].value; return ''; } return x.value || ''; };
+    var c = {}; ['name', 'email', 'company', 'needed_by'].forEach(function (k) { if (el(k)) c[k] = String(el(k)).slice(0, 200); });
+    var payload = { v: 1, c: c, wt: el('wording_type'), w: el('wording').slice(0, 600), eng: el('engraving'), lines: d.lines.map(function (l) {
+      var q = parseInt(l.qty, 10) || 0, out = { k: l.kind || 'award', s: l.sku, n: l.name, q: q };
+      if (out.k === 'plaque' && l.design) {
+        var r = l.design.render || {};
+        out.p = { w: (l.design.wording || '').slice(0, 600), wi: r.w, hi: r.h, mat: r.mat, holes: !!r.holes, border: !!r.border, corners: r.corners };
+      } else {
+        var list = []; for (var i = 1; i <= Math.min(q, 200); i++) list.push((names[l.sku + '-' + i] || '').slice(0, 300));
+        if (list.some(function (x) { return x.trim(); })) out.names = list;
+      }
+      return out;
+    }) };
+    return 'http://hub.grimes.test/order?d=' + encode(payload);
+  }
   if (form && meta) form.addEventListener('submit', function () {
     tagOrder();
     ph('suggested_options_order_sent', { option_choice: meta.choice || 'none', est_total: meta.est ? Math.round(meta.est) : null });

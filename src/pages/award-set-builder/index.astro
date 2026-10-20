@@ -1,0 +1,123 @@
+---
+// Awards set builder: 7 quick questions, then 2–3 matching options (budget, mid, premium) opened on the
+// order page as suggested options (public/js/options.js): live stock check, choose one, quote all, or share.
+import Base from "../../layouts/Base.astro";
+import { awards } from "../../lib/awards";
+
+const meta = { url: "/award-set-builder/", title: "Award Set Builder: Your Awards in 7 Quick Questions | Grimes Engravers",
+  description: "Answer 7 quick questions and we'll suggest matching glass and crystal award sets, with winners and runners-up sizes, prices and stock checked. Nothing to pay today." };
+
+// Award families with in-stock sizes (two or more lets winners be bigger than runners-up), from the catalogue.
+const STYLE: Record<string, string> = { "Optical crystal awards": "crystal", "Star awards": "star", "Jade & clear glass awards": "glass", "Crystal awards on bases": "crystal", "3D laser crystal awards": "crystal", "Globe awards": "crystal", "Sports awards": "sports" };
+const fams = new Map<string, any[]>();
+for (const a of awards) {
+  if (!a.in_stock || !a.price_from) continue;
+  fams.set(a.family, [...(fams.get(a.family) ?? []), { sku: a.sku, size: a.size, name: a.name, price: a.price_from, thumb: a.thumb, range: a.range, product: a.product }]);
+}
+const families = [...fams.values()]
+  .map((l) => l.sort((x, y) => x.price - y.price))
+  .filter((l) => STYLE[l[0].range])
+  .map((l) => ({ product: l[0].product, style: STYLE[l[0].range], sizes: l.map(({ sku, size, price, name }) => ({ sku, size, price, name })), thumb: l[Math.floor(l.length / 2)].thumb }));
+const step = "background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; padding: 1.25rem 1.4rem; margin: 0 0 1rem";
+---
+<Base title={meta.title} description={meta.description} path={meta.url} scripts={["options.js"]}>
+<section style="background: #23263A; color: #FFFFFF; padding: 3rem 1.5rem"><div style="max-width: 48rem; margin: 0 auto">
+<p style="margin: 0 0 0.5rem; color: #F3A3A6; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase">Award set builder</p>
+<h1 style="margin: 0 0 0.75rem; font-size: clamp(1.9rem, 4vw, 2.6rem); font-weight: 600; line-height: 1.15">Your awards in 7 quick questions</h1>
+<p style="margin: 0; color: #E5E7EB; font-size: 1.1rem">Tell us about your event and we’ll suggest matching sets at different budgets, with prices and live stock. Choose one, change anything, or share them with your team. Nothing to pay today.</p>
+</div></section>
+<section style="background: #F5F6F7; padding: 2.5rem 1.5rem"><div style="max-width: 48rem; margin: 0 auto">
+<form id="builder" novalidate>
+  <fieldset style={step}><legend style="font-weight: 700; font-size: 1.1rem">1. What’s the occasion?</legend>
+    {[["staff", "Staff awards night"], ["christmas", "Christmas party awards"], ["long-service", "Long service"], ["retirement", "Retirement"], ["sports", "Sports presentation"], ["other", "Something else"]].map(([v, t], i) =>
+      <label class="bq"><input type="radio" name="occasion" value={v} checked={i === 0} /> {t}</label>)}
+  </fieldset>
+  <fieldset style={step}><legend style="font-weight: 700; font-size: 1.1rem">2. How many awards altogether?</legend>
+    <input type="number" name="total" min="2" max="500" value="10" inputmode="numeric" class="bi" aria-describedby="b2" /><p id="b2" class="bh">Minimum order is 2.</p>
+  </fieldset>
+  <fieldset style={step}><legend style="font-weight: 700; font-size: 1.1rem">3. Winners and runners-up?</legend>
+    <label class="bq"><input type="radio" name="tiers" value="same" checked /> All the same award</label>
+    <label class="bq"><input type="radio" name="tiers" value="two" /> Winners slightly bigger than runners-up</label>
+    <div data-if-two hidden><label class="bh" for="winners">How many winners? (the rest are runners-up)</label><input id="winners" type="number" name="winners" min="1" value="5" class="bi" /></div>
+  </fieldset>
+  <fieldset style={step}><legend style="font-weight: 700; font-size: 1.1rem">4. Which style do you like?</legend>
+    {[["any", "Show me a mix"], ["crystal", "Optical crystal"], ["star", "Star awards"], ["glass", "Jade glass (great value)"], ["sports", "Sports"]].map(([v, t], i) =>
+      <label class="bq"><input type="radio" name="style" value={v} checked={i === 0} /> {t}</label>)}
+  </fieldset>
+  <fieldset style={step}><legend style="font-weight: 700; font-size: 1.1rem">5. Budget per award (before engraving)?</legend>
+    {[["25", "Up to £25"], ["40", "Up to £40"], ["60", "Up to £60"], ["999", "No set budget"]].map(([v, t], i) =>
+      <label class="bq"><input type="radio" name="budget" value={v} checked={i === 1} /> {t}</label>)}
+    <p class="bh">Engraving is £10.50 per award plus a flat £40 setup. Orders of 20 or more get a bulk discount.</p>
+  </fieldset>
+  <fieldset style={step}><legend style="font-weight: 700; font-size: 1.1rem">6. When do you need them?</legend>
+    <input type="date" id="needed_by" name="needed_by" class="bi" /><p class="bh">We’ll check you’re in time.</p>
+  </fieldset>
+  <fieldset style={step}><legend style="font-weight: 700; font-size: 1.1rem">7. Adding your logo?</legend>
+    <label class="bq"><input type="radio" name="logo" value="yes" checked /> Yes, logo and text</label>
+    <label class="bq"><input type="radio" name="logo" value="no" /> Text only</label>
+  </fieldset>
+  <button type="submit" class="btn" style="font-size: 1.05rem">Show my award sets →</button>
+  <p id="b-msg" class="bh" role="alert" style="color: #8A1C1C; font-weight: 700"></p>
+</form>
+</div></section>
+<style>
+.bq { display: flex; align-items: center; gap: 0.6rem; min-height: 44px; padding: 0.2rem 0; font-size: 1rem; cursor: pointer; }
+.bq input { width: 1.2rem; height: 1.2rem; }
+.bi { font: inherit; padding: 0.55rem 0.7rem; border: 1px solid #9CA3AF; border-radius: 6px; min-height: 44px; max-width: 14rem; width: 100%; }
+.bh { margin: 0.4rem 0 0; color: #4B5563; font-size: 0.9rem; }
+fieldset legend { padding: 0; margin-bottom: 0.5rem; }
+</style>
+<script type="application/json" id="builder-data" set:html={JSON.stringify(families)}></script>
+<script is:inline>
+(function () {
+  var F = JSON.parse(document.getElementById('builder-data').textContent);
+  var form = document.getElementById('builder'), msg = document.getElementById('b-msg');
+  var ph = function (ev, p) { try { window.posthog && window.posthog.capture(ev, p || {}); } catch (e) {} };
+  var val = function (n) { var el = form.querySelector('[name="' + n + '"]:checked') || form.elements[n]; return el ? el.value : ''; };
+  var started = false;
+  form.addEventListener('change', function () {
+    form.querySelector('[data-if-two]').hidden = val('tiers') !== 'two';
+    if (!started) { started = true; ph('builder_started'); }
+  });
+  var label = { staff: 'your staff awards', christmas: 'your Christmas party', 'long-service': 'your long service awards', retirement: 'the retirement', sports: 'your presentation', other: 'your event' };
+  form.addEventListener('submit', function (e) {
+    e.preventDefault(); msg.textContent = '';
+    var total = Math.max(2, parseInt(val('total'), 10) || 0), two = val('tiers') === 'two';
+    var winners = two ? Math.min(total - 1, Math.max(1, parseInt(form.elements.winners.value, 10) || 1)) : total;
+    var style = val('style'), budget = parseFloat(val('budget')) || 999;
+    var pool = F.filter(function (f) {
+      if (style !== 'any' && f.style !== style) return false;
+      if (style === 'any' && f.style === 'sports' && val('occasion') !== 'sports') return false;
+      if (two && f.sizes.length < 2) return false;
+      return true;
+    }).map(function (f) {
+      var s = f.sizes.filter(function (x) { return x.price <= budget; });
+      if (two) { if (s.length < 2) return null; var w = s[s.length - 1], r = s[s.length - 2]; return { f: f, lines: [[w.sku, winners], [r.sku, total - winners]], unit: (w.price * winners + r.price * (total - winners)) / total, desc: winners + ' winners at ' + w.size + ', ' + (total - winners) + ' runners-up at ' + r.size }; }
+      if (!s.length) return null; var m = s[Math.min(s.length - 1, Math.floor(s.length / 2))];
+      return { f: f, lines: [[m.sku, total]], unit: m.price, desc: total + ' \u00d7 ' + m.size };
+    }).filter(Boolean).sort(function (a, b) { return a.unit - b.unit; });
+    if (!pool.length) { msg.textContent = 'Nothing matches that budget and style. Try a higher budget or "Show me a mix".'; return; }
+    // Up to three options spread across the price range: best value, middle, premium (different styles for a mix).
+    var pick;
+    if (pool.length <= 3) pick = pool;
+    else if (style === 'any') {
+      var a0 = pool[0], mid = Math.floor(pool.length / 2), rest = pool.slice(1);
+      var m1 = rest.slice().sort(function (x, y) { return Math.abs(pool.indexOf(x) - mid) - Math.abs(pool.indexOf(y) - mid); }).filter(function (x) { return x.f.style !== a0.f.style; })[0] || pool[mid];
+      var p3 = rest.slice().reverse().filter(function (x) { return x !== m1 && x.f.style !== a0.f.style && x.f.style !== m1.f.style; })[0] || rest.slice().reverse().filter(function (x) { return x !== m1; })[0];
+      pick = [a0, m1, p3].sort(function (x, y) { return x.unit - y.unit; });
+    } else pick = [pool[0], pool[Math.floor(pool.length / 2)], pool[pool.length - 1]];
+    var names = ['Best value', 'Popular choice', 'Premium'];
+    var payload = {
+      r: 'builder', for: '',
+      note: 'Based on your answers, here are ' + pick.length + ' options for ' + (label[val('occasion')] || 'your event') + (val('logo') === 'yes' ? ' with your logo' : '') + '. Choose one to load it into your order and change anything you like, or ask us to quote them all.',
+      c: form.elements.needed_by.value ? { needed_by: form.elements.needed_by.value } : {},
+      o: pick.map(function (p, i) { return { n: p.f.product, d: (pick.length === 3 ? names[i] + ': ' : '') + p.desc + '.', l: p.lines }; })
+    };
+    ph('builder_finished', { occasion: val('occasion'), total: total, tiers: val('tiers'), style: style, budget: budget, options: pick.length });
+    var code = (window.GrimesOptions && window.GrimesOptions.encode) ? window.GrimesOptions.encode(payload)
+      : btoa(unescape(encodeURIComponent(JSON.stringify(payload)))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    location.href = '/quote/?options=' + code;
+  });
+})();
+</script>
+</Base>

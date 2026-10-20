@@ -7,6 +7,12 @@ dist/
 # Raw supplier scrape (rebuilt by scripts/scrape-logocrystal.py); only src/data/awards.json is published.
 /data/
 
+# Supplier engraving templates (re-download with scripts/fetch-templates.sh) and local proofs: never pushed or published.
+/supplier-templates/
+/proofs/
+/fonts/
+/private/
+
 # Local Cloudflare worker and Python caches
 .wrangler/
 __pycache__/

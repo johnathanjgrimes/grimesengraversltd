@@ -1,0 +1,16 @@
+# Local nicknames for this Mac (needs: 127.0.0.1 grimes.test hub.grimes.test in /etc/hosts).
+#   http://grimes.test      -> the website (npm run dev or npm run preview, port 4321)
+#   http://hub.grimes.test  -> the internal hub (python3 scripts/dashboard.py, port 8765)
+# Start: caddy start --config internal/Caddyfile     Stop: caddy stop
+{
+	auto_https off
+	admin localhost:2019
+}
+
+http://grimes.test {
+	reverse_proxy localhost:4321
+}
+
+http://hub.grimes.test {
+	reverse_proxy localhost:8765
+}
