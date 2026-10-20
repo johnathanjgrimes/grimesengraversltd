@@ -342,6 +342,37 @@ header .nav-toggle { order: 4; }
 .quote-pay-note { display: block; margin-top: 0.5rem; padding: 0.5rem 0.65rem; border-radius: 6px; background: #F0F7F2; color: #166534; font-weight: 600; }
 @media (max-width: 40rem) { .quote-bar-pay { display: none; } }
 
+/* Award page: price guide with a live estimate (src/pages/glass-awards/[slug].astro) */
+.price-guide { margin: 0.75rem 0 1.5rem; padding: 1rem 1.1rem; border: 1px solid #E5E7EB; border-radius: 10px; background: #F9FAFB; }
+.pg-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem 1rem; margin-bottom: 0.5rem; }
+.pg-title { margin: 0; font-weight: 700; color: #1F2933; }
+.pg-qty { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; color: #374151; }
+.pg-qty input { width: 5rem; min-height: 44px; padding: 0 0.6rem; border: 1px solid #9CA3AF; border-radius: 6px; font: inherit; }
+.pg-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.pg-table th { text-align: left; font-weight: 400; color: #374151; padding: 0.35rem 0; }
+.pg-table td { text-align: right; white-space: nowrap; padding: 0.35rem 0 0.35rem 1rem; color: #1F2933; font-variant-numeric: tabular-nums; }
+.pg-total th, .pg-total td { border-top: 1px solid #D1D5DB; padding-top: 0.6rem; font-weight: 700; color: #1F2933; font-size: 1.05rem; }
+.pg-vat th, .pg-vat td { color: #6B7280; font-size: 0.9rem; }
+.pg-note { margin: 0.6rem 0 0; font-size: 0.85rem; color: #6B7280; }
+.pg-list { margin: 0.4rem 0 0; padding-left: 1.1rem; display: grid; gap: 0.35rem; font-size: 0.95rem; color: #374151; }
+.pg-pos { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.4rem 1rem; margin: 0 0 0.5rem; font-size: 0.95rem; color: #374151; }
+.pg-pos select { min-height: 44px; padding: 0 0.6rem; border: 1px solid #9CA3AF; border-radius: 6px; font: inherit; background: #FFFFFF; }
+.os-pos { margin: 0 0 0.75rem; }
+
+/* Order page: running estimate (src/pages/quote/index.astro) */
+.order-summary { margin-top: 1rem; padding: 1.1rem 1.25rem; border: 2px solid #23263A; border-radius: 12px; background: #FFFFFF; }
+.os-title { margin: 0 0 0.6rem; font-size: 1.15rem; font-weight: 700; color: #1F2933; }
+.os-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.os-table th { text-align: left; font-weight: 400; color: #374151; padding: 0.4rem 0; }
+.os-table td { text-align: right; white-space: nowrap; padding: 0.4rem 0 0.4rem 1rem; color: #1F2933; font-variant-numeric: tabular-nums; vertical-align: top; }
+.os-q { display: block; font-size: 0.85rem; color: #6B7280; }
+.os-muted { color: #6B7280 !important; font-size: 0.9rem; }
+.os-sub th, .os-sub td { border-top: 1px solid #E5E7EB; padding-top: 0.6rem; font-weight: 600; }
+.os-total th, .os-total td { border-top: 2px solid #23263A; padding-top: 0.7rem; font-weight: 800; font-size: 1.15rem; color: #1F2933; }
+.os-vat th, .os-vat td { color: #6B7280; font-size: 0.9rem; }
+.os-note { margin: 0.6rem 0 0; font-size: 0.85rem; color: #6B7280; }
+.os-bulk { margin: 0.9rem 0 0; padding: 0.7rem 0.9rem; border-radius: 8px; background: #F0F7F2; color: #166534; font-size: 0.95rem; }
+
 /* AI-made scene images: always labelled */
 .coll-scene-wrap { position: relative; }
 /* Range and occasion pages with a scene image: full-width scene behind a navy wash, like the homepage */

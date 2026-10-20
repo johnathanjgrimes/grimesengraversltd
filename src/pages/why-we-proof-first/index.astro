@@ -10,15 +10,15 @@ const h2 = "margin: 0 0 0.6rem; color: #3D5A5E; font-weight: 600; font-size: cla
 const steps = [
   ["Send your order", "Choose your awards or design your plaque. You see a price straight away, and there’s nothing to pay."],
   ["We check and send a proof", "Our team checks every name, date and logo, then emails a free proof for you to approve."],
-  ["Engraved and checked by hand", "We only engrave once you’ve approved the proof, then inspect every piece before it’s packed."],
-  ["Pay when you’re happy", "We send your invoice once your order is engraved and checked. Pay by card or bank transfer."],
+  ["Approve and pay", "Once you’re happy with the proof, we ask for a deposit or full payment, by card or bank transfer."],
+  ["Engraved and checked by hand", "Then we engrave your order and inspect every piece before it’s packed and sent to you."],
 ];
 ---
 <Base image="/assets/img/glass-award.jpg" title={meta.title} description={meta.description} path={meta.url} faqs={faqs["why-we-proof-first"]} scripts={[]}>
 <section style="background: #F5F6F7; padding: 3.5rem 1.5rem"><div style="max-width: 52rem; margin: 0 auto">
 <p style="margin: 0 0 0.75rem; color: #C8202A; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase">How we work</p>
-<h1 style="margin: 0 0 1rem; color: #3D5A5E; font-weight: 600; font-size: clamp(2rem, 4.5vw, 2.8rem); line-height: 1.15">Why we proof first, and why you pay later</h1>
-<p style="margin: 0; font-size: 1.15rem; color: #4B5563">A personalised award or plaque can’t simply be sent back. So we’d rather take a few days to get it right than rush it and get it wrong. That’s why there’s nothing to pay when you order: you pay once your order is engraved and checked.</p>
+<h1 style="margin: 0 0 1rem; color: #3D5A5E; font-weight: 600; font-size: clamp(2rem, 4.5vw, 2.8rem); line-height: 1.15">Why we proof first</h1>
+<p style="margin: 0; font-size: 1.15rem; color: #4B5563">A personalised award or plaque can’t simply be sent back. So we’d rather take a few days to get it right than rush it and get it wrong. That’s why there’s nothing to pay when you order: you see a free proof first, and we only ask for payment once you’ve approved it.</p>
 </div></section>
 
 <section style="background: #FFFFFF; padding: 4rem 1.5rem"><div style="max-width: 52rem; margin: 0 auto">
@@ -80,7 +80,7 @@ const steps = [
 {faqs["why-we-proof-first"].map((f, i) => <details style="border-bottom: 1px solid #E5E7EB; padding: 1rem 0" open={i === 0}><summary style="font-weight: 700; cursor: pointer; color: #1F2933">{f.q}</summary><p style="margin: 0.6rem 0 0; color: #4B5563">{f.a}</p></details>)}
 </div></div></section>
 <section style="background: #3D5A5E; color: #FFFFFF; padding: 3.5rem 1.5rem"><div style="max-width: 72rem; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem">
-<div style="flex: 1 1 24rem"><h2 style="margin: 0 0 0.4rem; font-size: 1.8rem; font-weight: 600">Ready when you are</h2><p style="margin: 0; color: #E5ECEC">Send your order today. Nothing to pay until it’s engraved and checked.</p></div>
+<div style="flex: 1 1 24rem"><h2 style="margin: 0 0 0.4rem; font-size: 1.8rem; font-weight: 600">Ready when you are</h2><p style="margin: 0; color: #E5ECEC">Send your order today. Nothing to pay until you’ve approved your free proof.</p></div>
 <div style="display: flex; flex-wrap: wrap; gap: 0.75rem"><a href="/glass-awards/" style="background: #FFFFFF; color: #3D5A5E; font-weight: 700; text-decoration: none; padding: 0.85rem 1.4rem; border-radius: 6px">Glass awards</a>
 <a href="/design-a-bench-plaque/" style="border: 2px solid #FFFFFF; color: #FFFFFF; font-weight: 700; text-decoration: none; padding: 0.75rem 1.3rem; border-radius: 6px">Design a bench plaque</a></div></div></section>
 </Base>

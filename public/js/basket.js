@@ -142,9 +142,12 @@
     // Running total at "from" prices: quantity × per-award price. Engraving and delivery are quoted separately.
     unit: function (l) { return l.unit != null ? +l.unit : parseFloat(String(l.price || '').replace(/[^0-9.]/g, '')) || 0; },
     money: function (d) { return (d || load()).lines.reduce(function (s, l) { return s + Q.unit(l) * (parseInt(l.qty, 10) || 0); }, 0); },
+    // Guide price shown in the basket: awards + engraving per award + one setup per order (plaques priced with the proof).
+    ENGRAVING: 10.50, SETUP: 40.00,
+    estimate: function (d) { d = d || load(); var a = Q.awardTotal(d); return Q.money(d) + (a > 0 ? a * Q.ENGRAVING + Q.SETUP : 0); },
     gbp: function (n) { return '£' + n.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); },
-    TOTAL_NOTE: 'Excludes engraving and delivery.',
-    PAY_NOTE: 'Nothing to pay today: you pay after your proof, once your awards are engraved and checked.',
+    TOTAL_NOTE: 'Includes engraving and setup. Plus delivery. 20+ awards? Bulk discount in your quote.',
+    PAY_NOTE: 'Nothing to pay today. We’ll send a free proof first; once you approve it, we ask for a deposit or full payment before we engrave.',
     open: function () { openPanel(); },
   };
 
@@ -158,7 +161,7 @@
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
   function render() {
-    var d = load(), n = d.lines.length, total = Q.total(d), money = Q.gbp(Q.money(d));
+    var d = load(), n = d.lines.length, total = Q.total(d), money = Q.gbp(Q.estimate(d));
     if (btn) {
       btn.hidden = !n;
       btn.querySelector('[data-quote-count]').textContent = n;
@@ -166,7 +169,7 @@
     }
     if (bar) {
       bar.hidden = !n || location.pathname === '/quote/';
-      bar.querySelector('[data-quote-bar-text]').innerHTML = thumbs(d.lines, 4) + '<span>' + total + (total === 1 ? ' item' : ' items') + (money !== '£0.00' ? ' · <strong>from ' + money + '</strong>' : '') +
+      bar.querySelector('[data-quote-bar-text]').innerHTML = thumbs(d.lines, 4) + '<span>' + total + (total === 1 ? ' item' : ' items') + (money !== '£0.00' ? ' · <strong>est. ' + money + '</strong>' : '') +
         (Q.short(d) ? ' <span class="quote-bar-warn">(minimum ' + MIN + ' awards)</span>' : '') + ' <span class="quote-bar-pay">· nothing to pay today</span></span>';
     }
     renderPeek(d, n, total, money);
@@ -187,7 +190,7 @@
     }).join('') : '<li class="muted py-6 text-center">Your order is empty. Add awards from the catalogue, or design a bench plaque.</li>';
     var note = panel.querySelector('[data-panel-total]');
     var sh = Q.short(d);
-    note.innerHTML = n ? '<span class="quote-total"><span>Total</span><strong>from ' + money + '</strong></span><span class="muted block text-xs font-normal">' + Q.TOTAL_NOTE + (Q.hasPlaques(d) ? ' ' + Q.PLAQUE_NOTE : '') + '</span>' +
+    note.innerHTML = n ? '<span class="quote-total"><span>Estimated total</span><strong>' + money + '</strong></span><span class="muted block text-xs font-normal">' + Q.TOTAL_NOTE + (Q.hasPlaques(d) ? ' ' + Q.PLAQUE_NOTE : '') + '</span>' +
       '<span class="block mt-1">' + total + (total === 1 ? ' item' : ' items') + (sh ? ' (minimum order ' + MIN + ' awards)' : '') + '</span>' +
       '<span class="quote-pay-note">✓ ' + Q.PAY_NOTE + ' <a href="/why-we-proof-first/">Why?</a></span>' : '';
     note.style.color = n && sh ? '#8A1C1C' : '';
@@ -221,7 +224,7 @@
       return '<li><img src="' + esc(l.image) + '" alt="" width="48" height="48"><span class="min-w-0 flex-1"><span class="block font-semibold leading-snug">' + esc(l.name) + '</span>' +
         '<span class="muted block text-sm">' + esc(l.qty) + ' × ' + (l.price ? esc(l.price) : '') + '</span></span></li>';
     }).join('');
-    peek.innerHTML = '<div class="mb-3 flex items-baseline justify-between gap-3 border-0 border-b border-solid pb-2" style="border-color: #E5E7EB"><p class="m-0 font-bold">Your order</p><p class="m-0 text-sm">Total: <strong>from ' + money + '</strong></p></div><ul class="quote-peek-list">' + rows + '</ul>' +
+    peek.innerHTML = '<div class="mb-3 flex items-baseline justify-between gap-3 border-0 border-b border-solid pb-2" style="border-color: #E5E7EB"><p class="m-0 font-bold">Your order</p><p class="m-0 text-sm">Estimated total: <strong>' + money + '</strong></p></div><ul class="quote-peek-list">' + rows + '</ul>' +
       (n > 4 ? '<p class="muted m-0 mt-1 text-sm">and ' + (n - 4) + ' more</p>' : '') +
       '<p class="m-0 mt-3 text-sm font-semibold"' + (Q.short(d) ? ' style="color: #8A1C1C"' : '') + '>' + total + (total === 1 ? ' item' : ' items') + (Q.short(d) ? ' (minimum ' + MIN + ' awards)' : '') + '</p>' +
       '<p class="muted m-0 text-xs">' + Q.TOTAL_NOTE + ' Nothing to pay today.</p>' +

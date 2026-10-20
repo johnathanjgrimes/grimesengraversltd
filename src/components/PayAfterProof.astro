@@ -1,14 +1,14 @@
 ---
 // "Nothing to pay today" line with a tap-to-open explanation. Native <details> so it works without JavaScript.
 // Used on award pages, plaque pages and the order page; links to /why-we-proof-first/.
-const { item = "awards", dark = false, label = "✓ Nothing to pay today: pay after your proof" } = Astro.props as { item?: "awards" | "plaque"; dark?: boolean; label?: string };
-const what = item === "plaque" ? "your plaque is" : "your awards are";
+const { item = "awards", dark = false, label = "✓ Nothing to pay today: free proof first" } = Astro.props as { item?: "awards" | "plaque"; dark?: boolean; label?: string };
+const what = item === "plaque" ? "your plaque" : "your awards";
 const thing = item === "plaque" ? "A plaque with a name on it" : "Personalised awards";
 ---
 <details class={`pay-proof${dark ? " pay-proof-dark" : ""}`}>
   <summary>{label}</summary>
   <div class="pay-proof-body">
-    <p>We check your wording{item === "awards" && " and logo"}, email you a free proof, and only engrave once you approve it. You pay by card or bank transfer once {what} engraved and checked.</p>
+    <p>We check your wording{item === "awards" && " and logo"} and email you a free proof. Once you’ve approved it, we ask for a deposit or full payment (by card or bank transfer), and then we engrave {what}.</p>
     <p>{thing} can’t be sent back, so we make sure it’s right first. <a href="/why-we-proof-first/">Why we proof first ›</a></p>
   </div>
 </details>

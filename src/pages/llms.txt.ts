@@ -17,9 +17,9 @@ export const GET: APIRoute = () => {
 
 ## Key facts
 
-- Established: ${config.founded}, Cardiff, Wales. Family-run, third generation.${anniversary ? ' Celebrating 80 years (1947–2027).' : ''}
+- Established: ${config.founded}, Cardiff, Wales. Family-run since 1947.${anniversary ? ' Celebrating 80 years (1947–2027).' : ''}
 - Contact: by email only, ${config.email} · ${config.site}. No telephone enquiries.
-- Working days: ${config.workingDays}. Prices and free proof ${config.quoteTime}. Nothing to pay until the order is engraved and checked.
+- Working days: ${config.workingDays}. Prices and free proof ${config.quoteTime}. Nothing to pay when ordering: once the customer approves the free proof, we ask for a deposit or full payment (card or bank transfer) before engraving.
 - Lead time: ${config.leadTime}.
 - Visiting: no visits, appointments or collections. All orders are delivered.
 - Areas: ${config.areas.join(', ')}, and UK-wide by post.

@@ -6,7 +6,7 @@
   },
   {
    "q": "Do catalogue prices include engraving?",
-   "a": "No. Catalogue prices are per award, and engraving is added on top. We confirm the full price with your proof."
+   "a": "No. Catalogue prices are per award, and engraving is added on top: £10.50 per position (e.g. the front, or the front and back) for text and/or your logo, plus a flat £40 setup per order. UK delivery is quoted with your order. These are guide prices; bulk discounts may apply, confirmed in your quote."
   },
   {
    "q": "How long does an order take?",
@@ -120,7 +120,7 @@
   },
   {
    "q": "Are the catalogue prices final?",
-   "a": "Catalogue prices are per item, and engraving is added on top. We confirm the full price with your proof."
+   "a": "Catalogue prices are per item. Engraving is £10.50 per position (e.g. the front) plus a flat £40 setup per order. They're guide prices and may change; bulk discounts may apply, confirmed in your quote."
   },
   {
    "q": "Can you use our company logo?",
@@ -303,7 +303,7 @@
   {"q": "Do you deliver outside Cardiff?", "a": "Yes. We engrave in Cardiff and deliver anywhere in the UK."}
  ],
  "why-we-proof-first": [
-  {"q": "Why can't I pay when I order?", "a": "Because personalised items can't be sent back, we check every name and logo and send you a free proof first. You pay by card or bank transfer once your order is engraved and checked. If you'd like to pay sooner, tick the box on the order page and we'll send a payment link with your proof."},
+  {"q": "Why don't I pay when I order?", "a": "Because personalised items can't be sent back, we check every name and logo and send you a free proof first. Once you've approved it, we ask for a deposit or full payment by card or bank transfer before we engrave. Tick the box on the order page and we'll send a payment link with your proof."},
   {"q": "Do you price match?", "a": "We don't price match, because two awards that look alike online can be very different in quality. But we're always happy to talk through your budget and suggest options that work for you."},
   {"q": "What if my order arrives damaged?", "a": "Send us a photo as soon as you can. We'll arrange a replacement and do everything we can to get it to you before your event."},
   {"q": "What if there's a mistake in the engraving?", "a": "If it doesn't match the proof you approved, we'll re-engrave it at no cost. If the mistake was in the wording sent to us, talk to us anyway: we'll help, and do our best to meet your date."},

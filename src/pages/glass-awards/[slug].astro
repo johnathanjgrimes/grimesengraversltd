@@ -56,7 +56,24 @@ const productSchema = {
             {sizes.map((s) => <li><a href={awardUrl(s)} class="size-opt" aria-current={s.sku === a.sku ? 'true' : undefined}><strong>{s.size || mm(s.dimensions_mm)}</strong><small>{fromPrice(s.price_from)}</small></a></li>)}
           </ul>
         </nav>}
-        <p class="m-0 mb-6 text-2xl font-bold text-ink">{fromPrice(a.price_from)} <span class="muted text-base font-normal">per award</span></p>
+        <p class="m-0 mb-1 text-2xl font-bold text-ink">{fromPrice(a.price_from)} <span class="muted text-base font-normal">per award</span></p>
+    {(() => {
+      const unit = Number(a.price_from) || 0, ENG = 10.50, SETUP = 40.00;
+      const gbp = (n) => `£${n.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      const example = unit * 10 + ENG * 10 + SETUP;
+      return (
+        <div class="price-guide">
+          <p class="pg-title">Engraving prices</p>
+          <ul class="pg-list">
+            <li><strong>Engraving:</strong> {gbp(ENG)} per award (your text and/or logo, frosted finish). Engraving the back too? Another {gbp(ENG)} per award.</li>
+            <li><strong>Setup:</strong> a flat {gbp(SETUP)} <strong>per order</strong>, even if each award has a different name</li>
+            <li>UK delivery is quoted with your order.</li>
+            <li><strong>Ordering 20 or more?</strong> You’ll get a bulk discount, taken off in your quote.</li>
+          </ul>
+          <p class="pg-note">Example: 10 of these ≈ <strong>{gbp(example)}</strong> plus delivery. A guide price: your quote confirms the final price.</p>
+        </div>
+      );
+    })()}
         <p class="m-0 mb-5"><strong>Availability:</strong> <span id="stock-status">{a.in_stock ? 'In stock' : 'Currently out of stock: ask us for the restock date'}</span>
             {a.source_url && <button type="button" class="ml-2 text-sm font-semibold" style="background: none; border: none; padding: 0; color: #0F5257; cursor: pointer; text-decoration: underline; min-height: 44px" data-check-stock="#stock-status" data-src={a.source_url} data-sku={a.sku} hidden>Check stock now</button>}</p>
         <div class="flex flex-wrap items-center gap-3">
