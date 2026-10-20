@@ -7,16 +7,19 @@ const meta = pages["quote"];
 // Trimmed: a pasted secret with a trailing newline makes Web3Forms reject the key.
 const web3formsKey = (import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "").trim();
 ---
-<Base title={meta.title} description={meta.description} path={meta.url} scripts={["awards.js"]} fonts>
+<Base title={meta.title} description={meta.description} path={meta.url} scripts={["awards.js", "options.js"]} fonts>
 <section class="bg-mist px-6 py-10">
   <div class="mx-auto max-w-3xl">
     <p class="m-0 mb-2 text-sm"><a href="/glass-awards/" data-browse-more>← Browse more awards</a></p>
     <h1 class="m-0 mb-2 text-3xl font-semibold text-teal">Your order</h1>
     <p class="muted m-0 mb-6">Check your glass awards and bench plaques and add the wording. We’ll email the full price, including engraving and delivery, with a free proof within 24 hours (working days). Nothing to pay today.</p>
 
+    <section id="suggested-options" class="suggested-options" aria-live="polite" hidden></section>
+
     <form id="quote-form" action="https://api.web3forms.com/submit" method="POST" data-ajax data-min={MIN_QTY} data-thanks="/thank-you/"
       data-success="Thank you, your order is on its way. We’ll email the full price and a free proof within 24 hours (working days). If you’re adding a logo, just reply to our email with the file (PDF, EPS, SVG or a clear image)."
       class="flex flex-col gap-6 rounded-lg bg-white p-6 shadow-sm" style="box-shadow: 0 1px 3px rgba(0,0,0,0.12)">
+      <input type="hidden" name="suggested_options" id="suggested_options_field" value="" />
 
       <section aria-labelledby="q-awards-title">
         <div class="mb-3 flex flex-wrap items-baseline justify-between gap-2">
@@ -54,6 +57,7 @@ const web3formsKey = (import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "").trim();
           <p id="os-plaques" class="os-note" hidden>Bench plaques are priced with your free proof, so they’re not included in this estimate.</p>
           <p class="os-note">Setup is a flat £40 per order, even when each award has a different name.</p>
           <p class="os-note">A guide price to help you budget, plus UK delivery (quoted with your order). Orders of 20 or more awards get a bulk discount, taken off in your quote. Nothing to pay today.</p>
+          <p class="m-0 mt-3"><button type="button" class="btn btn-secondary" data-share-link>Share this order with your team</button></p>
         </div>
         <script is:inline>
           (function () {

@@ -74,7 +74,7 @@ document.addEventListener('error', function (e) {
 // No cookies. sessionStorage (cleared when the tab closes) keeps one visit together for session replay.
 // Replay masks every form field and the plaque wording / order lines, so names, addresses and memorial
 // wording are never recorded. Check the privacy notice mentions analytics and session recording.
-posthog.init(phKey, { api_host: phHost, persistence: 'sessionStorage', person_profiles: 'identified_only', disable_session_recording: false, session_recording: { maskAllInputs: true, maskTextSelector: '.pq-preview, .pqv, #quote-panel, .q-line, [data-plaque-added], [data-ph-mask]' }, disable_surveys: true, advanced_disable_feature_flags: true });
+posthog.init(phKey, { api_host: phHost, persistence: 'sessionStorage', person_profiles: 'identified_only', disable_session_recording: false, session_recording: { maskAllInputs: true, maskTextSelector: '.pq-preview, .pqv, #quote-panel, .q-line, [data-plaque-added], [data-ph-mask], #suggested-options' }, sanitize_properties: function (p) { ['$current_url', '$referrer', '$initial_current_url', '$initial_referrer', '$pathname'].forEach(function (k) { if (typeof p[k] === 'string') p[k] = p[k].replace(/([?&])options=[^&#]*/, '$1options=hidden'); }); return p; }, disable_surveys: true, advanced_disable_feature_flags: true });
 </script>}
 </head>
 <body>

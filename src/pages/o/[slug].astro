@@ -1,0 +1,47 @@
+---
+// Short links for suggested options: grimesengravers.com/o/<slug>/ forwards to /quote/?options=<code>.
+// The options live in src/data/option-links.json (no personal details there: this page is public).
+// The customer's name and email can ride along after a # (e.g. /o/nhs-mcb/#<code>): the part after # is
+// never sent to the server, and this page has no analytics, so they're only ever read in the customer's browser.
+import links from "../../data/option-links.json";
+
+export function getStaticPaths() {
+  return Object.keys(links).map((slug) => ({ params: { slug } }));
+}
+const { slug } = Astro.params;
+const payload = (links as Record<string, unknown>)[slug as string];
+---
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="referrer" content="no-referrer" />
+<title>Your suggested options | Grimes Engravers</title>
+<style>body{font-family:system-ui,-apple-system,sans-serif;display:grid;place-items:center;min-height:100vh;margin:0;background:#F3F4F6;color:#1F2933}a{color:#23263A;font-weight:700}</style>
+</head>
+<body>
+<p>Opening your suggested options… <a id="go" href="/quote/">Continue</a></p>
+<script type="application/json" id="payload" set:html={JSON.stringify(payload)}></script>
+<script is:inline>
+(function () {
+  var p = JSON.parse(document.getElementById('payload').textContent || '{}');
+  var h = location.hash.slice(1);
+  if (h) {
+    try {
+      var b = h.replace(/-/g, '+').replace(/_/g, '/'); while (b.length % 4) b += '=';
+      var who = JSON.parse(decodeURIComponent(escape(atob(b))));
+      p.c = p.c || {};
+      if (who.n) { p.c.name = who.n; p.for = (who.n.split(' ')[0]) + (p.for ? ' and ' + p.for : ''); }
+      if (who.e) p.c.email = who.e;
+    } catch (e) {}
+  }
+  var code = btoa(unescape(encodeURIComponent(JSON.stringify(p)))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  var url = '/quote/?options=' + code;
+  document.getElementById('go').href = url;
+  location.replace(url);
+})();
+</script>
+</body>
+</html>

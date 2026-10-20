@@ -1,0 +1,13 @@
+{
+  "nhs-mcb": {
+    "r": "nhs-mcb-oct26",
+    "for": "the Medical Clinical Board",
+    "note": "Based on what you told us (28 awards, with winners slightly larger than runners-up), we’ve hand-picked three options at different budgets, all checked in stock on 20 October. Choose one to load it into your order and change anything you like, or ask us to quote all three so your team can compare.",
+    "c": { "company": "Medical Clinical Board, Cardiff and Vale University Health Board", "needed_by": "2026-12-04" },
+    "o": [
+      { "n": "Optical Crystal Vertical Wedge", "d": "14 winners at 15cm, 14 runners-up at 12cm. Our best value option.", "l": [["SY5067", 14], ["SY5066", 14]] },
+      { "n": "Optical Crystal Hexagon", "d": "14 winners at 19cm, 14 runners-up at 12.5cm. A classic, elegant shape.", "l": [["DY16", 14], ["DY15", 14]] },
+      { "n": "Optical Crystal Star Rectangle", "d": "14 winners at 21cm, 14 runners-up at 18cm. Our premium option.", "l": [["SY1013", 14], ["SY3018", 14]] }
+    ]
+  }
+}

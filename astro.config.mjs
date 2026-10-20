@@ -31,7 +31,7 @@ export default defineConfig({
   site: SITE,
   trailingSlash: 'always',
   integrations: [markdownCopies(), sitemap({
-    filter: (url) => !otherSizes.has(url) && !url.endsWith('/thank-you/'),
+    filter: (url) => !otherSizes.has(url) && !url.endsWith('/thank-you/') && !url.includes('/o/'),
     serialize: (item) => { const d = lastmod(item.url); return d ? { ...item, lastmod: d } : item; },
   })],
   // The stylesheet is small, so put it in each page rather than making the browser wait for a separate file.
