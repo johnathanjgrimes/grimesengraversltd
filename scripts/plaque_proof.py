@@ -10,12 +10,12 @@ and the wording in Helvetica, black, centred, as large as fits.
   python3 scripts/plaque_proof.py 7x5 --style preview --metal steel --font script --emblem heart "Forever in our hearts" "Tom"
 
 Size: a website size (8x3, 6x4, 7x5, 10x5, 8x6, a4, in inches) or any size in mm, e.g. 263x66.
-Options: --fixing screws|adhesive  --border  --font helvetica|roman|italic|script|capitals|modern|gothic  --emblem none|cross|heart|star|paw|flower
+Options: --fixing screws|adhesive  --border  --no-details  --font helvetica|roman|italic|script|capitals|modern|gothic  --emblem none|cross|heart|star|paw|flower
          --style grimes|preview (preview = coloured brass/steel picture with notes, for showing customers the finish)
 Saves a PDF (print at 100% for true size) and a PNG preview to proofs/ (git-ignored).
 Needs: pip3 install pymupdf
 """
-import argparse, json, os, re, sys, datetime, urllib.request
+import argparse, json, os, re, sys, urllib.request
 import pymupdf
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -57,13 +57,27 @@ def plaque_size(size):
     if m: return float(m.group(1)), float(m.group(2)), f'{m.group(1)} x {m.group(2)}mm'
     sys.exit(f"Unknown size {size}. Use a website size ({', '.join(s['id'] for s in plaque['sizes'])}) or mm, e.g. 263x66")
 
+def describe(size, metal='brass', font_id='helvetica', emblem='none', corners='square', fixing='screws', border=False):
+    """The chosen options in customer words, e.g. for the proof and the email."""
+    fj, pq = (json.load(open(os.path.join(DATA, f), encoding='utf-8')) for f in ('font.json', 'plaque.json'))
+    name = lambda xs, v, d='': next((x['name'] for x in xs if x['id'] == v), d or v)
+    w, h, label = plaque_size(size)
+    if '"' not in label:  # made to measure: give the nearest inches too
+        inch = lambda mm: f'{round(mm / 25.4 * 2) / 2:g}'
+        label += f' (about {inch(w)} x {inch(h)}")'
+    return (f"{name(fj['mats'], metal)} bench plaque, {label}",
+            f"Font: {name(fj['fonts'], font_id, 'Helvetica')} · Emblem: {name(pq['emblems'], emblem)} · Corners: {corners.capitalize()} · "
+            f"Border: {'Yes' if border else 'None'} · Fixing: {'Adhesive backing' if fixing == 'adhesive' else 'Screw holes, stainless steel screws included'}")
+
+DETAILS_H = 24  # mm of notes under the plaque on our standard proof
+
 def make(size, lines, metal='brass', font_id='helvetica', emblem='none', corners='square', fixing='screws', border=False,
-         style='grimes', max_pt=None, out_name=None, dry=False):
+         style='grimes', max_pt=None, out_name=None, dry=False, details=True):
     wmm, hmm, label = plaque_size(size)
     W, H = wmm * MM, hmm * MM
     grimes = style != 'preview'
     if grimes:
-        doc = pymupdf.open(); page = doc.new_page(width=W, height=H)  # the page IS the plaque
+        doc = pymupdf.open(); page = doc.new_page(width=W, height=H + (DETAILS_H * MM if details else 0))  # the plaque at true size, any notes below
         plate = pymupdf.Rect(0, 0, W, H)
         ink, edge, fill = (0, 0, 0), (0, 0, 0), None
         page.draw_rect(pymupdf.Rect(OUTLINE_IN * MM, OUTLINE_IN * MM, W - OUTLINE_IN * MM, H - OUTLINE_IN * MM), color=edge, width=LINE_W)
@@ -117,12 +131,12 @@ def make(size, lines, metal='brass', font_id='helvetica', emblem='none', corners
         page.insert_text(((plate.x0 + plate.x1 - font.text_length(l, fontsize=pt)) / 2, y), l, fontname='w', fontsize=pt, color=ink)
         y += pt * LEADING
 
-    if not grimes:
-        cap = pt * 0.7 / MM
-        notes = [f'PROOF  |  Grimes Engravers  |  {label}  |  {metal}  |  {corners} corners  |  {"border" if border else "no border"}  |  {"screw holes" if fixing == "screws" else "adhesive"}',
-                 f'Font: {font_id}  |  {pt:.1f}pt (capitals about {cap:.1f} mm tall)  |  {datetime.date.today():%d %b %Y}  |  Print at 100% (actual size).']
-        yy = plate.y1 + 12 * MM
-        for n in notes: page.insert_text((24 * MM, yy), n, fontsize=8.5, color=(0.35, 0.35, 0.35)); yy += 5 * MM
+    if details:
+        head, opts = describe(size, metal, font_id, emblem, corners, fixing, border)
+        notes = f'PROOF  ·  Grimes Engravers\n{head}\n{opts}'
+        side = 4 * MM if grimes else 24 * MM
+        box = pymupdf.Rect(side, plate.y1 + (5 if grimes else 12) * MM, page.rect.width - side, page.rect.height - 2 * MM)
+        page.insert_textbox(box, notes, fontsize=7.5 if grimes else 8.5, color=(0.35, 0.35, 0.35), lineheight=1.35)
 
     os.makedirs(OUT, exist_ok=True)
     name = out_name or f"Proof_{re.sub(r'[^A-Za-z0-9]+', '_', ' '.join(lines[0].split()[:4])).strip('_')}_plaque"
@@ -140,10 +154,11 @@ def main():
     ap.add_argument('--font', default='helvetica'); ap.add_argument('--metal', default='brass'); ap.add_argument('--emblem', default='none')
     ap.add_argument('--corners', default='square', choices=['rounded', 'square']); ap.add_argument('--fixing', default='screws', choices=['screws', 'adhesive'])
     ap.add_argument('--border', action='store_true'); ap.add_argument('--max-pt', type=float)
+    ap.add_argument('--no-details', action='store_true', help='leave the size and options off the proof')
     a = ap.parse_intermixed_args()
     lines = [l.strip() for l in open(a.lines_file, encoding='utf-8') if l.strip()] if a.lines_file else a.lines
     if not lines: ap.error('give the wording as arguments, or --lines-file')
-    path, pt = make(a.size, lines, a.metal, a.font, a.emblem, a.corners, a.fixing, a.border, a.style, a.max_pt)
+    path, pt = make(a.size, lines, a.metal, a.font, a.emblem, a.corners, a.fixing, a.border, a.style, a.max_pt, details=not a.no_details)
     print(f'{path}  ({pt:.1f}pt)')
 
 if __name__ == '__main__':

@@ -243,7 +243,7 @@
       var q = parseInt(l.qty, 10) || 0, out = { k: l.kind || 'award', s: l.sku, n: l.name, q: q };
       if (out.k === 'plaque' && l.design) {
         var r = l.design.render || {};
-        out.p = { w: (l.design.wording || '').slice(0, 600), wi: r.w, hi: r.h, mat: r.mat, holes: !!r.holes, border: !!r.border, corners: r.corners };
+        out.p = { w: (l.design.wording || '').slice(0, 600), wi: r.w, hi: r.h, mat: r.mat, holes: !!r.holes, border: !!r.border, corners: r.corners, font: r.font, emblem: r.emblem };
       } else {
         var list = []; for (var i = 1; i <= Math.min(q, 200); i++) list.push((names[l.sku + '-' + i] || '').slice(0, 300));
         if (list.some(function (x) { return x.trim(); })) out.names = list;

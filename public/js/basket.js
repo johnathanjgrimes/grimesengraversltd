@@ -137,6 +137,9 @@
     isPlaque: function (l) { return l.kind === 'plaque'; },
     awardTotal: function (d) { return (d || load()).lines.reduce(function (s, l) { return s + (l.kind === 'plaque' ? 0 : (parseInt(l.qty, 10) || 0)); }, 0); },
     hasPlaques: function (d) { return (d || load()).lines.some(function (l) { return l.kind === 'plaque'; }); },
+    hasAwards: function (d) { return (d || load()).lines.some(function (l) { return l.kind !== 'plaque'; }); },
+    // Plaques are priced with the proof, so an order of only plaques has no estimate and none of the award notes.
+    totalNote: function (d) { return Q.hasAwards(d) ? Q.TOTAL_NOTE + (Q.hasPlaques(d) ? ' ' + Q.PLAQUE_NOTE : '') : 'Bench plaques are priced with your free proof. No minimum order. Plus delivery.'; },
     short: function (d) { d = d || load(); var a = Q.awardTotal(d); return a > 0 && a < MIN; },
     PLAQUE_NOTE: 'Plaque prices are confirmed with your proof.',
     // Running total at "from" prices: quantity × per-award price. Engraving and delivery are quoted separately.
@@ -176,18 +179,20 @@
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
   function render() {
-    var d = load(), n = d.lines.length, total = Q.total(d), money = (Q.groups(d).length > 1 ? Q.groups(d).length + ' options, from ' : '') + Q.gbp(Q.estimate(d));
+    var d = load(), n = d.lines.length, total = Q.total(d), awards = Q.hasAwards(d);
+    var money = awards ? (Q.groups(d).length > 1 ? Q.groups(d).length + ' options, from ' : '') + Q.gbp(Q.estimate(d)) : 'With your free proof';
+    var label = !awards ? 'Price' : Q.hasPlaques(d) ? 'Awards estimate' : 'Estimated total';
     if (btn) {
       btn.hidden = !n;
       btn.querySelector('[data-quote-count]').textContent = n;
-      btn.setAttribute('aria-label', 'Your order, ' + n + (n === 1 ? ' award' : ' awards'));
+      btn.setAttribute('aria-label', 'Your order, ' + n + (n === 1 ? ' item' : ' items'));
     }
     if (bar) {
       bar.hidden = !n || location.pathname === '/quote/';
-      bar.querySelector('[data-quote-bar-text]').innerHTML = thumbs(d.lines, 4) + '<span>' + total + (total === 1 ? ' item' : ' items') + (money !== '£0.00' ? ' · <strong>est. ' + money + '</strong>' : '') +
+      bar.querySelector('[data-quote-bar-text]').innerHTML = thumbs(d.lines, 4) + '<span>' + total + (total === 1 ? ' item' : ' items') + (awards && money !== '£0.00' ? ' · <strong>est. ' + money + '</strong>' : '') +
         (Q.short(d) ? ' <span class="quote-bar-warn">(minimum ' + MIN + ' awards)</span>' : '') + ' <span class="quote-bar-pay">· nothing to pay today</span></span>';
     }
-    renderPeek(d, n, total, money);
+    renderPeek(d, n, total, money, label);
     document.querySelectorAll('[data-add-quote]').forEach(function (b) {
       var inQ = d.lines.some(function (l) { return l.sku === b.dataset.sku; });
       b.textContent = inQ ? '✓ In your order' : (b.dataset.label || 'Add to order');
@@ -205,7 +210,7 @@
     }).join('') : '<li class="muted py-6 text-center">Your order is empty. Add awards from the catalogue, or design a bench plaque.</li>';
     var note = panel.querySelector('[data-panel-total]');
     var sh = Q.short(d);
-    note.innerHTML = n ? '<span class="quote-total"><span>Estimated total</span><strong>' + money + '</strong></span><span class="muted block text-xs font-normal">' + Q.TOTAL_NOTE + (Q.hasPlaques(d) ? ' ' + Q.PLAQUE_NOTE : '') + '</span>' +
+    note.innerHTML = n ? '<span class="quote-total"><span>' + label + '</span><strong>' + money + '</strong></span><span class="muted block text-xs font-normal">' + Q.totalNote(d) + '</span>' +
       '<span class="block mt-1">' + total + (total === 1 ? ' item' : ' items') + (sh ? ' (minimum order ' + MIN + ' awards)' : '') + '</span>' +
       '<span class="quote-pay-note">✓ ' + Q.PAY_NOTE + ' <a href="/why-we-proof-first/">Why?</a></span>' : '';
     note.style.color = n && sh ? '#8A1C1C' : '';
@@ -220,7 +225,7 @@
 
   // Hover preview under the header button (mouse only; a click/tap opens the full panel).
   var peek, peekTimer;
-  function renderPeek(d, n, total, money) {
+  function renderPeek(d, n, total, money, label) {
     if (!btn) return;
     if (!peek) {
       peek = document.createElement('div');
@@ -237,12 +242,12 @@
     }
     var rows = d.lines.slice(0, 4).map(function (l) {
       return '<li><img src="' + esc(l.image) + '" alt="" width="48" height="48"><span class="min-w-0 flex-1"><span class="block font-semibold leading-snug">' + esc(l.name) + '</span>' +
-        '<span class="muted block text-sm">' + esc(l.qty) + ' × ' + (l.price ? esc(l.price) : '') + '</span></span></li>';
+        '<span class="muted block text-sm">' + esc(l.qty) + (l.price ? ' × ' + esc(l.price) : '') + '</span></span></li>';
     }).join('');
-    peek.innerHTML = '<div class="mb-3 flex items-baseline justify-between gap-3 border-0 border-b border-solid pb-2" style="border-color: #E5E7EB"><p class="m-0 font-bold">Your order</p><p class="m-0 text-sm">Estimated total: <strong>' + money + '</strong></p></div><ul class="quote-peek-list">' + rows + '</ul>' +
+    peek.innerHTML = '<div class="mb-3 flex items-baseline justify-between gap-3 border-0 border-b border-solid pb-2" style="border-color: #E5E7EB"><p class="m-0 font-bold">Your order</p><p class="m-0 text-sm">' + label + ': <strong>' + money + '</strong></p></div><ul class="quote-peek-list">' + rows + '</ul>' +
       (n > 4 ? '<p class="muted m-0 mt-1 text-sm">and ' + (n - 4) + ' more</p>' : '') +
       '<p class="m-0 mt-3 text-sm font-semibold"' + (Q.short(d) ? ' style="color: #8A1C1C"' : '') + '>' + total + (total === 1 ? ' item' : ' items') + (Q.short(d) ? ' (minimum ' + MIN + ' awards)' : '') + '</p>' +
-      '<p class="muted m-0 text-xs">' + Q.TOTAL_NOTE + ' Nothing to pay today.</p>' +
+      '<p class="muted m-0 text-xs">' + Q.totalNote(d) + ' Nothing to pay today.</p>' +
       '<div class="mt-3 flex gap-2"><button type="button" class="btn ghost flex-1" data-open-quote style="padding: 0.55rem 0.8rem">View &amp; edit</button><a href="/quote/" class="btn flex-1 text-center" style="padding: 0.55rem 0.8rem">Continue →</a></div>';
     if (!n) peek.hidden = true;
   }

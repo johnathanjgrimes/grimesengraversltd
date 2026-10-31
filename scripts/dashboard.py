@@ -266,41 +266,82 @@ def overview():
             f'<div class="card"><h2>Outreach due today or overdue ({len(due)})</h2>'
             + (f'<div class="scroll"><table><tr><th>Name</th><th>Organisation</th><th>Status</th><th>Next action</th><th>Due</th></tr>{due_rows}</table></div>' if due else '<p class="muted">Nothing due. Nice.</p>') + '</div>')
 
+def save_settings(name, **s):  # kept next to the proof so it can be duplicated and tweaked
+    json.dump({k: v for k, v in s.items() if v}, open(os.path.join(proof.OUT, name + '.json'), 'w', encoding='utf-8'))
+
+def load_settings(name):
+    try: return json.load(open(os.path.join(proof.OUT, name + '.json'), encoding='utf-8'))
+    except (OSError, ValueError): return None
+
+def edit_url(name):  # loads the proof into its form, ready to replace it or save as new
+    s = load_settings(name)
+    return f'/proofs?{urllib.parse.urlencode({**s, "replace": name})}#{"plaque" if "plaque" in s else "award"}' if s else ''
+
+def save_buttons(pre, label):
+    r = pre.get('replace', '')
+    if not r: return f'<button>{label}</button>'
+    return (f'<input type="hidden" name="replace" value="{esc(r)}"><p class="hint" style="margin-top:.75rem">Editing <strong>{esc(r)}</strong> · <a href="/proofs">Start blank</a></p>'
+            f'<button name="mode" value="replace" style="margin-right:.5rem">Save and replace</button><button name="mode" value="new" class="sec">Save as new</button>')
+
+def safe_name(n): return re.sub(r'[^A-Za-z0-9_.-]', '', os.path.basename(n))
+
+def proof_summary(s, cat):  # what was chosen, worded for the customer email
+    if 'plaque' not in s:
+        a = cat.get(s.get('code', ''), {})
+        head = f"{a['name']} ({s['code']})" if a else s.get('code', '')
+        return f"{head}{'' if s.get('area', '1') == '1' else ' · engraving area ' + s['area']}\nWording:\n{s.get('lines', '')}"
+    try: head, opts = plaque_proof.describe(s['plaque'], s.get('metal', 'brass'), s.get('font', 'helvetica'), s.get('emblem', 'none'),
+                                            s.get('corners', 'square'), s.get('fixing', 'screws'), bool(s.get('border')))
+    except SystemExit: head, opts = s['plaque'], ''
+    return f"{head}\nWording:\n{s.get('lines', '')}\n{opts}"
+
+COPY_JS = "var t=this.previousElementSibling;t.select();document.execCommand('copy');this.textContent='Copied';setTimeout(()=>this.textContent='Copy',1500)"
+
 def proofs_page(pre=None):
     pre = pre or {}
     OUT, T = proof.OUT, proof.TEMPLATES
     pdfs = sorted([f for f in os.listdir(OUT) if f.endswith('.pdf')], key=lambda f: os.path.getmtime(os.path.join(OUT, f)), reverse=True) if os.path.isdir(OUT) else []
     codes = sorted(f[:-4] for f in os.listdir(T) if f.endswith('.pdf')) if os.path.isdir(T) else []
-    pq, fj = load('plaque.json'), load('font.json')
-    items = ''.join(
-        f'<div class="p"><img src="/file/{urllib.parse.quote(f[:-4])}.png" alt="" loading="lazy"><div><strong>{esc(f[:-4])}</strong><br>'
-        f'<span class="muted">{datetime.datetime.fromtimestamp(os.path.getmtime(os.path.join(OUT, f))):%d %b %Y, %H:%M}</span><br>'
-        f'<a href="/file/{urllib.parse.quote(f)}" target="_blank">Open true-size PDF</a>'
-        f'<form method="post" action="/proof/delete" onsubmit="return confirm(\'Delete this proof?\')" style="margin:0"><input type="hidden" name="name" value="{esc(f)}">'
-        f'<button class="sec" style="min-height:32px;padding:0 .7rem;margin-top:.5rem">Delete</button></form></div></div>' for f in pdfs)
-    opt = lambda xs: ''.join(f'<option value="{esc(v)}">{esc(t)}</option>' for v, t in xs)
+    pq, fj, cat = load('plaque.json'), load('font.json'), awards()
+    def item(f):
+        n, t = f[:-4], os.path.getmtime(os.path.join(OUT, f))
+        img, u = f'<img src="/file/{urllib.parse.quote(n)}.png?v={int(t)}" alt="" loading="lazy">', esc(edit_url(n))
+        on = ' style="outline:3px solid var(--navy)"' if n == pre.get('replace') else ''
+        if u: img, edit = f'<a href="{u}" title="Load into the form">{img}</a>', f' · <a href="{u}">Edit</a>'
+        else: edit = ''
+        s = load_settings(n)
+        copy = (f'<label class="muted" style="font-weight:400;margin-top:.75rem">For the email</label><textarea readonly rows="7" style="min-height:0;font-size:.8rem">{esc(proof_summary(s, cat))}</textarea>'
+                f'<button type="button" class="sec" style="min-height:32px;padding:0 .7rem;margin:.4rem .4rem 0 0" onclick="{esc(COPY_JS)}">Copy</button>') if s else ''
+        return (f'<div class="p"{on}>{img}<div><strong>{esc(n)}</strong><br>'
+                f'<span class="muted">{datetime.datetime.fromtimestamp(t):%d %b %Y, %H:%M}</span><br>'
+                f'<a href="/file/{urllib.parse.quote(f)}" target="_blank">Open true-size PDF</a>{edit}'
+                f'<form method="post" action="/proof/delete" onsubmit="return confirm(\'Delete this proof?\')" style="margin:0"><input type="hidden" name="name" value="{esc(f)}">'
+                f'<button class="sec" style="min-height:32px;padding:0 .7rem;margin-top:.5rem">Delete</button></form>{copy}</div></div>')
+    items = ''.join(item(f) for f in pdfs)
+    opt = lambda xs, sel='': ''.join(f'<option value="{esc(v)}"{" selected" if v == sel else ""}>{esc(t)}</option>' for v, t in xs)
     return f"""<h1>Proofs</h1>
 <div class="row">
-<form class="card" method="post" action="/proof"><h2>Glass award (text)</h2>
+<form class="card" method="post" action="/proof" id="award"><h2>Glass award (text)</h2>
   <label for="code">Product code</label><input id="code" name="code" list="codes" placeholder="SY5067" required value="{esc(pre.get('code', ''))}">
   <datalist id="codes">{''.join(f'<option value="{c}">' for c in codes)}</datalist><p class="hint">{len(codes)} supplier templates available.</p>
   <label for="lines">Wording (one line per row; blank line between awards for a set)</label>
   <textarea id="lines" name="lines" placeholder="Employee of the Year 2026&#10;Sarah Jones" required>{esc(pre.get('lines', '') if pre.get('code') else '')}</textarea>
-  <label for="area">Engraving area</label><select id="area" name="area">{opt([('1', 'Main (largest)'), ('2', '2nd area'), ('3', '3rd area')])}</select>
-  <button>Create award proof</button></form>
-<form class="card" method="post" action="/plaque"><h2>Bench plaque</h2>
+  <label for="area">Engraving area</label><select id="area" name="area">{opt([('1', 'Main (largest)'), ('2', '2nd area'), ('3', '3rd area')], pre.get('area', '1'))}</select>
+  {save_buttons(pre if 'code' in pre else {}, 'Create award proof')}</form>
+<form class="card" method="post" action="/plaque" id="plaque"><h2>Bench plaque</h2>
   <div class="row"><div><label for="psize">Size</label><input id="psize" name="size" list="psizes" value="{esc(pre.get('plaque', '8x3'))}" required>
     <datalist id="psizes">{''.join(f'<option value="{s["id"]}">{esc(s["name"])} ({esc(s["mm"])})</option>' for s in pq['sizes'])}<option value="263x66">Made to measure, in mm</option></datalist>
     <p class="hint">A website size, or any size in mm, e.g. 263x66</p></div>
-  <div><label for="pstyle">Style</label><select id="pstyle" name="style">{opt([('grimes', 'Our proof (white, true size)'), ('preview', 'Colour preview (brass or steel)')])}</select></div>
-  <div><label for="metal">Metal (colour preview)</label><select id="metal" name="metal">{opt([(m['id'], m['name']) for m in fj['mats']])}</select></div>
-  <div><label for="pfont">Font</label><select id="pfont" name="font">{opt([('helvetica', 'Helvetica (our standard)')] + [(f['id'], f['name']) for f in fj['fonts']])}</select></div>
-  <div><label for="emblem">Emblem</label><select id="emblem" name="emblem">{opt([(e['id'], e['name']) for e in pq['emblems'] if e['id'] == 'none' or e.get('svg')])}</select></div>
-  <div><label for="fixing">Fixing</label><select id="fixing" name="fixing">{opt([('screws', 'Screw holes'), ('adhesive', 'Adhesive')])}</select></div>
-  <div><label for="corners">Corners (colour preview)</label><select id="corners" name="corners">{opt([('square', 'Square'), ('rounded', 'Rounded')])}</select></div></div>
-  <label style="font-weight:400"><input type="checkbox" name="border" value="1" style="width:auto"> Border</label>
+  <div><label for="pstyle">Style</label><select id="pstyle" name="style">{opt([('grimes', 'Our proof (white, true size)'), ('preview', 'Colour preview (brass or steel)')], pre.get('style', ''))}</select></div>
+  <div><label for="metal">Metal (colour preview)</label><select id="metal" name="metal">{opt([(m['id'], m['name']) for m in fj['mats']], pre.get('metal', ''))}</select></div>
+  <div><label for="pfont">Font</label><select id="pfont" name="font">{opt([('helvetica', 'Helvetica (our standard)')] + [(f['id'], f['name']) for f in fj['fonts']], pre.get('font', ''))}</select></div>
+  <div><label for="emblem">Emblem</label><select id="emblem" name="emblem">{opt([(e['id'], e['name']) for e in pq['emblems'] if e['id'] == 'none' or e.get('svg')], pre.get('emblem', ''))}</select></div>
+  <div><label for="fixing">Fixing</label><select id="fixing" name="fixing">{opt([('screws', 'Screw holes'), ('adhesive', 'Adhesive')], pre.get('fixing', ''))}</select></div>
+  <div><label for="corners">Corners (colour preview)</label><select id="corners" name="corners">{opt([('square', 'Square'), ('rounded', 'Rounded')], pre.get('corners', ''))}</select></div></div>
+  <label style="font-weight:400"><input type="checkbox" name="border" value="1" style="width:auto"{" checked" if pre.get('border') else ""}> Border</label>
+  <label style="font-weight:400"><input type="checkbox" name="details" value="1" style="width:auto"{" checked" if pre.get('details', '1') != '0' else ""}> Include details with proof (size and options under the plaque)</label>
   <label for="plines">Wording (one line per row)</label><textarea id="plines" name="lines" placeholder="In loving memory of&#10;Margaret Jones&#10;1938 – 2024" required>{esc(pre.get('lines', '') if pre.get('plaque') else '')}</textarea>
-  <button>Create plaque proof</button></form>
+  {save_buttons(pre if 'plaque' in pre else {}, 'Create plaque proof')}</form>
 </div>
 <h2>Proofs ({len(pdfs)})</h2>
 {'<form method="post" action="/proof/delete-all" onsubmit="return confirm(&#39;Delete all ' + str(len(pdfs)) + ' proofs?&#39;)" style="margin:0 0 1rem"><button class="sec" style="margin:0">Delete all proofs</button></form>' if pdfs else ''}
@@ -409,11 +450,13 @@ def order_page(code):
             p = l.get('p') or {}
             words = [x.strip() for x in (p.get('w') or '').splitlines() if x.strip()]
             size = f"{round(float(p.get('wi') or 6) * 25.4)}x{round(float(p.get('hi') or 4) * 25.4)}"
+            font, emblem = p.get('font') or 'helvetica', p.get('emblem') or 'none'  # older order links don't say
             if words:
                 out = f'order-{oid}-{li:02d}-plaque'
                 try:
                     if not os.path.exists(os.path.join(proof.OUT, out + '.pdf')):
-                        plaque_proof.make(size, words, p.get('mat') or 'brass', 'helvetica', 'none', 'square', 'screws' if p.get('holes', True) else 'adhesive', bool(p.get('border')), 'grimes', out_name=out)
+                        plaque_proof.make(size, words, p.get('mat') or 'brass', font, emblem, p.get('corners') or 'square', 'screws' if p.get('holes', True) else 'adhesive', bool(p.get('border')), 'grimes', out_name=out)
+                    save_settings(out, plaque=size, lines='\n'.join(words), metal=p.get('mat') or 'brass', font=font, emblem=emblem, corners=p.get('corners') or 'square', fixing='screws' if p.get('holes', True) else 'adhesive', border='1' if p.get('border') else '')
                     made.append(out)
                 except SystemExit as e: notes.append(('bad', str(e)))
             else: notes.append(('warn', 'No wording yet.'))
@@ -442,6 +485,7 @@ def order_page(code):
                         out = f'order-{oid}-{li:02d}-{sku}-{i:02d}'
                         if not os.path.exists(os.path.join(proof.OUT, out + '.pdf')):
                             proof.make_proof(sku, bl, 1, max_pt=max_pt, out_name=out)
+                        save_settings(out, code=sku, lines='\n'.join(bl), area='1')
                         made.append(out)
                     if len(blocks) > 40: notes.append(('warn', f'Showing the first 40 of {len(blocks)} proofs.'))
                 except SystemExit:
@@ -511,6 +555,9 @@ class H(BaseHTTPRequestHandler):
         body = pages[path]() if path in pages else '<p>Not found</p>'
         return self.send(shell(path, body, msg))
 
+    def edit_proof(self, name, msg):  # after saving, keep that proof loaded in the form for the next tweak
+        return self.send(shell('/proofs', proofs_page({**(load_settings(name) or {}), 'replace': name}), msg))
+
     def do_GET(self):
         if urllib.parse.urlparse(self.path).path == '/robots.txt':
             return self.send('User-agent: *\nDisallow: /\n', 'text/plain; charset=utf-8')
@@ -541,15 +588,17 @@ class H(BaseHTTPRequestHandler):
             if path == '/proof/delete':
                 name = os.path.basename(g('name'))  # only files directly in the proofs folder
                 if not name.endswith('.pdf'): raise SystemExit('Nothing to delete.')
-                for ext in ('.pdf', '.png'):
+                for ext in ('.pdf', '.png', '.json'):
                     fp = os.path.join(proof.OUT, name[:-4] + ext)
                     if os.path.isfile(fp): os.remove(fp)
                 return self.go('/proofs', note(f'Deleted {esc(name[:-4])}.'))
             if path == '/proof/delete-all':
                 n = 0
                 for f in os.listdir(proof.OUT) if os.path.isdir(proof.OUT) else []:
-                    if f.endswith(('.pdf', '.png')): os.remove(os.path.join(proof.OUT, f)); n += f.endswith('.pdf')
+                    if f.endswith(('.pdf', '.png', '.json')): os.remove(os.path.join(proof.OUT, f)); n += f.endswith('.pdf')
                 return self.go('/proofs', note(f'Deleted {n} proof(s).'))
+            rep = safe_name(g('replace')) if g('mode') == 'replace' else ''  # "Save and replace" keeps the proof's name
+            done = 'Replaced' if rep else 'Created'
             if path == '/proof':
                 code, area = g('code').strip().upper(), int(g('area', '1') or 1)
                 blocks, cur = [], []
@@ -560,8 +609,11 @@ class H(BaseHTTPRequestHandler):
                 if not code or not blocks: raise SystemExit('Enter a product code and some wording.')
                 max_pt = min(proof.make_proof(code, b, area, dry=True)[1] for b in blocks) if len(blocks) > 1 else 36
                 stamp = datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
-                made = [os.path.basename(proof.make_proof(code, b, area, max_pt=max_pt, out_name=f'{code}-{stamp}-{i:02d}')[0]) for i, b in enumerate(blocks, 1)]
-                return self.go('/proofs', note(f'Created {len(made)} proof(s): {esc(", ".join(made))}'))
+                made = []
+                for i, b in enumerate(blocks, 1):
+                    made.append(os.path.basename(proof.make_proof(code, b, area, max_pt=max_pt, out_name=rep if rep and i == 1 else f'{code}-{stamp}-{i:02d}')[0]))
+                    save_settings(made[-1][:-4], code=code, lines='\n'.join(b), area=str(area))
+                return self.edit_proof(made[0][:-4], note(f'{done} {len(made)} proof(s): {esc(", ".join(made))}'))
             if path == '/plaque':
                 lines = [t.strip() for t in g('lines').splitlines() if t.strip()]
                 if not lines: raise SystemExit('Enter the plaque wording.')
@@ -569,8 +621,10 @@ class H(BaseHTTPRequestHandler):
                 size = re.sub(r'[^0-9a-zA-Z.x×]', '', g('size', '8x3')) or '8x3'
                 first = re.sub(r'[^A-Za-z0-9]+', '_', ' '.join(lines[0].split()[:4])).strip('_')
                 p, pt = plaque_proof.make(size, lines, g('metal', 'brass'), g('font', 'helvetica'), g('emblem', 'none'), g('corners', 'square'),
-                                          g('fixing', 'screws'), bool(g('border')), g('style', 'grimes'), out_name=f'Proof_{first}_plaque_{stamp}')
-                return self.go('/proofs', note(f'Created {esc(os.path.basename(p))} ({pt:.1f}pt)'))
+                                          g('fixing', 'screws'), bool(g('border')), g('style', 'grimes'), out_name=rep or f'Proof_{first}_plaque_{stamp}', details=bool(g('details')))
+                save_settings(os.path.basename(p)[:-4], plaque=size, lines='\n'.join(lines), style=g('style', 'grimes'), metal=g('metal', 'brass'), font=g('font', 'helvetica'),
+                              emblem=g('emblem', 'none'), fixing=g('fixing', 'screws'), corners=g('corners', 'square'), border='1' if g('border') else '', details='1' if g('details') else '0')
+                return self.edit_proof(os.path.basename(p)[:-4], note(f'{done} {esc(os.path.basename(p))} ({pt:.1f}pt)'))
             if path == '/options/new':
                 cat = awards(); slug = g('slug').strip().lower()
                 if not re.fullmatch(r'[a-z0-9-]{3,60}', slug): raise SystemExit('Short name: 3–60 lower-case letters, numbers or dashes.')

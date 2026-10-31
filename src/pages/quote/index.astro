@@ -42,8 +42,8 @@ const web3formsKey = (import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "").trim();
           <div class="field"><label for="awards_text">Which awards, and how many of each?</label>
           <textarea id="awards_text" name="awards_text" rows="3" class="inp" placeholder="e.g. 20 × DY1, 5 × FC235"></textarea></div>
         </noscript>
-        <p class="m-0 mt-3"><a href="/glass-awards/" class="font-bold">+ Add more awards</a></p>
-        <p class="m-0 mt-3 rounded-lg p-4 text-sm" style="background: #F0F7F2; color: #1F2933"><strong>Deciding between a few?</strong> That’s fine. Add each one you like, then tell us in the notes below which you’re choosing between (and your budget, if you have one). We’ll quote them side by side and recommend the best fit. Nothing to pay today.</p>
+        <p class="m-0 mt-3" data-add-more><a href="/glass-awards/" class="font-bold">+ Add more awards</a></p>
+        <p class="m-0 mt-3 rounded-lg p-4 text-sm" style="background: #F0F7F2; color: #1F2933"><strong>Deciding between a few?</strong> That’s fine. Add each award or plaque size you like, then tell us in the notes below which you’re choosing between (and your budget, if you have one). We’ll quote them side by side and recommend the best fit. Nothing to pay today.</p>
         <div id="order-summary" class="order-summary" aria-labelledby="os-title" hidden>
           <h3 id="os-title" class="os-title">Your estimate</h3>
           <table class="os-table">
@@ -58,8 +58,8 @@ const web3formsKey = (import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "").trim();
           <p id="os-multi-note" class="os-note" hidden>You’re comparing options, so each is priced on its own. You’ll only order one: we’ll quote them side by side.</p>
           <p id="os-bulk" class="os-bulk" hidden>✓ <strong>Bulk discount:</strong> your order of <span id="os-bulk-n"></span> awards qualifies. We’ll take it off in your quote.</p>
           <p id="os-plaques" class="os-note" hidden>Bench plaques are priced with your free proof, so they’re not included in this estimate.</p>
-          <p class="os-note">Setup is a flat £40 per order, even when each award has a different name.</p>
-          <p class="os-note">A guide price to help you budget, plus UK delivery (quoted with your order). Orders of 20 or more awards get a bulk discount, taken off in your quote. Nothing to pay today.</p>
+          <p class="os-note" data-os-awards>Setup is a flat £40 per order, even when each award has a different name.</p>
+          <p class="os-note" data-os-awards>A guide price to help you budget, plus UK delivery (quoted with your order). Orders of 20 or more awards get a bulk discount, taken off in your quote. Nothing to pay today.</p>
           <p class="m-0 mt-3"><button type="button" class="btn btn-secondary" data-share-link>Share this order with your team</button></p>
         </div>
         <script is:inline>
@@ -113,7 +113,11 @@ const web3formsKey = (import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "").trim();
               document.getElementById('os-setup-n').textContent = 'flat fee, once per order';
               document.getElementById('os-setup').textContent = Q.gbp(setupTotal);
               document.getElementById('os-total').textContent = has ? Q.gbp(total) : 'With your proof';
-              document.getElementById('os-plaques').hidden = plaques.length === 0;
+              document.getElementById('os-plaques').hidden = plaques.length === 0 || !awards.length;
+              // Only plaques: no estimate, setup or award notes (plaques are priced with the proof).
+              document.getElementById('os-title').textContent = awards.length ? 'Your estimate' : 'Your order';
+              box.querySelector('.os-total th').textContent = awards.length ? 'Estimated total' : 'Price';
+              box.querySelectorAll('[data-os-awards]').forEach(function (p) { p.hidden = !awards.length; });
               var bulk = document.getElementById('os-bulk'); if (bulk) { var bn = multi ? Math.max.apply(null, gs.map(function (g) { return g.n; })) : n; bulk.hidden = bn < 20; document.getElementById('os-bulk-n').textContent = bn; }
             }
             function start() { if (!window.GrimesQuote) return setTimeout(start, 50); draw(); window.GrimesQuote.onChange(draw); var pe = document.getElementById('engraving_positions'); if (pe) { try { var sv = localStorage.getItem('grimes_engraving_positions'); if (sv) pe.value = sv; } catch (e) {} pe.addEventListener('change', function () { try { localStorage.setItem('grimes_engraving_positions', pe.value); } catch (e) {} draw(); }); draw(); } document.addEventListener('change', function (e) { if (e.target && e.target.name === 'wording_type') draw(); }); document.addEventListener('input', function (e) { if (e.target.closest && e.target.closest('#q-lines')) setTimeout(draw, 0); }); document.addEventListener('change', function (e) { if (e.target.closest && e.target.closest('#q-lines')) setTimeout(draw, 0); }); document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('#q-lines')) setTimeout(draw, 50); }); }
@@ -122,7 +126,7 @@ const web3formsKey = (import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "").trim();
         </script>
       </section>
 
-      <div class="grid gap-4" style="grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr))">
+      <div class="grid gap-4" style="grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr))" data-awards-only>
         <fieldset class="m-0 border-0 p-0">
           <legend class="mb-2 font-bold">Engraving</legend>
           <label class="flex items-center gap-2"><input type="radio" name="engraving" value="Text only" checked /> Text only</label>
@@ -135,7 +139,7 @@ const web3formsKey = (import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "").trim();
         </fieldset>
       </div>
 
-      <div id="logo-box" class="rounded-lg p-4" style="background: #F5F6F7" hidden>
+      <div id="logo-box" data-awards-only class="rounded-lg p-4" style="background: #F5F6F7" hidden>
         <label for="logo-input" class="mb-1 block font-bold">Upload your logo (optional)</label>
         <p class="muted m-0 mb-3 text-sm">PDF, AI, EPS or SVG work best. A large, clear PNG or JPG is fine too. Up to 10 MB. You can also reply to our email with it.</p>
         <input id="logo-input" type="file" accept=".pdf,.ai,.eps,.svg,.png,.jpg,.jpeg" class="text-sm" />
@@ -143,7 +147,7 @@ const web3formsKey = (import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "").trim();
         <input type="hidden" name="logo_file" data-logo-url />
       </div>
 
-      <div class="field">
+      <div class="field" data-awards-only>
         <label for="wording" data-wording-label>Wording</label>
         <textarea id="wording" name="wording" rows="4" class="inp" style="resize: vertical" data-wording placeholder="e.g. Salesperson of the Year 2026, Acme Ltd"></textarea>
         <span class="muted text-sm" data-wording-fit></span>
@@ -253,8 +257,8 @@ const web3formsKey = (import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "").trim();
 
       <div class="field">
         <label for="notes">What are you thinking? (optional)</label>
-        <p class="muted m-0 mb-2 text-sm">Tell us anything that helps us quote: which awards you’re deciding between, your budget, winners and runners-up, or delivery instructions.</p>
-        <textarea id="notes" name="notes" rows="4" class="inp" style="resize: vertical" placeholder="e.g. Deciding between the crystal star and the diamond. 14 winners (larger size) and 14 runners-up (smaller). Budget about £30 each. Event 4 December."></textarea>
+        <p class="muted m-0 mb-2 text-sm">Tell us anything that helps us quote: which awards or plaque sizes you’re deciding between, your budget, winners and runners-up, or delivery instructions.</p>
+        <textarea id="notes" name="notes" rows="4" class="inp" style="resize: vertical" data-awards-placeholder="e.g. Deciding between the crystal star and the diamond. 14 winners (larger size) and 14 runners-up (smaller). Budget about £30 each. Event 4 December." placeholder="e.g. Deciding between the crystal star and the diamond. 14 winners (larger size) and 14 runners-up (smaller). Budget about £30 each. Event 4 December."></textarea>
       </div>
 
       <div class="field" style="max-width: 22rem">
@@ -315,4 +319,7 @@ const web3formsKey = (import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "").trim();
     sync();
   })();
 </script>
+<style is:global>
+  #quote-form.plaques-only [data-awards-only] { display: none !important; }
+</style>
 </Base>

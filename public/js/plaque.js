@@ -142,7 +142,7 @@
     // What the basket needs to redraw this plaque as a picture (basket.js renderPlaque).
     var fnt = byId(data.fonts, picked('font', 'data-font')), mt = byId(data.mats, picked('material', 'data-mat')), em = byId(data.emblems, picked('emblem', 'data-emblem'));
     var sz = byId(data.sizes, size.options[size.selectedIndex].getAttribute('data-size')) || byId(data.sizes, '6x4');
-    design.render = { mat: mt.id, ink: mt.ink, fam: fnt.fam, fstyle: fnt.fstyle, w: sz.w, h: sz.h, corners: picked('corners', 'data-corners'), border: picked('border', 'data-border') === '1', holes: picked('fixing', 'data-holes') === '1', emblemSvg: em && em.svg || '' };
+    design.render = { mat: mt.id, ink: mt.ink, fam: fnt.fam, fstyle: fnt.fstyle, w: sz.w, h: sz.h, corners: picked('corners', 'data-corners'), border: picked('border', 'data-border') === '1', holes: picked('fixing', 'data-holes') === '1', emblemSvg: em && em.svg || '', font: fnt.id, emblem: em ? em.id : 'none' };
     var snapshot = window.GrimesQuote.renderPlaque(design.render, text);
     // Options after material and size (those are in the name), plus where it's going and any notes.
     var optionsText = summary.value.split(' · ').slice(2).join(' · ') +

@@ -17,7 +17,7 @@ python3 scripts/dashboard.py --set-password   # one-off, before sharing it beyon
 | http://grimes.test | The website running locally (`npm run dev` or `npm run preview`) |
 | http://hub.grimes.test | The internal hub |
 
-One-off setup: add `127.0.0.1 grimes.test hub.grimes.test` to `/etc/hosts`, `brew install caddy`, then
+One-off setup: add `127.0.0.1 grimes.test hub.grimes.test` and `::1 grimes.test hub.grimes.test` to `/etc/hosts` (without the `::1` line every page waits 5 seconds), `brew install caddy`, then
 `caddy start --config internal/Caddyfile` (stop with `caddy stop`).
 
 ## What's where

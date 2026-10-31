@@ -171,6 +171,7 @@
         '<button type="button" class="q-remove" data-line-remove aria-label="Remove ' + esc(l.name) + '">Remove</button></div></li>';
     }).join('');
     renderNames();
+    paintMix(d);
     update();
     d.lines.forEach(function (l) {
       if (l.kind === 'plaque') return;
@@ -180,6 +181,21 @@
         update();
       });
     });
+  }
+
+  // Awards, plaques or both: hide the award-only questions and point the "add more" links at the right place.
+  var browseMore = document.querySelector('[data-browse-more]'), addMore = document.querySelector('[data-add-more]');
+  function paintMix(d) {
+    var a = Q.hasAwards(d), p = Q.hasPlaques(d), saved = d.lines.length ? ' (your order is saved)' : '';
+    form.classList.toggle('plaques-only', p && !a);
+    browseMore.href = p && !a ? '/memorial-bench-plaques/' : '/glass-awards/';
+    browseMore.textContent = (p && !a ? '← Browse bench plaques' : '← Browse more awards') + saved;
+    addMore.innerHTML = p && !a ? '<a href="/design-a-bench-plaque/" class="font-bold">+ Design another plaque</a>'
+      : p ? '<a href="/glass-awards/" class="font-bold">+ Add more awards</a> · <a href="/design-a-bench-plaque/" class="font-bold">+ Design another plaque</a>'
+      : '<a href="/glass-awards/" class="font-bold">+ Add more awards</a>';
+    var occ = form.querySelector('#occasion'), notes = form.querySelector('#notes');
+    occ.placeholder = p && !a ? 'e.g. bench unveiling' : 'e.g. staff awards night';
+    notes.placeholder = p && !a ? 'e.g. Deciding between 8 x 3 and 6 x 3. It’s for a bench by the river. Unveiling on 12 June.' : notes.dataset.awardsPlaceholder;
   }
 
   // Live stock against the quantity wanted. short: fewer in stock than they've asked for.
@@ -295,7 +311,7 @@
 
   // Different wording on each: one group per award type, a numbered box per award.
   function renderNames() {
-    var d = Q.get(), on = different();
+    var d = Q.get(), on = different() && !(d.lines.length && !Q.hasAwards(d));  // never for an order of only plaques
     namesBox.hidden = !on;
     wordingLabel.textContent = on ? 'Wording that’s the same on every award (optional)' : 'Wording';
     var lines = d.lines.filter(function (l) { return l.kind !== 'plaque'; });
@@ -357,7 +373,8 @@
     var firstQty = linesEl.querySelector('[data-line-qty]');
     var short = Q.short(d);
     if (firstQty) firstQty.setCustomValidity(short ? 'Our minimum order is ' + MIN + ' awards in total.' : '');
-    totalEl.innerHTML = n ? total + (total === 1 ? ' item' : ' items') + (short ? ' (minimum ' + MIN + ' awards)' : '') + ' · <strong>' + (Q.groups && Q.groups(d).length > 1 ? Q.groups(d).length + ' options, from ' : 'Estimated ') + Q.gbp(Q.estimate(d)) + '</strong><span class="block text-xs">' + Q.TOTAL_NOTE + (Q.hasPlaques(d) ? ' ' + Q.PLAQUE_NOTE : '') + '</span>' : 'Minimum order ' + MIN + ' awards in total. Bench plaques have no minimum.';
+    var price = !Q.hasAwards(d) ? 'Priced with your free proof' : (Q.groups && Q.groups(d).length > 1 ? Q.groups(d).length + ' options, from ' : Q.hasPlaques(d) ? 'Awards estimated ' : 'Estimated ') + Q.gbp(Q.estimate(d));
+    totalEl.innerHTML = n ? total + (total === 1 ? ' item' : ' items') + (short ? ' (minimum ' + MIN + ' awards)' : '') + ' · <strong>' + price + '</strong><span class="block text-xs">' + Q.totalNote(d) + '</span>' : 'Minimum order ' + MIN + ' awards in total. Bench plaques have no minimum.';
     totalEl.style.color = short ? '#8A1C1C' : '';
     paintStock(d);
     var parts = d.lines.map(function (l) {
@@ -380,7 +397,8 @@
       form.querySelector('[data-names]').value = namesText(d);
       return;
     }
-    form.querySelector('[data-summary]').value = (parts.length ? parts.join('\n') + '\nEstimated total ' + Q.gbp(Q.estimate(d)) + ' (' + Q.TOTAL_NOTE.toLowerCase() + (Q.hasPlaques(d) ? ' Plaques to be priced.' : '') + ')' : '') || (approx.value ? 'Recommendation wanted, about ' + approx.value + ' awards' : '');
+    var est = Q.hasAwards(d) ? '\nEstimated total ' + Q.gbp(Q.estimate(d)) + ' (' + Q.TOTAL_NOTE.toLowerCase() + (Q.hasPlaques(d) ? ' Plaques to be priced.' : '') + ')' : '\nPlaques to be priced with the proof.';
+    form.querySelector('[data-summary]').value = (parts.length ? parts.join('\n') + est : '') || (approx.value ? 'Recommendation wanted, about ' + approx.value + ' awards' : '');
     form.querySelector('[data-subject]').value = 'Website order: ' + (parts.map(function (p) { return p.replace(/ \[.*\]$/, '').replace(/\): .*/, ')'); }).join(', ') || 'recommendation request');
     form.querySelector('[data-names]').value = namesText(d);
   }
@@ -407,7 +425,6 @@
     });
     pasteInput.value = d.paste || '';
     ignoreFit.checked = !!f.ignore_size_guide;
-    if (d.lines.length) document.querySelector('[data-browse-more]').textContent = '← Browse more awards (your quote is saved)';
   }
 
   linesEl.addEventListener('input', function (e) {
@@ -463,7 +480,7 @@
   var started = false;
   form.addEventListener('input', function () { if (!started) { started = true; ph('quote_started', { awards: Q.get().lines.length }); } });
   form.onBeforeSend = checkBeforeSend;
-  form.onSent = function () { Q.clear(); logoUrl.value = ''; logoStatus.textContent = ''; showLogo(); renderLines(); document.querySelector('[data-browse-more]').textContent = '← Browse more awards'; };
+  form.onSent = function () { Q.clear(); logoUrl.value = ''; logoStatus.textContent = ''; showLogo(); renderLines(); };
 
   // A ?award=CODE link adds that award (looked up in /awards-index.json), then tidies the address.
   var wanted = new URLSearchParams(location.search).get('award');
