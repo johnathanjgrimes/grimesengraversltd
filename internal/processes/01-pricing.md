@@ -38,6 +38,13 @@ Real cost ≈ (trade × qty × 1.2) + (qty × £3) + £21 + carriage (inc VAT).
 Customer price ≈ (website price × qty) + (qty × £10.50) + £40 − discount.
 Aim for **30%+** of the customer price as profit.
 
+## Bench plaques
+
+- **Price = supplier price × 3** (200% on top). The supplier price is what they charge us for one plaque, as invoiced (we can't reclaim VAT).
+- In the hub, type the supplier price on the plaque proof (Proofs tab). It shows our price and profit, and remembers the price for that size and metal (in `private/prices.json`, never committed), so the next plaque of that size is priced automatically.
+- Tick the options and click **Customer quote for selected** for the reply email.
+- Delivery: not on the quote for now. We can deliver to Northern Ireland as well as Great Britain.
+
 ## Competitors (Oct 2026)
 
 Online promo sellers are roughly 10–25% cheaper on the same awards once their VAT is added (e.g. Wills & Merwagg include setup and delivery). Our edge: no VAT to add, local family firm, a free proof, a real person, hand-picked options.

@@ -23,6 +23,12 @@ Every product has a true-size engraving template:
 `https://portal.crystalgalleries.co.uk/upload/glass_templates/<CODE>.pdf`
 We keep copies in `supplier-templates/` (run `./scripts/fetch-templates.sh` to update). Keep them private: they're Crystal Galleries' artwork.
 
+## Bench plaques (from our plaque supplier, not Crystal Galleries)
+
+- **Stainless steel:** ask for **1.5 mm thick brushed stainless steel**.
+- **Screw holes:** ask for **4 × 4 mm holes, 9 mm in from the corners** (hole centres 9 mm from each edge). Our proofs draw them in the same place.
+- **Screws:** the plaque supplier doesn't supply them, but every plaque we sell comes with stainless steel screws (the website promises this). We send the screws ourselves: use the spare bag, and order more when it runs low (they're cheap).
+
 ## Questions to ask them
 
 - Bulk or project pricing beyond 4% at 24+?

@@ -2,7 +2,7 @@
 """Bench plaque proofs, in the style Grimes sends customers.
 
 Default ("grimes" style, matching our real proofs): the page is the plaque at true size,
-white, with a thin black outline 1.5 mm in, 4 mm screw holes 10.5 mm in from each edge,
+white, with a thin black outline 1.5 mm in, 4 mm screw holes 9 mm in from each edge (what we order),
 and the wording in Helvetica, black, centred, as large as fits.
 
   python3 scripts/plaque_proof.py 263x66 "Dedicated to The Force of Glyn." "Talented, unique, brave and…" "…forever FABULOUS 1973-2026"
@@ -10,7 +10,7 @@ and the wording in Helvetica, black, centred, as large as fits.
   python3 scripts/plaque_proof.py 7x5 --style preview --metal steel --font script --emblem heart "Forever in our hearts" "Tom"
 
 Size: a website size (8x3, 6x4, 7x5, 10x5, 8x6, a4, in inches) or any size in mm, e.g. 263x66.
-Options: --fixing screws|adhesive  --border  --no-details  --font helvetica|roman|italic|script|capitals|modern|gothic  --emblem none|cross|heart|star|paw|flower
+Options: --fixing screws|adhesive  --border  --no-details  --no-hairline  --font helvetica|roman|italic|script|capitals|modern|gothic  --emblem none|cross|heart|star|paw|flower
          --style grimes|preview (preview = coloured brass/steel picture with notes, for showing customers the finish)
 Saves a PDF (print at 100% for true size) and a PNG preview to proofs/ (git-ignored).
 Needs: pip3 install pymupdf
@@ -34,8 +34,9 @@ FONT_FILES = {  # the website's plaque fonts (downloaded once); 'helvetica' is b
 }
 # Our standard proof layout, measured from a real Grimes proof (263 x 66 mm).
 OUTLINE_IN, LINE_W = 1.5, 0.6          # mm in from the edge; line width in pt
-HOLE_D, HOLE_IN = 4.0, 10.5            # hole diameter; centre distance from each edge (mm)
+HOLE_D, HOLE_IN = 4.0, 9.0             # hole diameter; centre distance from each edge (mm), as ordered from the supplier
 LEADING = 1.28
+HAIRLINE = 0.2                         # mm outline on the lettering: thickens it slightly so it fills and stands out
 
 def hexrgb(h):
     h = h.lstrip('#'); return tuple(int(h[i:i + 2], 16) / 255 for i in (0, 2, 4))
@@ -57,22 +58,25 @@ def plaque_size(size):
     if m: return float(m.group(1)), float(m.group(2)), f'{m.group(1)} x {m.group(2)}mm'
     sys.exit(f"Unknown size {size}. Use a website size ({', '.join(s['id'] for s in plaque['sizes'])}) or mm, e.g. 263x66")
 
-def describe(size, metal='brass', font_id='helvetica', emblem='none', corners='square', fixing='screws', border=False):
-    """The chosen options in customer words, e.g. for the proof and the email."""
+MATERIAL = {'steel': '1.5 mm brushed stainless steel'}  # what we order from the plaque supplier
+
+def describe(size, metal='brass', font_id='helvetica', emblem='none', corners='square', fixing='screws', border=False, supplier=False):
+    """The chosen options in words: for the customer (on the proof), or for the plaque supplier, who doesn't supply screws."""
     fj, pq = (json.load(open(os.path.join(DATA, f), encoding='utf-8')) for f in ('font.json', 'plaque.json'))
     name = lambda xs, v, d='': next((x['name'] for x in xs if x['id'] == v), d or v)
     w, h, label = plaque_size(size)
     if '"' not in label:  # made to measure: give the nearest inches too
         inch = lambda mm: f'{round(mm / 25.4 * 2) / 2:g}'
         label += f' (about {inch(w)} x {inch(h)}")'
-    return (f"{name(fj['mats'], metal)} bench plaque, {label}",
+    holes = f"{HOLE_D:g} × {HOLE_D:g} mm screw holes, {HOLE_IN:g} mm in from the corners" + (' (no screws needed)' if supplier else ', stainless steel screws included')
+    return (f"{MATERIAL.get(metal) or name(fj['mats'], metal)} bench plaque, {label}",
             f"Font: {name(fj['fonts'], font_id, 'Helvetica')} · Emblem: {name(pq['emblems'], emblem)} · Corners: {corners.capitalize()} · "
-            f"Border: {'Yes' if border else 'None'} · Fixing: {'Adhesive backing' if fixing == 'adhesive' else 'Screw holes, stainless steel screws included'}")
+            f"Border: {'Yes' if border else 'None'} · Fixing: {'Adhesive backing' if fixing == 'adhesive' else holes}")
 
 DETAILS_H = 24  # mm of notes under the plaque on our standard proof
 
 def make(size, lines, metal='brass', font_id='helvetica', emblem='none', corners='square', fixing='screws', border=False,
-         style='grimes', max_pt=None, out_name=None, dry=False, details=True):
+         style='grimes', max_pt=None, out_name=None, dry=False, details=True, hairline=True):
     wmm, hmm, label = plaque_size(size)
     W, H = wmm * MM, hmm * MM
     grimes = style != 'preview'
@@ -119,16 +123,18 @@ def make(size, lines, metal='brass', font_id='helvetica', emblem='none', corners
     page.insert_font(fontname='w', fontbuffer=font.buffer)
     asc, desc = font.ascender, -font.descender  # in em units
     pt = max_pt or 72
+    line_w = HAIRLINE * MM if hairline else 0
     def fits(p):
         block = p * LEADING * (len(lines) - 1) + p * (asc + desc)
-        return max(font.text_length(l, fontsize=p) for l in lines) <= safe.width and block <= safe.height
+        return max(font.text_length(l, fontsize=p) for l in lines) + line_w <= safe.width and block <= safe.height
     while pt >= 5 and not fits(pt): pt -= 0.25
     if dry: return pt
     if pt < 5: sys.exit(f'The wording is too long for a {label} plaque. Shorten it, or choose a bigger size.')
     block = pt * LEADING * (len(lines) - 1) + pt * (asc + desc)
     y = safe.y0 + (safe.height - block) / 2 + pt * asc  # first baseline, block centred vertically
     for l in lines:
-        page.insert_text(((plate.x0 + plate.x1 - font.text_length(l, fontsize=pt)) / 2, y), l, fontname='w', fontsize=pt, color=ink)
+        page.insert_text(((plate.x0 + plate.x1 - font.text_length(l, fontsize=pt)) / 2, y), l, fontname='w', fontsize=pt, color=ink,
+                         fill=ink, render_mode=2 if hairline else 0, border_width=line_w / pt)  # border_width is a fraction of the font size
         y += pt * LEADING
 
     if details:
@@ -155,10 +161,11 @@ def main():
     ap.add_argument('--corners', default='square', choices=['rounded', 'square']); ap.add_argument('--fixing', default='screws', choices=['screws', 'adhesive'])
     ap.add_argument('--border', action='store_true'); ap.add_argument('--max-pt', type=float)
     ap.add_argument('--no-details', action='store_true', help='leave the size and options off the proof')
+    ap.add_argument('--no-hairline', action='store_true', help='no outline thickening the lettering')
     a = ap.parse_intermixed_args()
     lines = [l.strip() for l in open(a.lines_file, encoding='utf-8') if l.strip()] if a.lines_file else a.lines
     if not lines: ap.error('give the wording as arguments, or --lines-file')
-    path, pt = make(a.size, lines, a.metal, a.font, a.emblem, a.corners, a.fixing, a.border, a.style, a.max_pt, details=not a.no_details)
+    path, pt = make(a.size, lines, a.metal, a.font, a.emblem, a.corners, a.fixing, a.border, a.style, a.max_pt, details=not a.no_details, hairline=not a.no_hairline)
     print(f'{path}  ({pt:.1f}pt)')
 
 if __name__ == '__main__':

@@ -285,15 +285,84 @@ def save_buttons(pre, label):
 
 def safe_name(n): return re.sub(r'[^A-Za-z0-9_.-]', '', os.path.basename(n))
 
-def proof_summary(s, cat):  # what was chosen, worded for the customer email
+def proof_summary(s, cat):  # what was chosen, worded for the supplier email
     if 'plaque' not in s:
         a = cat.get(s.get('code', ''), {})
         head = f"{a['name']} ({s['code']})" if a else s.get('code', '')
         return f"{head}{'' if s.get('area', '1') == '1' else ' · engraving area ' + s['area']}\nWording:\n{s.get('lines', '')}"
     try: head, opts = plaque_proof.describe(s['plaque'], s.get('metal', 'brass'), s.get('font', 'helvetica'), s.get('emblem', 'none'),
-                                            s.get('corners', 'square'), s.get('fixing', 'screws'), bool(s.get('border')))
+                                            s.get('corners', 'square'), s.get('fixing', 'screws'), bool(s.get('border')), supplier=True)
     except SystemExit: head, opts = s['plaque'], ''
     return f"{head}\nWording:\n{s.get('lines', '')}\n{opts}"
+
+PLAQUE_DIFFS = [('plaque', 'plate size'), ('lines', 'wording'), ('metal', 'material'), ('font', 'font'), ('emblem', 'emblem'),
+                ('corners', 'corners'), ('border', 'border'), ('fixing', 'fixing')]
+
+def supplier_email(names, cat):  # one email asking for a price on the ticked proofs
+    picked = [(n, load_settings(n)) for n in names]
+    picked = [(n, st) for n, st in picked if st]
+    if not picked: return ''
+    if len(picked) == 1:
+        return f'Can I get a price for this, please? Proof attached.\n\n{proof_summary(picked[0][1], cat)}'
+    intro = f'Can I get a price for a customer, please? They want to choose between {len(picked)} options.\n\nProofs attached.'
+    if all('plaque' in st for _, st in picked):
+        diff = [label for k, label in PLAQUE_DIFFS if len({st.get(k, '') for _, st in picked}) > 1]
+        if diff: intro += f" Everything is the same apart from the {' and '.join([', '.join(diff[:-1]), diff[-1]] if len(diff) > 1 else diff)}:"
+    return intro + ''.join(f'\n\nOption {i}: {proof_summary(st, cat)}' for i, (_, st) in enumerate(picked, 1))
+
+PRICES = os.path.join(PRIVATE, 'prices.json')  # supplier prices we've been quoted, by metal and plaque size (git-ignored: trade data)
+MARKUP = 200  # % added to the supplier price for bench plaques (200% = supplier price × 3)
+
+def read_prices():
+    try: return json.load(open(PRICES, encoding='utf-8'))
+    except (OSError, ValueError): return {}
+
+def price_key(s):  # one supplier price per metal and size, e.g. "steel 203x76"
+    try: w, h, _ = plaque_proof.plaque_size(s['plaque'])
+    except SystemExit: return ''
+    return f"{s.get('metal', 'brass')} {round(w)}x{round(h)}"
+
+def proof_price(s, cat):
+    """(our price, supplier cost or None, how it was worked out) for one proof; price is None when not priced yet."""
+    if 'plaque' not in s:
+        a = cat.get(s.get('code', ''))
+        if not a or not a.get('price_from'): return None, None, 'Not in the website catalogue'
+        return float(a['price_from']) + ENGRAVING, None, f"Website price {gbp(float(a['price_from']))} + {gbp(ENGRAVING)} engraving per award, plus {gbp(SETUP)} setup per order"
+    known = read_prices().get(price_key(s), {})
+    cost, markup = s.get('cost') or known.get('cost'), float(s.get('markup') or known.get('markup') or MARKUP)
+    if not cost: return None, None, 'Not priced yet: add the supplier price'
+    src = '' if s.get('cost') else f", from the {known.get('date', '')} quote for this size"
+    return round(float(cost) * (1 + markup / 100), 2), float(cost), f'Supplier {gbp(float(cost))} + {markup:g}%{src}'
+
+def customer_quote(names, cat):  # the priced reply to the customer for the ticked proofs (delivery left off for now)
+    picked = [st for st in (load_settings(n) for n in names) if st]
+    if not picked: return ''
+    plaques = all('plaque' in st for st in picked)
+    def label(st):
+        if 'plaque' not in st:
+            a = cat.get(st.get('code', ''), {})
+            return f"{a.get('name', st.get('code', ''))} ({st.get('code', '')})", ' per award'
+        try: return f"{plaque_proof.describe(st['plaque'])[0].split('bench plaque, ', 1)[1]} plaque", ''
+        except SystemExit: return st['plaque'], ''
+    def detail(st):
+        if 'plaque' not in st: return f"Engraved with:\n{st.get('lines', '')}"
+        head, opts = plaque_proof.describe(st['plaque'], st.get('metal', 'brass'), st.get('font', 'helvetica'), st.get('emblem', 'none'),
+                                           st.get('corners', 'square'), st.get('fixing', 'screws'), bool(st.get('border')))
+        return f"{head.split(' bench plaque')[0]}, engraved with \"{' / '.join(st.get('lines', '').splitlines())}\".\n{opts}"
+    def line(st):
+        (what, per), price = label(st), proof_price(st, cat)[0]
+        return f"{what} – {gbp(price) + per if price else 'price to follow'}"
+    same = plaques and len({tuple(st.get(k, '') for k, _ in PLAQUE_DIFFS if k != 'plaque') for st in picked}) == 1
+    if len(picked) == 1:
+        body, close = f'{line(picked[0])}\n\n{detail(picked[0])}', "Let me know if you'd like to go ahead and I'll send over a proof."
+    elif same:
+        body = '\n'.join(f'Option {i}: {line(st)}' for i, st in enumerate(picked, 1))
+        body += f"\n\n{'Both' if len(picked) == 2 else f'All {len(picked)}'} are {detail(picked[0])}"
+        close = "Let me know which option you'd like and I'll send over a proof."
+    else:
+        body = '\n\n'.join(f'Option {i}: {line(st)}\n{detail(st)}' for i, st in enumerate(picked, 1))
+        close = "Let me know which option you'd like and I'll send over a proof."
+    return f'Hi [name]\n\nThank you for your enquiry.\n\n{body}\n\n{close}'
 
 COPY_JS = "var t=this.previousElementSibling;t.select();document.execCommand('copy');this.textContent='Copied';setTimeout(()=>this.textContent='Copy',1500)"
 
@@ -310,14 +379,29 @@ def proofs_page(pre=None):
         if u: img, edit = f'<a href="{u}" title="Load into the form">{img}</a>', f' · <a href="{u}">Edit</a>'
         else: edit = ''
         s = load_settings(n)
-        copy = (f'<label class="muted" style="font-weight:400;margin-top:.75rem">For the email</label><textarea readonly rows="7" style="min-height:0;font-size:.8rem">{esc(proof_summary(s, cat))}</textarea>'
+        copy = (f'<label class="muted" style="font-weight:400;margin-top:.75rem">For the supplier</label><textarea readonly rows="7" style="min-height:0;font-size:.8rem">{esc(proof_summary(s, cat))}</textarea>'
                 f'<button type="button" class="sec" style="min-height:32px;padding:0 .7rem;margin:.4rem .4rem 0 0" onclick="{esc(COPY_JS)}">Copy</button>') if s else ''
-        return (f'<div class="p"{on}>{img}<div><strong>{esc(n)}</strong><br>'
+        price, cost, how = proof_price(s, cat) if s else (None, None, '')
+        priced = (f'<p style="margin:.5rem 0 0"><strong style="font-size:1rem">{gbp(price) if price else "No price yet"}</strong>'
+                  f'{f" · profit {gbp(price - cost)}" if price and cost else ""}<br><span class="muted">{esc(how)}</span></p>') if s else ''
+        if s and 'plaque' in s:
+            priced += (f'<form method="post" action="/proof/price" style="margin:.25rem 0 0;display:flex;gap:.35rem;align-items:end"><input type="hidden" name="name" value="{esc(n)}">'
+                       f'<div><label class="muted" style="font-weight:400;margin:0">Supplier £</label><input name="cost" inputmode="decimal" value="{esc(s.get("cost", ""))}" placeholder="{f"{cost:.2f}" if cost else "e.g. 25.00"}" style="padding:.3rem"></div>'
+                       f'<div style="max-width:70px"><label class="muted" style="font-weight:400;margin:0">Markup %</label><input name="markup" inputmode="decimal" value="{esc(s.get("markup", MARKUP))}" style="padding:.3rem"></div>'
+                       f'<button class="sec" style="min-height:32px;padding:0 .6rem;margin:0">Save</button></form>')
+        tick = (f'<label style="font-weight:400;margin:0 0 .25rem"><input type="checkbox" name="pick" value="{esc(n)}" form="pick" style="width:auto"'
+                f'{" checked" if n in pre.get("pick", []) else ""}> Select</label>') if s else ''
+        return (f'<div class="p"{on}>{img}<div>{tick}<strong>{esc(n)}</strong><br>'
                 f'<span class="muted">{datetime.datetime.fromtimestamp(t):%d %b %Y, %H:%M}</span><br>'
                 f'<a href="/file/{urllib.parse.quote(f)}" target="_blank">Open true-size PDF</a>{edit}'
                 f'<form method="post" action="/proof/delete" onsubmit="return confirm(\'Delete this proof?\')" style="margin:0"><input type="hidden" name="name" value="{esc(f)}">'
-                f'<button class="sec" style="min-height:32px;padding:0 .7rem;margin-top:.5rem">Delete</button></form>{copy}</div></div>')
+                f'<button class="sec" style="min-height:32px;padding:0 .7rem;margin-top:.5rem">Delete</button></form>{priced}{copy}</div></div>')
     items = ''.join(item(f) for f in pdfs)
+    customer = pre.get('for') == 'customer'
+    text = (customer_quote if customer else supplier_email)(pre.get('pick', []), cat)
+    hint = 'Prices from each proof. Change [name], and attach the proofs if you want them to see the design.' if customer else f'Attach: {esc(", ".join(n + ".pdf" for n in pre.get("pick", [])))}'
+    email = (f'<div class="card" id="supplier"><h2>{"Customer quote" if customer else "Supplier email"}</h2><p class="hint">{hint}</p>'
+             f'<textarea readonly rows="{min(30, text.count(chr(10)) + 2)}">{esc(text)}</textarea><button type="button" onclick="{esc(COPY_JS)}">Copy</button></div>') if text else ''
     opt = lambda xs, sel='': ''.join(f'<option value="{esc(v)}"{" selected" if v == sel else ""}>{esc(t)}</option>' for v, t in xs)
     return f"""<h1>Proofs</h1>
 <div class="row">
@@ -340,11 +424,13 @@ def proofs_page(pre=None):
   <div><label for="corners">Corners (colour preview)</label><select id="corners" name="corners">{opt([('square', 'Square'), ('rounded', 'Rounded')], pre.get('corners', ''))}</select></div></div>
   <label style="font-weight:400"><input type="checkbox" name="border" value="1" style="width:auto"{" checked" if pre.get('border') else ""}> Border</label>
   <label style="font-weight:400"><input type="checkbox" name="details" value="1" style="width:auto"{" checked" if pre.get('details', '1') != '0' else ""}> Include details with proof (size and options under the plaque)</label>
+  <label style="font-weight:400"><input type="checkbox" name="hairline" value="1" style="width:auto"{" checked" if pre.get('hairline', '1') != '0' else ""}> Hairline on lettering (thickens it slightly, easier to fill)</label>
   <label for="plines">Wording (one line per row)</label><textarea id="plines" name="lines" placeholder="In loving memory of&#10;Margaret Jones&#10;1938 – 2024" required>{esc(pre.get('lines', '') if pre.get('plaque') else '')}</textarea>
   {save_buttons(pre if 'plaque' in pre else {}, 'Create plaque proof')}</form>
 </div>
-<h2>Proofs ({len(pdfs)})</h2>
-{'<form method="post" action="/proof/delete-all" onsubmit="return confirm(&#39;Delete all ' + str(len(pdfs)) + ' proofs?&#39;)" style="margin:0 0 1rem"><button class="sec" style="margin:0">Delete all proofs</button></form>' if pdfs else ''}
+<h2>Proofs ({len(pdfs)})</h2>{email}
+<form id="pick" method="get" action="/proofs#supplier"></form>
+{'<div style="display:flex;flex-wrap:wrap;gap:.5rem;margin:0 0 1rem"><button form="pick" name="for" value="supplier" style="margin:0">Supplier email for selected</button><button form="pick" name="for" value="customer" style="margin:0">Customer quote for selected</button><form method="post" action="/proof/delete-all" onsubmit="return confirm(&#39;Delete all ' + str(len(pdfs)) + ' proofs?&#39;)" style="margin:0"><button class="sec" style="margin:0">Delete all proofs</button></form></div>' if pdfs else ''}
 <div class="grid">{items or '<p class="muted">No proofs yet.</p>'}</div>"""
 
 def options_page(result=''):
@@ -575,7 +661,7 @@ class H(BaseHTTPRequestHandler):
         if path == '/order':
             return self.send(shell('/order', order_page((q.get('d') or [''])[0])))
         if path == '/proofs' and q:
-            return self.send(shell('/proofs', proofs_page({k: v[0] for k, v in q.items()})))
+            return self.send(shell('/proofs', proofs_page({**{k: v[0] for k, v in q.items()}, 'pick': q.get('pick', [])})))
         return self.go(path)
 
     def do_POST(self):
@@ -597,6 +683,17 @@ class H(BaseHTTPRequestHandler):
                 for f in os.listdir(proof.OUT) if os.path.isdir(proof.OUT) else []:
                     if f.endswith(('.pdf', '.png', '.json')): os.remove(os.path.join(proof.OUT, f)); n += f.endswith('.pdf')
                 return self.go('/proofs', note(f'Deleted {n} proof(s).'))
+            if path == '/proof/price':
+                name, s = safe_name(g('name')), load_settings(safe_name(g('name')))
+                if not s or 'plaque' not in s: raise SystemExit('That proof can’t be priced here.')
+                try: cost, markup = round(float(g('cost').replace('£', '').strip() or 0), 2), float(g('markup') or MARKUP)
+                except ValueError: raise SystemExit('Enter the supplier price as a number, e.g. 25.00')
+                s.update(cost=cost or '', markup=markup)
+                save_settings(name, **s)
+                if cost:  # remember it for the next plaque of this size and metal
+                    prices = read_prices(); prices[price_key(s)] = {'cost': cost, 'markup': markup, 'date': datetime.date.today().isoformat()}
+                    os.makedirs(PRIVATE, exist_ok=True); json.dump(prices, open(PRICES, 'w', encoding='utf-8'), indent=1)
+                return self.go('/proofs', note(f'Priced {esc(name)}: {gbp(proof_price(s, awards())[0]) if cost else "price cleared"}.'))
             rep = safe_name(g('replace')) if g('mode') == 'replace' else ''  # "Save and replace" keeps the proof's name
             done = 'Replaced' if rep else 'Created'
             if path == '/proof':
@@ -621,9 +718,9 @@ class H(BaseHTTPRequestHandler):
                 size = re.sub(r'[^0-9a-zA-Z.x×]', '', g('size', '8x3')) or '8x3'
                 first = re.sub(r'[^A-Za-z0-9]+', '_', ' '.join(lines[0].split()[:4])).strip('_')
                 p, pt = plaque_proof.make(size, lines, g('metal', 'brass'), g('font', 'helvetica'), g('emblem', 'none'), g('corners', 'square'),
-                                          g('fixing', 'screws'), bool(g('border')), g('style', 'grimes'), out_name=rep or f'Proof_{first}_plaque_{stamp}', details=bool(g('details')))
+                                          g('fixing', 'screws'), bool(g('border')), g('style', 'grimes'), out_name=rep or f'Proof_{first}_plaque_{stamp}', details=bool(g('details')), hairline=bool(g('hairline')))
                 save_settings(os.path.basename(p)[:-4], plaque=size, lines='\n'.join(lines), style=g('style', 'grimes'), metal=g('metal', 'brass'), font=g('font', 'helvetica'),
-                              emblem=g('emblem', 'none'), fixing=g('fixing', 'screws'), corners=g('corners', 'square'), border='1' if g('border') else '', details='1' if g('details') else '0')
+                              emblem=g('emblem', 'none'), fixing=g('fixing', 'screws'), corners=g('corners', 'square'), border='1' if g('border') else '', details='1' if g('details') else '0', hairline='1' if g('hairline') else '0')
                 return self.edit_proof(os.path.basename(p)[:-4], note(f'{done} {esc(os.path.basename(p))} ({pt:.1f}pt)'))
             if path == '/options/new':
                 cat = awards(); slug = g('slug').strip().lower()
